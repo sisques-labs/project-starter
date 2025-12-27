@@ -73,7 +73,30 @@
     "loading": "Cargando usuario...",
     "notFound": "Usuario no encontrado",
     "profile": {
-      "title": "Perfil de Usuario"
+      "title": "Perfil de Usuario",
+      "anonymous": "Usuario anónimo",
+      "email": "Correo electrónico",
+      "verified": "Verificado",
+      "unverified": "No verificado",
+      "provider": "Proveedor de autenticación",
+      "twoFactor": "Autenticación de dos factores",
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado",
+      "createdAt": "Fecha de creación",
+      "lastLoginAt": "Último inicio de sesión",
+      "phoneNumber": "Número de teléfono",
+      "sections": {
+        "personalInfo": "Información Personal",
+        "personalInfoDescription": "Datos personales y de identificación",
+        "authInfo": "Información de Autenticación",
+        "authInfoDescription": "Configuración de seguridad y autenticación",
+        "accountInfo": "Información de Cuenta",
+        "accountInfoDescription": "Detalles de la cuenta y actividad",
+        "contactInfo": "Información de Contacto",
+        "contactInfoDescription": "Datos de contacto y comunicación",
+        "editProfile": "Editar Perfil",
+        "editProfileDescription": "Actualiza tu información personal"
+      }
     },
     "error": {
       "loading": "Error al cargar usuario: {message}"
@@ -98,6 +121,12 @@
       "avatarUrl": {
         "label": "URL del avatar",
         "placeholder": "https://ejemplo.com/avatar.jpg"
+      },
+      "role": {
+        "label": "Rol"
+      },
+      "status": {
+        "label": "Estado"
       }
     },
     "actions": {
