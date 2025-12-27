@@ -1,10 +1,9 @@
 import { AuthProfileMeQuery } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query';
 import { FindAuthsByCriteriaQuery } from '@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query';
-import { CurrentUser } from '@/generic/auth/infrastructure/decorators/current-user/current-user.decorator';
 import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { CurrentUser } from '@/generic/auth/infrastructure/decorators/current-user/current-user.decorator';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
-import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthFindByCriteriaRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-find-by-criteria.request.dto';
 import { AuthUserProfileResponseDto } from '@/generic/auth/transport/graphql/dtos/responses/auth-user-profile.response.dto';
 import { PaginatedAuthResultDto } from '@/generic/auth/transport/graphql/dtos/responses/auth.response.dto';
@@ -27,17 +26,14 @@ export class AuthQueryResolver {
 
   @Query(() => AuthUserProfileResponseDto)
   async authProfileMe(
-    @CurrentUser() user: AuthAggregate,
+    @CurrentUser() user: any,
   ): Promise<AuthUserProfileResponseDto> {
-    // 01: Extract userId from JWT (stored in user object by JwtStrategy)
-    const userId = (user as any).userId;
-
-    // 02: Execute query
+    // 01: Execute query
     const result = await this.queryBus.execute(
-      new AuthProfileMeQuery({ userId }),
+      new AuthProfileMeQuery({ userId: user.userId }),
     );
 
-    // 03: Convert to response DTO
+    // 02: Convert to response DTO
     return this.authUserProfileGraphQLMapper.toResponseDto(result);
   }
 

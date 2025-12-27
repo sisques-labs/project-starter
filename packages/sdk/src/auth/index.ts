@@ -4,6 +4,7 @@ export * from './types/auth-logout-input.type.js';
 export * from './types/auth-refresh-token-input.type.js';
 export * from './types/auth-register-by-email-input.type.js';
 export * from './types/auth-response.type.js';
+export * from './types/auth-user-profile-response.type.js';
 export * from './types/login-response.type.js';
 export * from './types/refresh-token-response.type.js';
 

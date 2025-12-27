@@ -114,6 +114,10 @@ export class SDK {
         await this.client.clearTokens();
         return result;
       },
+      /**
+       * Get the current authenticated user's profile
+       */
+      profileMe: this.authClient.profileMe.bind(this.authClient),
     };
   }
 
