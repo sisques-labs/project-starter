@@ -10,5 +10,3 @@ export type CreateUserInput = {
   role: UserRole;
   status: UserStatus;
 };
-
-

@@ -139,6 +139,9 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(winston@3.19.0)
     devDependencies:
+      '@biomejs/biome':
+        specifier: 2.3.10
+        version: 2.3.10
       '@nestjs/cli':
         specifier: ^10.0.0
         version: 10.4.9(@swc/core@1.15.3(@swc/helpers@0.5.15))
@@ -345,6 +348,9 @@ importers:
         specifier: ^18.0.0 || ^19.0.0
         version: 19.2.0
     devDependencies:
+      '@biomejs/biome':
+        specifier: 2.3.10
+        version: 2.3.10
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -526,6 +532,9 @@ importers:
         specifier: ^4.1.12
         version: 4.1.12
     devDependencies:
+      '@biomejs/biome':
+        specifier: 2.3.10
+        version: 2.3.10
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config

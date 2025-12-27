@@ -1,7 +1,6 @@
+import { cn } from '@repo/shared/presentation/lib/utils';
 import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
-
-import { cn } from '@repo/shared/presentation/lib/utils';
 
 function Drawer({
   ...props

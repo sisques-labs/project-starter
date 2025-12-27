@@ -8,6 +8,15 @@ import { GraphQLClient } from './shared/client/graphql-client.js';
 import type { GraphQLClientConfig } from './shared/types/index.js';
 import { UserClient } from './users/client/user-client.js';
 
+export * from './auth/index.js';
+export * from './health/index.js';
+export * from './saga-instance/index.js';
+export * from './saga-log/index.js';
+export * from './saga-step/index.js';
+// Re-export storage interface for custom implementations
+export { MemoryStorage } from './shared/storage/memory-storage.js';
+export type { Storage } from './shared/storage/storage.interface.js';
+export { WebStorage } from './shared/storage/web-storage.js';
 // Re-export types from shared
 export type {
   BaseFilter,
@@ -19,17 +28,6 @@ export type {
   PaginationInput,
   SortDirection,
 } from './shared/types/index.js';
-
-// Re-export storage interface for custom implementations
-export { MemoryStorage } from './shared/storage/memory-storage.js';
-export type { Storage } from './shared/storage/storage.interface.js';
-export { WebStorage } from './shared/storage/web-storage.js';
-
-export * from './auth/index.js';
-export * from './health/index.js';
-export * from './saga-instance/index.js';
-export * from './saga-log/index.js';
-export * from './saga-step/index.js';
 export * from './users/index.js';
 
 export class SDK {

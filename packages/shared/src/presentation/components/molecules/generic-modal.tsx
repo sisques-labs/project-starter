@@ -1,7 +1,5 @@
 'use client';
 
-import * as React from 'react';
-
 import { Button } from '@repo/shared/presentation/components/ui/button';
 import {
   Dialog,
@@ -13,6 +11,7 @@ import {
   DialogTrigger,
 } from '@repo/shared/presentation/components/ui/dialog';
 import { cn } from '@repo/shared/presentation/lib/utils';
+import * as React from 'react';
 
 export type GenericModalAction = {
   label: string;

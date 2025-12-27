@@ -8,4 +8,3 @@ export type AuthResponse = {
   providerId?: string;
   twoFactorEnabled?: boolean;
 };
-

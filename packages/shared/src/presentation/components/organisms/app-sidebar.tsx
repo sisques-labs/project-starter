@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
 import { SearchForm } from '@repo/shared/presentation/components/organisms/search-form';
 import {
@@ -18,6 +16,7 @@ import {
   SidebarSeparator,
 } from '@repo/shared/presentation/components/ui/sidebar';
 import { LogOut } from 'lucide-react';
+import * as React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui';
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {

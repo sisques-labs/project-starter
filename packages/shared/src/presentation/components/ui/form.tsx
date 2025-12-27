@@ -2,17 +2,16 @@
 
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
+import { Label } from '@repo/shared/presentation/components/ui/label';
+import { cn } from '@repo/shared/presentation/lib/utils';
 import * as React from 'react';
 import {
   Controller,
+  type ControllerProps,
   FormProvider,
   useFormContext,
   useFormState,
-  type ControllerProps,
 } from 'react-hook-form';
-
-import { Label } from '@repo/shared/presentation/components/ui/label';
-import { cn } from '@repo/shared/presentation/lib/utils';
 
 const Form = FormProvider;
 
@@ -24,7 +23,7 @@ const FormFieldContext = React.createContext<{ name: string }>({
 function FormField(props: ControllerProps<any, any>) {
   return (
     <FormFieldContext.Provider value={{ name: String(props.name) }}>
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      {/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
       <Controller {...(props as any)} />
     </FormFieldContext.Provider>
   );
