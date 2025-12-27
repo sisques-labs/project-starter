@@ -1,6 +1,6 @@
-# SaaS Boilerplate
+# Project Starter
 
-A complete and scalable boilerplate for building modern SaaS applications. This project uses a Turborepo monorepo and is designed with DDD (Domain-Driven Design), CQRS (Command Query Responsibility Segregation), and Event-Driven Architecture.
+A complete and scalable project starter for building modern applications. This project uses a Turborepo monorepo and is designed with DDD (Domain-Driven Design), CQRS (Command Query Responsibility Segregation), and Event-Driven Architecture.
 
 ## 🏗️ Project Architecture
 
@@ -9,16 +9,13 @@ This is a monorepo built with **Turborepo** that includes multiple applications 
 ### 📦 Monorepo Structure
 
 ```
-saas-boilerplate/
+project-starter/
 ├── apps/
 │   ├── api/          # Backend API with DDD/CQRS architecture
-│   ├── web/          # Next.js web application for end users
-│   ├── admin/        # Next.js admin panel
-│   ├── mobile/       # React Native mobile app with Expo
-│   └── docs/         # Documentation site with Astro and Starlight
+│   └── web/          # Next.js web application
 ├── packages/
 │   ├── sdk/          # Shared TypeScript SDK for clients
-│   ├── ui/           # Shared UI components
+│   ├── shared/       # Shared UI components and utilities
 │   ├── eslint-config/    # Shared ESLint configuration
 │   └── typescript-config/ # Shared TypeScript configuration
 ```
@@ -27,43 +24,35 @@ saas-boilerplate/
 
 ### 🔌 API (`apps/api`)
 
-Backend API built with **NestJS** implementing DDD, CQRS, and Event-Driven Architecture. Features GraphQL API with Apollo Server, PostgreSQL (via Prisma) for transactional data, and MongoDB for Event Store.
+Backend API built with **NestJS** implementing DDD, CQRS, and Event-Driven Architecture. Features GraphQL API with Apollo Server, PostgreSQL (via TypeORM) for transactional data, and MongoDB for Event Store.
 
-Includes bounded contexts: Auth, User, Event Store, and Health.
+Includes bounded contexts:
+
+- **Auth**: Authentication and authorization with JWT
+- **User**: User management
+- **Saga**: Distributed transaction orchestration
+- **Health**: Health checks and monitoring
+- **Logging**: Centralized logging with Winston
 
 ### 🌐 Web App (`apps/web`)
 
-Next.js 16 web application for end users with React 19 and Tailwind CSS 4.
-
-### 🛠️ Admin Panel (`apps/admin`)
-
-Next.js 16 administration panel with integrated SDK for API communication.
-
-### 📱 Mobile App (`apps/mobile`)
-
-Cross-platform React Native application with Expo, supporting iOS, Android, and Web.
-
-### 📚 Docs (`apps/docs`)
-
-Documentation site built with Astro and Starlight.
+Next.js 16 web application with React 19 and Tailwind CSS 4.
 
 ### 📦 SDK (`packages/sdk`)
 
-Shared TypeScript SDK for interacting with the API from any client. Includes GraphQL client, React hooks, and automatic token management. Compatible with web and React Native.
+Shared TypeScript SDK for interacting with the API from any client. Includes GraphQL client, React hooks, and automatic token management.
 
 See `packages/sdk/README.md` for complete usage examples.
 
 ## 🛠️ Main Technologies
 
 - **Monorepo**: Turborepo
-- **Backend**: NestJS, GraphQL, Prisma, MongoDB
+- **Backend**: NestJS, GraphQL, TypeORM, MongoDB
 - **Frontend**: Next.js 16, React 19, Tailwind CSS 4
-- **Mobile**: React Native, Expo
-- **Docs**: Astro, Starlight
 - **Language**: TypeScript 5
 - **Package Manager**: pnpm 9
 - **Databases**: PostgreSQL, MongoDB
-- **ORM**: Prisma
+- **ORM**: TypeORM
 
 ## 📋 Prerequisites
 
@@ -78,7 +67,7 @@ See `packages/sdk/README.md` for complete usage examples.
 
 ```bash
 git clone <repository-url>
-cd saas-boilerplate
+cd project-starter
 ```
 
 ### 2. Install Dependencies
@@ -94,9 +83,12 @@ Create `.env` files in the corresponding folders:
 **`apps/api/.env`**:
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/saas_db"
-MONGODB_URI="mongodb://localhost:27017/saas_event_store"
-JWT_SECRET="your-jwt-secret-key"
+DATABASE_URL="postgresql://user:password@localhost:5432/project_db"
+MONGODB_URI="mongodb://localhost:27017/project_event_store"
+JWT_ACCESS_SECRET="your-jwt-access-secret-key"
+JWT_REFRESH_SECRET="your-jwt-refresh-secret-key"
+JWT_ACCESS_EXPIRATION="15m"
+JWT_REFRESH_EXPIRATION="7d"
 FRONTEND_URL="http://localhost:3000"
 PORT=4100
 ```
@@ -107,14 +99,11 @@ PORT=4100
 # From the project root
 cd apps/api
 
-# Generate Prisma Client
-pnpm prisma:generate
+# Run TypeORM migrations
+pnpm typeorm migration:run
 
-# Run migrations
-pnpm prisma:migrate
-
-# (Optional) Open Prisma Studio
-pnpm prisma:studio
+# Or generate a new migration
+pnpm typeorm migration:generate -n MigrationName
 ```
 
 ### 5. Start Services
@@ -134,15 +123,6 @@ pnpm dev --filter=api
 
 # Web App
 pnpm dev --filter=web
-
-# Admin Panel
-pnpm dev --filter=admin
-
-# Mobile (requires Expo CLI)
-pnpm dev --filter=mobile
-
-# Docs
-pnpm dev --filter=docs
 ```
 
 ### 6. Access Applications
@@ -150,43 +130,27 @@ pnpm dev --filter=docs
 - **GraphQL API**: http://localhost:4100/graphql
 - **GraphQL Playground**: http://localhost:4100/graphql (development mode)
 - **Web App**: http://localhost:3000
-- **Admin Panel**: http://localhost:3001 (Next.js default port)
-- **Docs**: http://localhost:4321 (Astro default port)
 
-## 🔄 Using the Boilerplate as a Living Base for Projects
+## 🔄 Using the Project Starter
 
-This repository is designed to function as a **living boilerplate**, not as a one-time use template. A project can be created from this repository (for example, using "Use this template" or cloning it and uploading it to a new repo) without preserving the complete Git history of the boilerplate. However, it's still possible to continue receiving future improvements (auth, i18n, layout, global configuration, tooling, etc.) by adding this repository as an additional remote (`boilerplate`).
+This repository is designed as a **project starter** that provides a solid foundation for building applications. You can use it as a template to start new projects with a well-structured architecture and best practices already in place.
 
-### Recommended Workflow
+### Getting Started
 
-1. **Add the boilerplate as a remote:**
+1. **Clone or use as template:**
+   - Clone this repository
+   - Or use GitHub's "Use this template" feature
 
-   ```bash
-   git remote add boilerplate <url-of-this-repo>
-   git fetch boilerplate
-   ```
+2. **Customize for your project:**
+   - Update project name and descriptions
+   - Configure environment variables
+   - Add your domain-specific bounded contexts
+   - Customize the web application
 
-2. **First merge (initial integration):**
-
-   ```bash
-   git merge boilerplate/main --allow-unrelated-histories
-   ```
-
-   This flag is necessary because both repositories don't share history. After this initial merge, subsequent merges work in a standard way.
-
-3. **Future updates:**
-   ```bash
-   git fetch boilerplate
-   git merge boilerplate/main
-   ```
-
-### Best Practices
-
-To avoid conflicts, derived projects should:
-
-- ✅ **Develop only new functionality** within domain folders or `features/`
-- ✅ **Keep core and cross-cutting layers** (auth, i18n, layout, configuration, and shared packages) as **exclusive property of the boilerplate**
-- ❌ **Avoid copying and pasting code manually** - all updates should be done via Git to maintain structural coherence and traceability
+3. **Start developing:**
+   - Follow the architecture patterns established in the codebase
+   - Add new features following DDD, CQRS, and Event-Driven principles
+   - Use the existing bounded contexts as examples for new ones
 
 ## 📜 Available Scripts
 
@@ -218,14 +182,7 @@ pnpm format                 # Format code with Prettier
 # Development
 pnpm dev                    # Watch mode
 pnpm start                  # Production
-pnpm debug                 # Debug mode
-
-# Database
-pnpm prisma:generate        # Generate Prisma Client
-pnpm prisma:migrate         # Run migrations
-pnpm prisma:studio          # Open Prisma Studio
-pnpm prisma:push            # Push schema without migrations
-pnpm prisma:seed            # Run seeds
+pnpm debug                  # Debug mode
 
 # Testing
 pnpm test                   # Run tests
@@ -253,10 +210,10 @@ The API is organized into **Bounded Contexts**, each representing a specific bus
 
 ### Event-Driven Architecture
 
-- **Event Store**: All domain events are stored in MongoDB
-- **Event Sourcing**: State reconstruction from events
-- **Event Handlers**: Asynchronous event processing
-- **Event Replay**: Ability to replay historical events
+- **Domain Events**: Each bounded context publishes domain events for state changes
+- **Event Handlers**: Asynchronous event processing to update read models and trigger side effects
+- **Event Storage**: Domain events are handled by event handlers that update read models in MongoDB
+- **Event Bus**: Uses NestJS CQRS EventBus for event distribution
 
 ### Operation Flow
 
@@ -271,13 +228,16 @@ The API is organized into **Bounded Contexts**, each representing a specific bus
 
 JWT-based authentication with multi-provider support (Local, Google, Apple). Role-based access control at user level.
 
-## 💳 Billing and Subscriptions
+## 📊 Event-Driven Architecture
 
-Subscription management with configurable plans, multi-currency support, and Stripe integration ready. Supports trial periods and automatic/manual renewal.
+The project implements an event-driven architecture where:
 
-## 📊 Event Store
+- **Domain Events** are published by aggregates when state changes occur
+- **Event Handlers** process events asynchronously to update read models in MongoDB
+- **Read Models** are maintained separately from write models for optimized query performance
+- **Event Bus** (NestJS CQRS) distributes events to registered handlers
 
-Complete event sourcing implementation with audit trail, event replay capabilities, and full traceability of all operations.
+Each bounded context publishes its own domain events (e.g., `UserCreatedEvent`, `AuthRegisteredByEmailEvent`, `SagaInstanceCreatedEvent`) which are handled by event handlers that update the corresponding view models in MongoDB.
 
 ## 🧪 Testing
 
@@ -294,18 +254,18 @@ pnpm test:e2e
 
 ## 📖 Documentation
 
-### Project Documentation
-
-Documentation is available in `apps/docs` and can be accessed by running:
-
-```bash
-pnpm dev --filter=docs
-```
-
 ### API Documentation
 
 - **GraphQL Playground**: http://localhost:4100/graphql
 - **GraphQL Schema**: Automatically generated in `apps/api/src/schema.gql`
+
+### Context Documentation
+
+Each bounded context includes its own README with detailed documentation:
+
+- **Auth**: `apps/api/src/auth-context/auth/README.md`
+- **User**: `apps/api/src/user-context/users/README.md`
+- **Saga**: `apps/api/src/saga-context/README.md`
 
 ### SDK Documentation
 
@@ -324,32 +284,14 @@ The project includes shared configurations for:
 ### API
 
 1. Configure production environment variables
-2. Run migrations: `pnpm prisma:migrate deploy`
+2. Run TypeORM migrations
 3. Build: `pnpm build --filter=api`
 4. Start: `pnpm start --filter=api`
 
-### Next.js Applications (Web/Admin)
+### Web App
 
-1. Build: `pnpm build --filter=web` or `pnpm build --filter=admin`
-2. Start: `pnpm start --filter=web` or `pnpm start --filter=admin`
-
-### Mobile
-
-```bash
-# Production build
-cd apps/mobile
-eas build --platform ios
-eas build --platform android
-```
-
-### Docs
-
-```bash
-# Static build
-pnpm build --filter=docs
-
-# Output will be in apps/docs/dist/
-```
+1. Build: `pnpm build --filter=web`
+2. Start: `pnpm start --filter=web`
 
 ## 🤝 Contributing
 
@@ -361,11 +303,10 @@ pnpm build --filter=docs
 
 ## 📝 License
 
-This project is an open-source boilerplate. See the LICENSE file for more details.
+This project is an open-source project starter. See the LICENSE file for more details.
 
 ## 🎯 Roadmap
 
-- [ ] Complete Stripe integration
 - [ ] Webhooks for external events
 - [ ] Notifications (email, push, SMS)
 - [ ] Analytics and metrics
