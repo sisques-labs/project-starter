@@ -13,6 +13,7 @@ export const useRoutes = () => {
     feature3: '/feature3',
 
     settings: '/settings',
+    auth: '/auth',
   } as const;
 
   /**

@@ -8,7 +8,7 @@ interface IRegisterClient {
   registerByEmail: (input: {
     email: string;
     password: string;
-  }) => Promise<{ success: boolean; message: string; id: string } | null>;
+  }) => Promise<{ success: boolean; message?: string; id?: string } | null>;
 }
 
 interface IAuthRegisterServiceInput {
