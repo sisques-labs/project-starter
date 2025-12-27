@@ -13,7 +13,7 @@ export function useUserFindById(id: string, options?: { enabled?: boolean }) {
     if (enabled && id) {
       findById.fetch({ id });
     }
-  }, [enabled, id]);
+  }, [enabled, id, findById.fetch]);
 
   return {
     user: findById.data || null,

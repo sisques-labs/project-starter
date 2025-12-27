@@ -17,13 +17,13 @@ export function useAuthProfileMe(options?: { autoFetch?: boolean }) {
     if (profileMe.data) {
       setProfile(profileMe.data);
     }
-  }, [profileMe.data]);
+  }, [profileMe.data, setProfile]);
 
   useEffect(() => {
     if (autoFetch) {
       profileMe.fetch();
     }
-  }, [autoFetch]);
+  }, [autoFetch, profileMe.fetch]);
 
   return {
     profile: profileMe.data || null,

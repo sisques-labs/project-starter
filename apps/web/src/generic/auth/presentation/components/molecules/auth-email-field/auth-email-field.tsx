@@ -29,7 +29,6 @@ export function AuthEmailField<T extends FieldValues>({
   return (
     <FormField
       // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control			control={control as any}
-      // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic name
       name={name as any}
       render={({ field }) => (
         <FormItem>
