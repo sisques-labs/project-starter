@@ -18,10 +18,6 @@ describe('MongoMasterService', () => {
         const config: Record<string, string> = {
           MONGODB_URI: 'mongodb://localhost:27017',
           MONGODB_DATABASE: 'test-db',
-          MONGODB_MAX_POOL_SIZE: '10',
-          MONGODB_MIN_POOL_SIZE: '2',
-          MONGODB_MAX_IDLE_TIME_MS: '30000',
-          MONGODB_WAIT_QUEUE_TIMEOUT_MS: '0',
         };
         return config[key];
       }),
@@ -80,10 +76,6 @@ describe('MongoMasterService', () => {
 
       expect(MongoClient).toHaveBeenCalledWith('mongodb://localhost:27017', {
         authSource: 'admin',
-        maxPoolSize: 10,
-        minPoolSize: 2,
-        maxIdleTimeMS: 30000,
-        waitQueueTimeoutMS: 0,
       });
       expect(mockClient.connect).toHaveBeenCalledTimes(1);
       expect(mockClient.db).toHaveBeenCalledWith('test-db');

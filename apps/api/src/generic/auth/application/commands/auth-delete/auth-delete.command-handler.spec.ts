@@ -2,7 +2,7 @@ import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-dele
 import { AuthDeleteCommandHandler } from '@/generic/auth/application/commands/auth-delete/auth-delete.command-handler';
 import { IAuthDeleteCommandDto } from '@/generic/auth/application/dtos/commands/auth-delete/auth-delete-command.dto';
 import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exsists/assert-auth-exsists.service';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';

@@ -3,7 +3,7 @@ import { AuthRegisterByEmailCommand } from '@/generic/auth/application/commands/
 import { AuthLoginByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-login-by-email.request.dto';
 import { AuthRegisterByEmailRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-register-by-email.request.dto';
 import { LoginResponseDto } from '@/generic/auth/transport/graphql/dtos/responses/login.response.dto';
-import { AuthMutationsResolver } from '@/generic/auth/transport/graphql/resolvers/auth-mutations.resolver';
+import { AuthMutationsResolver } from '@/generic/auth/transport/graphql/resolvers/auth-mutations/auth-mutations.resolver';
 import { UpdateUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/update-user.request.dto';
 import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';

@@ -1,5 +1,5 @@
 import { AuthUpdateCommandHandler } from '@/generic/auth/application/commands/auth-update/auth-update.command-handler';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exsists/assert-auth-exsists.service';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';

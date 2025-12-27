@@ -1,4 +1,4 @@
-import { AssertAuthViewModelExsistsService } from '@/generic/auth/application/services/assert-auth-view-model-exsists/assert-auth-view-model-exsists.service';
+import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
 import {
   AUTH_READ_REPOSITORY_TOKEN,
   AuthReadRepository,
@@ -16,7 +16,7 @@ export class AuthUpdatedEventHandler
   constructor(
     @Inject(AUTH_READ_REPOSITORY_TOKEN)
     private readonly authReadRepository: AuthReadRepository,
-    private readonly assertAuthViewModelExsistsService: AssertAuthViewModelExsistsService,
+    private readonly assertAuthViewModelExistsService: AssertAuthViewModelExistsService,
   ) {}
 
   /**
@@ -29,7 +29,7 @@ export class AuthUpdatedEventHandler
 
     // 01: Assert the auth view model exists
     const existingAuthViewModel =
-      await this.assertAuthViewModelExsistsService.execute(event.aggregateId);
+      await this.assertAuthViewModelExistsService.execute(event.aggregateId);
 
     // 02: Update the existing view model with new data
     existingAuthViewModel.update(event.data);

@@ -1,5 +1,5 @@
 import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exsists/assert-auth-exsists.service';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';

@@ -55,6 +55,38 @@ export class AuthMongoRepository
   }
 
   /**
+   * Finds a auth by user id
+   *
+   * @param userId - The user id of the auth to find
+   * @returns The auth if found, null otherwise
+   */
+  async findByUserId(userId: string): Promise<AuthViewModel | null> {
+    this.logger.log(`Finding auth by user id: ${userId}`);
+
+    const collection = this.mongoMasterService.getCollection(
+      this.collectionName,
+    );
+    const authViewModel = await collection.findOne({ userId });
+
+    return authViewModel
+      ? this.authMongoDBMapper.toViewModel({
+          id: authViewModel.id,
+          userId: authViewModel.userId,
+          email: authViewModel.email,
+          emailVerified: authViewModel.emailVerified,
+          phoneNumber: authViewModel.phoneNumber,
+          lastLoginAt: authViewModel.lastLoginAt,
+          password: authViewModel.password,
+          provider: authViewModel.provider,
+          providerId: authViewModel.providerId,
+          twoFactorEnabled: authViewModel.twoFactorEnabled,
+          createdAt: authViewModel.createdAt,
+          updatedAt: authViewModel.updatedAt,
+        })
+      : null;
+  }
+
+  /**
    * Finds auths by criteria
    *
    * @param criteria - The criteria to find auths by

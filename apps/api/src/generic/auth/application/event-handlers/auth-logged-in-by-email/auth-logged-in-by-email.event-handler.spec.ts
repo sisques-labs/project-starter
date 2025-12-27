@@ -1,5 +1,5 @@
 import { AuthLoggedInByEmailEventHandler } from '@/generic/auth/application/event-handlers/auth-logged-in-by-email/auth-logged-in-by-email.event-handler';
-import { AssertAuthViewModelExsistsService } from '@/generic/auth/application/services/assert-auth-view-model-exsists/assert-auth-view-model-exsists.service';
+import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
@@ -8,7 +8,7 @@ import { AuthLoggedInByEmailEvent } from '@/shared/domain/events/auth/auth-logge
 describe('AuthLoggedInByEmailEventHandler', () => {
   let handler: AuthLoggedInByEmailEventHandler;
   let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
-  let mockAssertAuthViewModelExsistsService: jest.Mocked<AssertAuthViewModelExsistsService>;
+  let mockAssertAuthViewModelExistsService: jest.Mocked<AssertAuthViewModelExistsService>;
 
   beforeEach(() => {
     mockAuthReadRepository = {
@@ -18,13 +18,13 @@ describe('AuthLoggedInByEmailEventHandler', () => {
       delete: jest.fn(),
     } as unknown as jest.Mocked<AuthReadRepository>;
 
-    mockAssertAuthViewModelExsistsService = {
+    mockAssertAuthViewModelExistsService = {
       execute: jest.fn(),
-    } as unknown as jest.Mocked<AssertAuthViewModelExsistsService>;
+    } as unknown as jest.Mocked<AssertAuthViewModelExistsService>;
 
     handler = new AuthLoggedInByEmailEventHandler(
       mockAuthReadRepository,
-      mockAssertAuthViewModelExsistsService,
+      mockAssertAuthViewModelExistsService,
     );
   });
 
@@ -76,16 +76,16 @@ describe('AuthLoggedInByEmailEventHandler', () => {
 
       const updateSpy = jest.spyOn(mockViewModel, 'update');
 
-      mockAssertAuthViewModelExsistsService.execute.mockResolvedValue(
+      mockAssertAuthViewModelExistsService.execute.mockResolvedValue(
         mockViewModel,
       );
       mockAuthReadRepository.save.mockResolvedValue(undefined);
 
       await handler.handle(event);
 
-      expect(
-        mockAssertAuthViewModelExsistsService.execute,
-      ).toHaveBeenCalledWith(authId);
+      expect(mockAssertAuthViewModelExistsService.execute).toHaveBeenCalledWith(
+        authId,
+      );
       expect(updateSpy).toHaveBeenCalledWith(eventData);
       expect(mockAuthReadRepository.save).toHaveBeenCalledWith(mockViewModel);
       expect(mockAuthReadRepository.save).toHaveBeenCalledTimes(1);

@@ -1,6 +1,6 @@
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
-import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth.mapper';
+import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth/auth.mapper';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 
 describe('AuthGraphQLMapper', () => {

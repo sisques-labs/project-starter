@@ -21,6 +21,67 @@ type MutationResponseDto {
   id: String
 }
 
+type AuthUserProfileResponseDto {
+  """The user id"""
+  userId: String!
+
+  """The auth id"""
+  authId: String!
+
+  """The email of the auth"""
+  email: String
+
+  """The email verified status of the auth"""
+  emailVerified: Boolean
+
+  """The last login at of the auth"""
+  lastLoginAt: DateTime
+
+  """The phone number of the auth"""
+  phoneNumber: String
+
+  """The provider of the auth"""
+  provider: String
+
+  """The provider id of the auth"""
+  providerId: String
+
+  """The two factor enabled status of the auth"""
+  twoFactorEnabled: Boolean
+
+  """The user name of the user"""
+  userName: String
+
+  """The first name of the user"""
+  name: String
+
+  """The last name of the user"""
+  lastName: String
+
+  """The bio of the user"""
+  bio: String
+
+  """The avatar url of the user"""
+  avatarUrl: String
+
+  """The role of the user"""
+  role: String
+
+  """The status of the user"""
+  status: String
+
+  """The created at timestamp"""
+  createdAt: DateTime
+
+  """The updated at timestamp"""
+  updatedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type AuthResponseDto {
   """The id of the auth"""
   id: String!
@@ -52,11 +113,6 @@ type AuthResponseDto {
   """The updated at of the auth"""
   updatedAt: DateTime
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type PaginatedAuthResultDto {
   """The total number of items"""
@@ -296,6 +352,7 @@ type PaginatedUserResultDto {
 type Query {
   hello: String!
   health: String!
+  authProfileMe: AuthUserProfileResponseDto!
   findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
   sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
   sagaInstanceFindByCriteria(input: SagaInstanceFindByCriteriaRequestDto): PaginatedSagaInstanceResultDto!

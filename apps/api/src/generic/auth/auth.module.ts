@@ -7,14 +7,18 @@ import { AuthCreatedEventHandler } from '@/generic/auth/application/event-handle
 import { AuthLoggedInByEmailEventHandler } from '@/generic/auth/application/event-handlers/auth-logged-in-by-email/auth-logged-in-by-email.event-handler';
 import { AuthRegisteredByEmailEventHandler } from '@/generic/auth/application/event-handlers/auth-registered-by-email/auth-registered-by-email.event-handler';
 import { AuthUpdatedEventHandler } from '@/generic/auth/application/event-handlers/auth-updated/auth-updated.event-handler';
+import { AuthProfileMeQueryHandler } from '@/generic/auth/application/queries/auth-profile-me/auth-profile-me.query-handler';
+import { AuthViewModelFindByUserIdQueryHandler } from '@/generic/auth/application/queries/auth-view-model-find-by-user-id/auth-view-model-find-by-user-id.query-handler';
 import { FindAuthsByCriteriaQueryHandler } from '@/generic/auth/application/queries/find-auths-by-criteria/find-auths-by-criteria.query-handler';
 import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';
 import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
 import { AssertAuthEmailNotExistsService } from '@/generic/auth/application/services/assert-auth-email-not-exists/assert-auth-email-not-exists.service';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exsists/assert-auth-exsists.service';
-import { AssertAuthViewModelExsistsService } from '@/generic/auth/application/services/assert-auth-view-model-exsists/assert-auth-view-model-exsists.service';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
+import { AssertAuthViewModelExistsByUserIdService } from '@/generic/auth/application/services/assert-auth-view-model-exists-by-user-id/assert-auth-view-model-exists-by-user-id.service';
+import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
 import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
 import { AuthAggregateFactory } from '@/generic/auth/domain/factories/auth-aggregate/auth-aggregate.factory';
+import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
 import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
 import { AUTH_READ_REPOSITORY_TOKEN } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AUTH_WRITE_REPOSITORY_TOKEN } from '@/generic/auth/domain/repositories/auth-write.repository';
@@ -27,9 +31,10 @@ import { AuthTypeormRepository } from '@/generic/auth/infrastructure/database/ty
 import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
 import { JwtStrategy } from '@/generic/auth/infrastructure/strategies/jwt/jwt.strategy';
-import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth.mapper';
-import { AuthMutationsResolver } from '@/generic/auth/transport/graphql/resolvers/auth-mutations.resolver';
-import { AuthQueryResolver } from '@/generic/auth/transport/graphql/resolvers/auth-queries.resolver';
+import { AuthUserProfileGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth-user-profile/auth-user-profile.mapper';
+import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth/auth.mapper';
+import { AuthMutationsResolver } from '@/generic/auth/transport/graphql/resolvers/auth-mutations/auth-mutations.resolver';
+import { AuthQueryResolver } from '@/generic/auth/transport/graphql/resolvers/auth-queries/auth-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -42,12 +47,18 @@ const RESOLVERS = [AuthQueryResolver, AuthMutationsResolver];
 const SERVICES = [
   AssertAuthEmailExistsService,
   AssertAuthEmailNotExistsService,
+  AssertAuthViewModelExistsByUserIdService,
+  AssertAuthViewModelExistsService,
   AssertAuthExistsService,
-  AssertAuthViewModelExsistsService,
   JwtAuthService,
 ];
 
-const QUERY_HANDLERS = [FindAuthsByCriteriaQueryHandler];
+const QUERY_HANDLERS = [
+  AuthProfileMeQueryHandler,
+  FindAuthsByCriteriaQueryHandler,
+];
+
+const QUERY_HANDLERS_VIEW_MODELS = [AuthViewModelFindByUserIdQueryHandler];
 
 const COMMAND_HANDLERS = [
   AuthCreateCommandHandler,
@@ -66,9 +77,18 @@ const EVENT_HANDLERS = [
 
 const SAGAS = [AuthRegistrationSaga];
 
-const FACTORIES = [AuthAggregateFactory, AuthViewModelFactory];
+const FACTORIES = [
+  AuthAggregateFactory,
+  AuthViewModelFactory,
+  AuthUserProfileViewModelFactory,
+];
 
-const MAPPERS = [AuthTypeormMapper, AuthMongoDBMapper, AuthGraphQLMapper];
+const MAPPERS = [
+  AuthTypeormMapper,
+  AuthMongoDBMapper,
+  AuthGraphQLMapper,
+  AuthUserProfileGraphQLMapper,
+];
 
 const STRATEGIES = [JwtStrategy];
 
@@ -111,6 +131,7 @@ const ENTITIES = [AuthTypeormEntity];
     ...RESOLVERS,
     ...SERVICES,
     ...QUERY_HANDLERS,
+    ...QUERY_HANDLERS_VIEW_MODELS,
     ...COMMAND_HANDLERS,
     ...EVENT_HANDLERS,
     ...SAGAS,

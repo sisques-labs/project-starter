@@ -1,5 +1,5 @@
 import { AuthUpdateCommand } from '@/generic/auth/application/commands/auth-update/auth-update.command';
-import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exsists/assert-auth-exsists.service';
+import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { IAuthUpdateDto } from '@/generic/auth/domain/dtos/entities/auth-update/auth-update.dto';
 import {

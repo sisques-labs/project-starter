@@ -3,8 +3,9 @@ import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthFindByCriteriaRequestDto } from '@/generic/auth/transport/graphql/dtos/requests/auth-find-by-criteria.request.dto';
 import { PaginatedAuthResultDto } from '@/generic/auth/transport/graphql/dtos/responses/auth.response.dto';
-import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth.mapper';
-import { AuthQueryResolver } from '@/generic/auth/transport/graphql/resolvers/auth-queries.resolver';
+import { AuthUserProfileGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth-user-profile/auth-user-profile.mapper';
+import { AuthGraphQLMapper } from '@/generic/auth/transport/graphql/mappers/auth/auth.mapper';
+import { AuthQueryResolver } from '@/generic/auth/transport/graphql/resolvers/auth-queries/auth-queries.resolver';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
@@ -15,6 +16,7 @@ describe('AuthQueryResolver', () => {
   let resolver: AuthQueryResolver;
   let mockQueryBus: jest.Mocked<QueryBus>;
   let mockAuthGraphQLMapper: jest.Mocked<AuthGraphQLMapper>;
+  let mockAuthUserProfileGraphQLMapper: jest.Mocked<AuthUserProfileGraphQLMapper>;
 
   beforeEach(() => {
     mockQueryBus = {
@@ -26,7 +28,15 @@ describe('AuthQueryResolver', () => {
       toPaginatedResponseDto: jest.fn(),
     } as unknown as jest.Mocked<AuthGraphQLMapper>;
 
-    resolver = new AuthQueryResolver(mockQueryBus, mockAuthGraphQLMapper);
+    mockAuthUserProfileGraphQLMapper = {
+      toResponseDto: jest.fn(),
+    } as unknown as jest.Mocked<AuthUserProfileGraphQLMapper>;
+
+    resolver = new AuthQueryResolver(
+      mockQueryBus,
+      mockAuthGraphQLMapper,
+      mockAuthUserProfileGraphQLMapper,
+    );
   });
 
   afterEach(() => {

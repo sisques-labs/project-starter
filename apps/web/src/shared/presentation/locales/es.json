@@ -68,5 +68,48 @@
         "mismatch": "Las contraseñas no coinciden"
       }
     }
+  },
+  "user": {
+    "loading": "Cargando usuario...",
+    "notFound": "Usuario no encontrado",
+    "profile": {
+      "title": "Perfil de Usuario"
+    },
+    "error": {
+      "loading": "Error al cargar usuario: {message}"
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Ingresa tu nombre"
+      },
+      "lastName": {
+        "label": "Apellido",
+        "placeholder": "Ingresa tu apellido"
+      },
+      "userName": {
+        "label": "Nombre de usuario",
+        "placeholder": "Ingresa tu nombre de usuario"
+      },
+      "bio": {
+        "label": "Biografía",
+        "placeholder": "Escribe una breve biografía sobre ti"
+      },
+      "avatarUrl": {
+        "label": "URL del avatar",
+        "placeholder": "https://ejemplo.com/avatar.jpg"
+      }
+    },
+    "actions": {
+      "update": {
+        "label": "Actualizar perfil",
+        "loading": "Actualizando..."
+      }
+    },
+    "validation": {
+      "id": {
+        "required": "El ID es requerido"
+      }
+    }
   }
 }

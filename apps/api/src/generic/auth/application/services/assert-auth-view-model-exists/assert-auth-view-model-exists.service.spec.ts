@@ -1,11 +1,11 @@
 import { AuthNotFoundException } from '@/generic/auth/application/exceptions/auth-not-found/auth-not-found.exception';
-import { AssertAuthViewModelExsistsService } from '@/generic/auth/application/services/assert-auth-view-model-exsists/assert-auth-view-model-exsists.service';
+import { AssertAuthViewModelExistsService } from '@/generic/auth/application/services/assert-auth-view-model-exists/assert-auth-view-model-exists.service';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 
 describe('AssertAuthViewModelExsistsService', () => {
-  let service: AssertAuthViewModelExsistsService;
+  let service: AssertAuthViewModelExistsService;
   let mockAuthReadRepository: jest.Mocked<AuthReadRepository>;
 
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('AssertAuthViewModelExsistsService', () => {
       delete: jest.fn(),
     } as unknown as jest.Mocked<AuthReadRepository>;
 
-    service = new AssertAuthViewModelExsistsService(mockAuthReadRepository);
+    service = new AssertAuthViewModelExistsService(mockAuthReadRepository);
   });
 
   afterEach(() => {
