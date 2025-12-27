@@ -1,39 +1,46 @@
 import * as React from 'react';
 
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
-import { SidebarHeader as SidebarHeaderType } from '@repo/shared/domain/interfaces/sidebar-header.interface';
 import { SearchForm } from '@repo/shared/presentation/components/organisms/search-form';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarSeparator,
 } from '@repo/shared/presentation/components/ui/sidebar';
+import { LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui';
+
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   data: SidebarData;
-  header: SidebarHeaderType;
+  onLogout?: () => void;
 }
 
-export function AppSidebar({ data, header, ...props }: AppSidebarProps) {
+export function AppSidebar({ data, onLogout, ...props }: AppSidebarProps) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg" variant="outline">
-              <a href={header.url}>
-                <Avatar className="h-8 w-8 shrink-0">
-                  <AvatarImage src={header.src} />
-                  <AvatarFallback>{header.fallback}</AvatarFallback>
-                </Avatar>
-                <span className="font-semibold">{header.title}</span>
+              <a href={data.header.url || '#'}>
+                {data.header.logoSrc && (
+                  <img
+                    src={data.header.logoSrc}
+                    alt={data.header.appName}
+                    className="h-6 w-6 shrink-0"
+                  />
+                )}
+                <span className="font-semibold">{data.header.appName}</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -59,6 +66,30 @@ export function AppSidebar({ data, header, ...props }: AppSidebarProps) {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarSeparator />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild size="lg">
+              <a href={data.footer.profileUrl}>
+                <Avatar className="h-8 w-8 shrink-0">
+                  <AvatarImage src={data.footer.avatarSrc} />
+                  <AvatarFallback>{data.footer.avatarFallback}</AvatarFallback>
+                </Avatar>
+                <span className="font-medium">{data.footer.name}</span>
+              </a>
+            </SidebarMenuButton>
+            {onLogout && (
+              <SidebarMenuAction
+                onClick={onLogout}
+                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <LogOut className="size-4" />
+              </SidebarMenuAction>
+            )}
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

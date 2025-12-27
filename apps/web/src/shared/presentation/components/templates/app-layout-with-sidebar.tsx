@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthLogout } from '@/generic/auth/presentation/hooks/use-auth-logout/use-auth-logout';
 import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
 import { useRoutes } from '@/shared/presentation/hooks/use-routes';
 import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
@@ -15,27 +16,46 @@ interface AppLayoutWithSidebarProps {
  */
 export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
   const pathname = usePathname();
-  const { getSidebarData } = useRoutes();
+  const { getSidebarData, routes } = useRoutes();
 
   // Check if current route is auth (should not show sidebar)
   const isAuthRoute = useMemo(() => {
     return pathname?.includes('/auth') ?? false;
   }, [pathname]);
 
-  // Get sidebar data
-  const sidebarData = getSidebarData();
-
-  const routes = useRoutes();
+  // Get sidebar navigation data
+  const sidebarNavData = getSidebarData();
 
   // Get user profile
   const { profile } = useAuthProfileMe();
 
-  const headerData = {
-    url: routes.routes.userProfile,
-    src: profile?.avatarUrl || '',
-    fallback: profile?.name?.charAt(0) || '',
-    title: profile?.name || '',
-  };
+  // Get logout handler
+  const { handleLogout } = useAuthLogout();
+
+  // Prepare sidebar data with header and footer
+  const sidebarData = useMemo(() => {
+    return {
+      ...sidebarNavData,
+      header: {
+        appName: 'App Name', // TODO: Get from config or env
+        logoSrc: undefined, // TODO: Add logo path
+        url: routes.home,
+      },
+      footer: {
+        avatarSrc: profile?.avatarUrl || undefined,
+        avatarFallback:
+          profile?.name?.charAt(0) || profile?.userName?.charAt(0) || 'U',
+        name: profile?.name || profile?.userName || 'User',
+        profileUrl: routes.userProfile,
+      },
+    };
+  }, [sidebarNavData, profile, routes]);
+
+  // Handle logout with user ID
+  const onLogout = useMemo(() => {
+    if (!profile?.userId) return undefined;
+    return () => handleLogout(profile.userId);
+  }, [profile?.userId, handleLogout]);
 
   // If auth route, render children without sidebar
   if (isAuthRoute) {
@@ -46,10 +66,8 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
   return (
     <PageWithSidebarTemplate
       sidebarProps={{
-        data: {
-          ...sidebarData,
-        },
-        header: headerData,
+        data: sidebarData,
+        onLogout,
       }}
     >
       {children}

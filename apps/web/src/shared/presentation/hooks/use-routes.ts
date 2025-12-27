@@ -20,7 +20,7 @@ export const useRoutes = () => {
   /**
    * Generates sidebar data structure with active state based on current pathname
    */
-  const getSidebarData = (): SidebarData => {
+  const getSidebarData = (): Omit<SidebarData, 'header' | 'footer'> => {
     return {
       navMain: [
         {
