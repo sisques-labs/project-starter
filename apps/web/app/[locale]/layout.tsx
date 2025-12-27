@@ -3,7 +3,8 @@ import Providers from '@/shared/presentation/providers/providers';
 import type { Metadata } from 'next';
 import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import { notFound } from 'next/navigation';
+import '../globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,6 +33,12 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
+
+  // Ensure that the incoming `locale` is valid
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
 
   // Providing all messages to the client
   // side is the easiest way to get started
