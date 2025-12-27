@@ -1,12 +1,9 @@
 import { AppResolver } from '@/app.resolver';
-import { AuthContextModule } from '@/auth-context/auth-context.module';
 import { CoreModule } from '@/core/core.module';
-import { HealthContextModule } from '@/health-context/health-context.module';
-import { LoggingContextModule } from '@/logging-context/logging-context.module';
-import { SagaContextModule } from '@/saga-context/saga-context.module';
+import { GenericModule } from '@/generic/generic.module';
 import { SharedModule } from '@/shared/shared.module';
 import '@/shared/transport/graphql/registered-enums/registered-enums.graphql';
-import { UserContextModule } from '@/user-context/user-context.module';
+import { SupportModule } from '@/support/generic.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -14,15 +11,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 
-const CONTEXT_MODULES = [
-  LoggingContextModule,
-  AuthContextModule,
-  UserContextModule,
-  HealthContextModule,
-  SagaContextModule,
-];
-
-const MODULES = [CoreModule, SharedModule];
+const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];
 
 @Module({
   imports: [
@@ -39,7 +28,6 @@ const MODULES = [CoreModule, SharedModule];
       context: ({ req }) => ({ req }),
     }),
     ...MODULES,
-    ...CONTEXT_MODULES,
   ],
   providers: [AppResolver],
 })
