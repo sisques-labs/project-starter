@@ -14,6 +14,7 @@ export const useRoutes = () => {
     feature3: `/${locale}/feature3`,
     settings: `/${locale}/settings`,
     auth: `/${locale}/auth`,
+    userProfile: `/${locale}/user/profile`,
   } as const;
 
   /**

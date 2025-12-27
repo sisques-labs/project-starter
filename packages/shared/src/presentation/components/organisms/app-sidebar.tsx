@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
+import { SidebarHeader as SidebarHeaderType } from '@repo/shared/domain/interfaces/sidebar-header.interface';
 import { SearchForm } from '@repo/shared/presentation/components/organisms/search-form';
 import {
   Sidebar,
@@ -15,24 +16,24 @@ import {
   SidebarRail,
 } from '@repo/shared/presentation/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui';
-
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   data: SidebarData;
+  header: SidebarHeaderType;
 }
 
-export function AppSidebar({ data, ...props }: AppSidebarProps) {
+export function AppSidebar({ data, header, ...props }: AppSidebarProps) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg" variant="outline">
-              <a href={data.navHeaderUrl}>
+              <a href={header.url}>
                 <Avatar className="h-8 w-8 shrink-0">
-                  <AvatarImage src={data.navAvatarSrc} />
-                  <AvatarFallback>{data.navAvatarFallback}</AvatarFallback>
+                  <AvatarImage src={header.src} />
+                  <AvatarFallback>{header.fallback}</AvatarFallback>
                 </Avatar>
-                <span className="font-semibold">{data.navTitle}</span>
+                <span className="font-semibold">{header.title}</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -30,6 +30,13 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
   // Get user profile
   const { profile } = useAuthProfileMe();
 
+  const headerData = {
+    url: routes.routes.userProfile,
+    src: profile?.avatarUrl || '',
+    fallback: profile?.name?.charAt(0) || '',
+    title: profile?.name || '',
+  };
+
   // If auth route, render children without sidebar
   if (isAuthRoute) {
     return <>{children}</>;
@@ -41,11 +48,8 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
       sidebarProps={{
         data: {
           ...sidebarData,
-          navAvatarSrc: profile?.avatarUrl || '',
-          navAvatarFallback: profile?.name?.charAt(0) || '',
-          navTitle: profile?.name || '',
-          navHeaderUrl: routes.routes.home || '',
         },
+        header: headerData,
       }}
     >
       {children}

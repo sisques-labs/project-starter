@@ -38,9 +38,5 @@ export interface SidebarNavGroup {
  * Interface for the complete sidebar data structure
  */
 export interface SidebarData {
-  navHeaderUrl: string;
-  navAvatarSrc: string;
-  navAvatarFallback: string;
-  navTitle: string;
   navMain: SidebarNavGroup[];
 }
