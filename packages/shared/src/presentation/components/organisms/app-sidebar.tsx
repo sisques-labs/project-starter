@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@repo/shared/presentation/components/ui/sidebar';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui';
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   data: SidebarData;
@@ -23,6 +24,19 @@ export function AppSidebar({ data, ...props }: AppSidebarProps) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild size="lg" variant="outline">
+              <a href={data.navHeaderUrl}>
+                <Avatar className="h-8 w-8 shrink-0">
+                  <AvatarImage src={data.navAvatarSrc} />
+                  <AvatarFallback>{data.navAvatarFallback}</AvatarFallback>
+                </Avatar>
+                <span className="font-semibold">{data.navTitle}</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent>

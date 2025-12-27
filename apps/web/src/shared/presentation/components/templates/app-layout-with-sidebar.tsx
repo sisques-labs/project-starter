@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
 import { useRoutes } from '@/shared/presentation/hooks/use-routes';
 import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
 import { usePathname } from 'next/navigation';
@@ -24,6 +25,11 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
   // Get sidebar data
   const sidebarData = getSidebarData();
 
+  const routes = useRoutes();
+
+  // Get user profile
+  const { profile } = useAuthProfileMe();
+
   // If auth route, render children without sidebar
   if (isAuthRoute) {
     return <>{children}</>;
@@ -31,7 +37,17 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
 
   // Otherwise, render with sidebar
   return (
-    <PageWithSidebarTemplate sidebarProps={{ data: sidebarData }}>
+    <PageWithSidebarTemplate
+      sidebarProps={{
+        data: {
+          ...sidebarData,
+          navAvatarSrc: profile?.avatarUrl || '',
+          navAvatarFallback: profile?.name?.charAt(0) || '',
+          navTitle: profile?.name || '',
+          navHeaderUrl: routes.routes.home || '',
+        },
+      }}
+    >
       {children}
     </PageWithSidebarTemplate>
   );
