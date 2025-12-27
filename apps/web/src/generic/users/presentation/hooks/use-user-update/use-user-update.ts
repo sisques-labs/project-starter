@@ -1,13 +1,16 @@
 import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
+import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
 import type { UpdateUserInput } from '@repo/sdk';
 import { useUsers } from '@repo/sdk';
 
 /**
  * Hook that provides user update functionality
  * Uses SDK directly since backend handles all validation
+ * Updates sidebar user store when profile is updated
  */
 export function useUserUpdate() {
   const { update } = useUsers();
+  const { updateProfile } = useSidebarUserStore();
 
   const handleUpdate = async (
     values: UserUpdateFormValues,
@@ -29,6 +32,17 @@ export function useUserUpdate() {
       const result = await update.mutate(input);
 
       if (result?.success) {
+        // Update sidebar user store with new profile data
+        updateProfile({
+          name: values.name || null,
+          lastName: values.lastName || null,
+          userName: values.userName || null,
+          bio: values.bio || null,
+          avatarUrl: values.avatarUrl === '' ? null : values.avatarUrl || null,
+          role: values.role || null,
+          status: values.status || null,
+        });
+
         onSuccess?.();
       }
     } catch (error) {

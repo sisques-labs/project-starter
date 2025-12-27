@@ -1,20 +1,19 @@
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 export const useRoutes = () => {
   const pathname = usePathname();
-  const locale = useLocale();
   const t = useTranslations('nav');
 
   const routes = {
-    home: `/${locale}/home`,
-    feature1: `/${locale}/feature1`,
-    feature2: `/${locale}/feature2`,
-    feature3: `/${locale}/feature3`,
-    settings: `/${locale}/settings`,
-    auth: `/${locale}/auth`,
-    userProfile: `/${locale}/user/profile`,
+    home: '/home',
+    feature1: '/feature1',
+    feature2: '/feature2',
+    feature3: '/feature3',
+    settings: '/settings',
+    auth: '/auth',
+    userProfile: '/user/profile',
   } as const;
 
   /**

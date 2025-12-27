@@ -3,6 +3,7 @@
 import { useAuthLogout } from '@/generic/auth/presentation/hooks/use-auth-logout/use-auth-logout';
 import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
 import { useRoutes } from '@/shared/presentation/hooks/use-routes';
+import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
 import PageWithSidebarTemplate from '@repo/shared/presentation/components/templates/page-with-sidebar-template';
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
@@ -26,8 +27,11 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
   // Get sidebar navigation data
   const sidebarNavData = getSidebarData();
 
-  // Get user profile
-  const { profile } = useAuthProfileMe();
+  // Initialize profile loading (this will sync to store)
+  useAuthProfileMe();
+
+  // Get user profile from store (for sidebar)
+  const profile = useSidebarUserStore((state) => state.profile);
 
   // Get logout handler
   const { handleLogout } = useAuthLogout();
