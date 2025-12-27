@@ -55,6 +55,10 @@ export function UserUpdateForm({
     },
   });
 
+  // Check if form has been modified
+  const isDirty = form.formState.isDirty;
+  const isSubmitting = isLoading;
+
   return (
     <Form {...(form as any)}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -153,11 +157,13 @@ export function UserUpdateForm({
           <div className="text-sm text-destructive">{error.message}</div>
         )}
 
-        <Button type="submit" disabled={isLoading}>
-          {isLoading
-            ? t('user.actions.update.loading')
-            : t('user.actions.update.label')}
-        </Button>
+        <div className="flex justify-end pt-2">
+          <Button type="submit" disabled={!isDirty || isSubmitting}>
+            {isSubmitting
+              ? t('user.actions.update.loading')
+              : t('user.actions.update.label')}
+          </Button>
+        </div>
       </form>
     </Form>
   );
