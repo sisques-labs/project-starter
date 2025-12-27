@@ -6,7 +6,7 @@ export const useRoutes = () => {
   const pathname = usePathname();
 
   const routes = {
-    home: '/',
+    home: '/home',
 
     feature1: '/feature1',
     feature2: '/feature2',

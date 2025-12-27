@@ -50,6 +50,13 @@ export default function middleware(request: NextRequest) {
   const locale = localeMatch ? localeMatch[1] : routing.defaultLocale;
   const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
 
+  // Redirect root path to /home
+  if (pathWithoutLocale === '/') {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}/home`;
+    return NextResponse.redirect(url);
+  }
+
   // Check if accessing auth page or other public routes
   const isAuthPage = pathWithoutLocale === '/auth';
   const isPublic = isPublicRoute(pathWithoutLocale);
