@@ -1,9 +1,9 @@
-name: API Release
+name: Web Release
 
 on:
   push:
     paths:
-      - 'apps/api/**'
+      - 'apps/web/**'
     branches:
       - main
 
@@ -47,8 +47,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build API
-        run: pnpm build --filter=./apps/api...
+      - name: Build Web
+        run: pnpm build --filter=./apps/web...
 
       - name: Configure Git
         run: |
@@ -56,7 +56,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Run semantic-release
-        working-directory: ./apps/api
+        working-directory: ./apps/web
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm release
