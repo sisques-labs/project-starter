@@ -29,7 +29,7 @@ saas-boilerplate/
 
 Backend API built with **NestJS** implementing DDD, CQRS, and Event-Driven Architecture. Features GraphQL API with Apollo Server, PostgreSQL (via Prisma) for transactional data, and MongoDB for Event Store.
 
-Includes bounded contexts: Auth, User, Tenant, Billing, Event Store, and Health.
+Includes bounded contexts: Auth, User, Event Store, and Health.
 
 ### 🌐 Web App (`apps/web`)
 
@@ -269,7 +269,7 @@ The API is organized into **Bounded Contexts**, each representing a specific bus
 
 ## 🔐 Authentication and Authorization
 
-JWT-based authentication with multi-provider support (Local, Google, Apple). Role-based access control at user and tenant levels.
+JWT-based authentication with multi-provider support (Local, Google, Apple). Role-based access control at user level.
 
 ## 💳 Billing and Subscriptions
 
