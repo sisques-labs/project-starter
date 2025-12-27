@@ -18,7 +18,7 @@ A comprehensive module for managing saga instances in a distributed transaction 
 
 ## Overview
 
-The Saga Instance Module provides a complete solution for managing saga workflows in a multi-tenant SaaS application. It handles saga instance creation, updates, deletion, and status management.
+The Saga Instance Module provides a complete solution for managing saga workflows in distributed systems. It handles saga instance creation, updates, deletion, and status management.
 
 ### Features
 
@@ -77,7 +77,7 @@ saga-instance/
 │       └── saga-instance.primitives.ts
 ├── infrastructure/          # Infrastructure layer
 │   └── database/          # Database implementations
-│       ├── prisma/        # Prisma write repository
+│       ├── typeorm/       # TypeORM write repository
 │       └── mongodb/       # MongoDB read repository
 └── transport/              # Transport layer
     └── graphql/           # GraphQL resolvers and DTOs
@@ -210,7 +210,7 @@ Creates a new saga instance.
 
 1. Validates saga instance name
 2. Creates saga instance aggregate
-3. Saves to write repository (Prisma)
+3. Saves to write repository (TypeORM)
 4. Publishes `SagaInstanceCreatedEvent`
 
 **Business Rules:**
@@ -242,7 +242,7 @@ Updates an existing saga instance.
 
 1. Asserts saga instance exists
 2. Updates saga instance aggregate
-3. Saves to write repository (Prisma)
+3. Saves to write repository (TypeORM)
 4. Publishes `SagaInstanceUpdatedEvent`
 
 **Business Rules:**
@@ -271,7 +271,7 @@ Changes the status of a saga instance.
 
 1. Asserts saga instance exists
 2. Updates saga instance status using appropriate method
-3. Saves to write repository (Prisma)
+3. Saves to write repository (TypeORM)
 4. Publishes `SagaInstanceStatusChangedEvent`
 
 **Business Rules:**
@@ -300,7 +300,7 @@ Deletes a saga instance.
 
 1. Asserts saga instance exists
 2. Deletes saga instance aggregate
-3. Removes from write repository (Prisma)
+3. Removes from write repository (TypeORM)
 4. Publishes `SagaInstanceDeletedEvent`
 
 **Business Rules:**
@@ -399,11 +399,11 @@ Published when a saga instance status changes.
 
 The module uses a dual repository pattern:
 
-### Write Repository (Prisma)
+### Write Repository (TypeORM)
 
 - Used for command operations (create, update, delete)
 - Implements `SagaInstanceWriteRepository`
-- Uses Prisma ORM for database operations
+- Uses TypeORM for database operations
 - Stores data in PostgreSQL
 
 **Operations:**

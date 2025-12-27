@@ -1,6 +1,6 @@
 # Users Module
 
-A comprehensive module for managing users in a multi-tenant SaaS application. This module handles user lifecycle, authentication, roles, and status management. It follows Clean Architecture principles, implements CQRS pattern, and uses Domain-Driven Design.
+A comprehensive module for managing users in the application. This module handles user lifecycle, authentication, roles, and status management. It follows Clean Architecture principles, implements CQRS pattern, and uses Domain-Driven Design.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ A comprehensive module for managing users in a multi-tenant SaaS application. Th
 
 ## Overview
 
-The Users Module provides a complete solution for managing users in a multi-tenant SaaS application. It handles user creation, updates, deletion, role management, and status tracking.
+The Users Module provides a complete solution for managing users in the application. It handles user creation, updates, deletion, role management, and status tracking.
 
 ### Features
 
@@ -85,7 +85,7 @@ users/
 │       └── user.primitives.ts
 ├── infrastructure/         # Infrastructure layer
 │   └── database/          # Database repositories
-│       ├── prisma/        # Write repository (Prisma/PostgreSQL - Master DB)
+│       ├── typeorm/       # Write repository (TypeORM/PostgreSQL - Master DB)
 │       └── mongodb/       # Read repository (MongoDB)
 └── transport/             # Transport layer
     └── graphql/          # GraphQL resolvers and DTOs
@@ -100,7 +100,7 @@ users/
 
 - **Commands**: Write operations (create, update, delete) that modify state
 - **Queries**: Read operations (findById, findByCriteria) that query data
-- **Write Repository**: Prisma-based repository for write operations (PostgreSQL - Master database)
+- **Write Repository**: TypeORM-based repository for write operations (PostgreSQL - Master database)
 - **Read Repository**: MongoDB-based repository for read operations (optimized for queries)
 
 #### Event-Driven Architecture
@@ -113,12 +113,11 @@ The module publishes domain events for important state changes:
 
 Events are handled asynchronously to update read models and trigger side effects.
 
-#### Multi-Tenant Architecture
+#### Database Architecture
 
-- Users are stored in the master database (not tenant-specific)
-- This allows for cross-tenant user management
-- Users can belong to multiple tenants through tenant members
-- **Note:** User operations don't require `x-tenant-id` header as they operate on the master database
+- Users are stored in the master database
+- Centralized user management
+- Efficient user lookup and authentication
 
 ## Domain Model
 
@@ -176,7 +175,7 @@ Administrative access to the system.
 - Full system access
 - Can manage all users
 - Can create, update, and delete users
-- Can access all tenants
+- Full system access
 - Highest level of access
 
 ### USER
@@ -187,7 +186,7 @@ Standard user access.
 
 - Limited system access
 - Can only update own profile (via OwnerGuard)
-- Can access tenants they are members of
+- Standard user access
 - Cannot manage other users
 
 ## User Status
@@ -238,7 +237,7 @@ Creates a new user.
 
 1. Asserts username is unique (if provided)
 2. Creates user aggregate
-3. Saves aggregate to write repository (Prisma - Master database)
+3. Saves aggregate to write repository (TypeORM - Master database)
 4. Publishes `UserCreatedEvent`
 5. Returns user ID
 
@@ -427,11 +426,11 @@ Published when a user is deleted.
 
 The module uses two repositories following CQRS pattern:
 
-### Write Repository (Prisma)
+### Write Repository (TypeORM)
 
 **Interface:** `UserWriteRepository`
 
-**Implementation:** `UserPrismaRepository`
+**Implementation:** `UserTypeormRepository`
 
 **Database:** PostgreSQL (Master database)
 
@@ -444,8 +443,8 @@ The module uses two repositories following CQRS pattern:
 
 **Features:**
 
-- Stores users in master database (not tenant-specific)
-- Allows cross-tenant user management
+- Stores users in master database
+- Centralized user management
 - Indexed on `userName` for performance
 - Soft delete support
 
@@ -485,8 +484,6 @@ Every request to the users API must include:
    ```http
    Authorization: Bearer <jwt-token>
    ```
-
-**Note:** User operations don't require `x-tenant-id` header as they operate on the master database.
 
 ### Guards
 
@@ -830,48 +827,49 @@ This will show detailed logs for:
 
 ## Database Schema
 
-### Prisma Schema (Master Database)
+### TypeORM Schema (Master Database)
 
-```prisma
-enum UserRoleEnum {
-  ADMIN
-  USER
-}
+```typescript
+@Entity('users')
+export class UserTypeormEntity extends BaseTypeormEntity {
+  @Column({ type: 'varchar', nullable: true, unique: true })
+  userName: string | null;
 
-enum StatusEnum {
-  ACTIVE
-  INACTIVE
-  BLOCKED
-}
+  @Column({ type: 'varchar', nullable: true })
+  name: string | null;
 
-model User {
-  id        String       @id @default(uuid())
-  userName  String?      @unique
-  name      String?
-  lastName  String?
-  bio       String?
-  avatarUrl String?
-  role      UserRoleEnum
-  status    StatusEnum
+  @Column({ type: 'varchar', nullable: true })
+  lastName: string | null;
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  @Column({ type: 'varchar', nullable: true })
+  bio: string | null;
 
-  @@index([userName])
+  @Column({ type: 'varchar', nullable: true })
+  avatarUrl: string | null;
+
+  @Column({
+    type: 'enum',
+    enum: UserRoleEnum,
+  })
+  role: UserRoleEnum;
+
+  @Column({
+    type: 'enum',
+    enum: UserStatusEnum,
+  })
+  status: UserStatusEnum;
 }
 ```
 
-**Note:** Users are stored in the master database, not in tenant-specific databases. This allows for:
+**Note:** Users are stored in the master database. This allows for:
 
-- Cross-tenant user management
 - Centralized user administration
 - Efficient user lookup
 - Simplified user authentication
 
 ### MongoDB Schema (Read Database)
 
-The MongoDB collection stores view models with the same structure as the Prisma model, optimized for read operations.
+The MongoDB collection stores view models with the same structure as the TypeORM entity, optimized for read operations.
 
 ## Best Practices
 
@@ -885,22 +883,12 @@ The MongoDB collection stores view models with the same structure as the Prisma 
 
 ## Integration with Other Modules
 
-### Tenant Members Module
-
-- Links users to tenants through tenant members
-- Validates user existence before adding members
-
 ### Auth Context
 
 - Uses user information for authentication
 - Validates user status for login
 - Uses user roles for authorization
 
-### Tenant Context
-
-- Users can belong to multiple tenants
-- Tenant members reference users
-
 ## License
 
-This module is part of the SaaS Boilerplate project.
+This module is part of the Project Starter project.

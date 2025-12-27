@@ -1,129 +1,97 @@
 # Auth Module
 
-A comprehensive authentication and authorization module for a multi-tenant SaaS application. This module handles user registration, login, JWT token generation, password hashing, and provides guards for role-based and tenant-based access control. It follows Clean Architecture principles, implements CQRS pattern, and uses Domain-Driven Design.
+A comprehensive authentication and authorization module that provides secure user authentication, JWT token management, and role-based access control. This module follows Clean Architecture principles, implements CQRS (Command Query Responsibility Segregation) pattern, and uses Domain-Driven Design (DDD).
 
 ## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
+- [Features](#features)
 - [Domain Model](#domain-model)
-- [Authentication Providers](#authentication-providers)
 - [Commands](#commands)
 - [Queries](#queries)
 - [Events](#events)
 - [JWT Authentication](#jwt-authentication)
-- [Guards](#guards)
+- [Guards and Authorization](#guards-and-authorization)
 - [Repositories](#repositories)
 - [GraphQL API](#graphql-api)
-- [Examples](#examples)
+- [Usage Examples](#usage-examples)
+- [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 
 ## Overview
 
-The Auth Module provides a complete solution for authentication and authorization in a multi-tenant SaaS application. It handles user registration, login, JWT token management, and provides comprehensive guards for access control.
+The Auth Module is responsible for managing user authentication and authorization throughout the application. It handles user registration, login, password management, JWT token generation, and provides guards for protecting routes and resources.
 
-### Features
+### What This Module Does
 
-- ✅ User registration by email
-- ✅ User login by email with password verification
-- ✅ JWT token generation (access and refresh tokens)
-- ✅ Password hashing and verification (bcrypt)
-- ✅ Multiple authentication providers (LOCAL, GOOGLE, APPLE)
-- ✅ Email verification support
-- ✅ Two-factor authentication support
-- ✅ Last login tracking
-- ✅ GraphQL API for auth operations
-- ✅ Event-driven architecture
-- ✅ CQRS pattern with separate read/write repositories
-- ✅ Comprehensive guards (JwtAuthGuard, RolesGuard, OwnerGuard, TenantGuard, TenantRolesGuard)
-- ✅ Global module (exports guards and services for use across the application)
+- **User Registration**: Creates new user accounts with email and password
+- **User Login**: Authenticates users and generates JWT tokens
+- **Token Management**: Generates, verifies, and refreshes JWT access and refresh tokens
+- **Password Security**: Hashes passwords using bcrypt and verifies them securely
+- **Authorization**: Provides guards for role-based access control
+- **Multi-Provider Support**: Supports LOCAL, GOOGLE, and APPLE authentication providers
+- **Event-Driven**: Publishes domain events for authentication state changes
 
 ## Architecture
 
-The module is organized following Clean Architecture principles:
+The module is organized following Clean Architecture principles with clear separation of concerns:
 
 ```
 auth/
 ├── application/              # Application layer (CQRS)
-│   ├── commands/            # Command handlers
+│   ├── commands/            # Command handlers (write operations)
+│   │   ├── auth-create/
+│   │   ├── auth-delete/
 │   │   ├── auth-login-by-email/
-│   │   └── auth-register-by-email/
-│   ├── queries/             # Query handlers
+│   │   ├── auth-refresh-token/
+│   │   ├── auth-register-by-email/
+│   │   └── auth-update/
+│   ├── queries/             # Query handlers (read operations)
 │   │   └── find-auths-by-criteria/
-│   ├── event-handlers/      # Event handlers
+│   ├── event-handlers/      # Event handlers (async processing)
 │   │   ├── auth-created/
 │   │   ├── auth-logged-in-by-email/
 │   │   ├── auth-registered-by-email/
 │   │   └── auth-updated/
+│   ├── sagas/              # Saga orchestration
+│   │   └── auth-registration/
 │   ├── services/           # Application services
 │   │   ├── assert-auth-email-exists/
 │   │   ├── assert-auth-email-not-exists/
-│   │   ├── assert-auth-exsits/
-│   │   ├── assert-auth-view-model-exsits/
+│   │   ├── assert-auth-exists/
+│   │   ├── assert-auth-view-model-exists/
 │   │   ├── jwt-auth/
 │   │   └── password-hashing/
 │   └── exceptions/         # Application exceptions
-│       ├── auth-not-found/
-│       ├── auth-email-already-exists/
-│       ├── password-hashing-failed/
-│       └── password-verification-failed/
 ├── domain/                  # Domain layer
-│   ├── aggregate/          # Auth aggregate
-│   │   └── auth.aggregate.ts
+│   ├── aggregate/          # Auth aggregate (business logic)
 │   ├── repositories/       # Repository interfaces
-│   │   ├── auth-write.repository.ts
-│   │   └── auth-read.repository.ts
-│   ├── value-objects/      # Value objects
-│   │   ├── auth-email/
-│   │   ├── auth-password/
-│   │   ├── auth-provider/
-│   │   ├── auth-email-verified/
-│   │   ├── auth-last-login-at/
-│   │   └── auth-two-factor-enabled/
+│   ├── value-objects/      # Value objects (validation)
 │   ├── view-models/        # Read models
-│   │   └── auth.view-model.ts
 │   ├── factories/          # Domain factories
-│   │   ├── auth-aggregate.factory.ts
-│   │   └── auth-view-model.factory.ts
 │   ├── interfaces/         # Domain interfaces
-│   │   ├── jwt-payload.interface.ts
-│   │   └── token-pair.interface.ts
 │   ├── enums/             # Domain enums
-│   │   └── auth-provider.enum.ts
 │   └── primitives/        # Domain primitives
-│       └── auth.primitives.ts
 ├── infrastructure/         # Infrastructure layer
 │   ├── auth/              # Auth infrastructure
-│   │   └── jwt-auth.guard.ts
 │   ├── database/          # Database repositories
-│   │   ├── prisma/        # Write repository (Prisma/PostgreSQL - Master DB)
+│   │   ├── typeorm/       # Write repository (TypeORM/PostgreSQL)
 │   │   └── mongodb/       # Read repository (MongoDB)
 │   ├── decorators/        # Decorators
-│   │   ├── public/
-│   │   ├── current-user/
-│   │   ├── roles/
-│   │   └── tenant-roles/
-│   ├── guards/            # Guards
-│   │   ├── owner/
-│   │   ├── roles/
-│   │   ├── tenant/
-│   │   └── tenant-roles/
+│   ├── guards/            # Authorization guards
 │   └── strategies/        # Passport strategies
-│       └── jwt/
 └── transport/             # Transport layer
     └── graphql/          # GraphQL resolvers and DTOs
-        ├── resolvers/
-        ├── dtos/
-        └── mappers/
 ```
 
 ### Architecture Patterns
 
 #### CQRS (Command Query Responsibility Segregation)
 
-- **Commands**: Write operations (login, register) that modify state
-- **Queries**: Read operations (findByCriteria) that query data
-- **Write Repository**: Prisma-based repository for write operations (PostgreSQL - Master database)
+- **Commands**: Write operations that modify state (create, update, delete, login, register)
+- **Queries**: Read operations that only query data (findByCriteria)
+- **Write Repository**: TypeORM-based repository for write operations (PostgreSQL)
 - **Read Repository**: MongoDB-based repository for read operations (optimized for queries)
 
 #### Event-Driven Architecture
@@ -136,7 +104,7 @@ The module publishes domain events for important state changes:
 - `AuthUpdatedEvent` - Published when auth is updated
 - `AuthUpdatedLastLoginAtEvent` - Published when last login timestamp is updated
 
-Events are handled asynchronously to update read models and trigger side effects.
+Events are handled asynchronously by event handlers to update read models in MongoDB.
 
 #### Global Module
 
@@ -146,12 +114,23 @@ The Auth Module is marked as `@Global()`, which means:
 - Other modules can use the guards without importing AuthModule
 - JWT strategy and guards are automatically available
 
-#### Multi-Tenant Architecture
+## Features
 
-- Auth records are stored in the master database (not tenant-specific)
-- JWT tokens include `tenantIds` array for multi-tenant access
-- TenantGuard validates tenant access using `x-tenant-id` header
-- TenantRolesGuard validates tenant member roles
+- ✅ User registration by email with password
+- ✅ User login by email with password verification
+- ✅ JWT token generation (access and refresh tokens)
+- ✅ Token refresh mechanism
+- ✅ Password hashing and verification (bcrypt)
+- ✅ Multiple authentication providers (LOCAL, GOOGLE, APPLE)
+- ✅ Email verification support
+- ✅ Two-factor authentication support
+- ✅ Last login tracking
+- ✅ GraphQL API for auth operations
+- ✅ Event-driven architecture with async event processing
+- ✅ CQRS pattern with separate read/write repositories
+- ✅ Comprehensive guards (JwtAuthGuard, RolesGuard, OwnerGuard)
+- ✅ Saga orchestration for registration flow
+- ✅ Global module (exports guards and services for use across the application)
 
 ## Domain Model
 
@@ -176,11 +155,12 @@ class AuthAggregate {
 }
 ```
 
-**Methods:**
+**Key Methods:**
 
 - `update(props, generateEvent)`: Updates auth properties
 - `updateLastLoginAt(lastLoginAt, generateEvent)`: Updates last login timestamp
 - `delete(generateEvent)`: Marks auth as deleted
+- `registerByEmail(generateEvent)`: Marks auth as registered
 - `toPrimitives()`: Converts aggregate to primitive data
 
 ### Value Objects
@@ -188,51 +168,17 @@ class AuthAggregate {
 The module uses value objects to encapsulate and validate domain concepts:
 
 - **AuthEmailValueObject**: Validates email format
-- **AuthPasswordValueObject**: Validates password (hashed)
-- **AuthProviderValueObject**: Validates authentication provider enum
+- **AuthPasswordValueObject**: Validates and stores hashed password
+- **AuthProviderValueObject**: Validates authentication provider enum (LOCAL, GOOGLE, APPLE)
 - **AuthEmailVerifiedValueObject**: Boolean for email verification status
 - **AuthLastLoginAtValueObject**: Timestamp for last login
 - **AuthTwoFactorEnabledValueObject**: Boolean for 2FA status
-- **AuthPhoneNumberValueObject**: Validates phone number
-- **AuthProviderIdValueObject**: Provider-specific ID (e.g., Google ID)
+- **AuthPhoneNumberValueObject**: Validates phone number format
+- **AuthProviderIdValueObject**: Provider-specific ID (e.g., Google ID, Apple ID)
 
 ### View Model
 
-The `AuthViewModel` is optimized for read operations and stored in MongoDB for fast querying. View models are automatically synchronized via event handlers.
-
-## Authentication Providers
-
-The module supports multiple authentication providers:
-
-### LOCAL
-
-Local email/password authentication.
-
-**Characteristics:**
-
-- Email and password required
-- Password is hashed using bcrypt
-- Default provider for email registration
-
-### GOOGLE
-
-Google OAuth authentication.
-
-**Characteristics:**
-
-- Uses Google OAuth
-- Provider ID is Google user ID
-- Email may be provided by Google
-
-### APPLE
-
-Apple Sign-In authentication.
-
-**Characteristics:**
-
-- Uses Apple Sign-In
-- Provider ID is Apple user ID
-- Email may be provided by Apple
+The `AuthViewModel` is optimized for read operations and stored in MongoDB for fast querying. View models are automatically synchronized via event handlers when domain events are published.
 
 ## Commands
 
@@ -246,13 +192,15 @@ Registers a new user with email and password.
 
 **Process:**
 
-1. Asserts email does not already exist
-2. Creates a new user (via UserCreateCommand)
-3. Hashes the password using bcrypt
-4. Creates auth aggregate with LOCAL provider
-5. Saves aggregate to write repository (Prisma - Master database)
-6. Publishes `AuthCreatedEvent` and `AuthRegisteredByEmailEvent`
-7. Returns auth ID
+1. Validates email does not already exist
+2. Creates `AuthRegistrationRequestedEvent`
+3. Triggers `AuthRegistrationSaga` to orchestrate the registration flow:
+   - Creates a new user (via `UserCreateCommand`)
+   - Hashes the password using bcrypt
+   - Creates auth aggregate with LOCAL provider
+   - Saves aggregate to write repository (TypeORM - PostgreSQL)
+4. Publishes `AuthCreatedEvent` and `AuthRegisteredByEmailEvent`
+5. Returns auth ID
 
 **Input:**
 
@@ -268,15 +216,10 @@ Registers a new user with email and password.
 **Business Rules:**
 
 - Email must be unique
-- Password is hashed using bcrypt
-- User is automatically created
+- Password is hashed using bcrypt before storage
+- User is automatically created during registration
 - Email is not verified by default
 - Two-factor authentication is disabled by default
-
-**Events Published:**
-
-- `AuthCreatedEvent` - Published when auth is created
-- `AuthRegisteredByEmailEvent` - Published when registration is complete
 
 ### AuthLoginByEmailCommand
 
@@ -290,10 +233,9 @@ Logs in a user with email and password.
 2. Verifies password using bcrypt
 3. Finds user by userId
 4. Updates last login timestamp
-5. Gets tenant members for the user
-6. Generates JWT token pair (access + refresh)
-7. Publishes `AuthLoggedInByEmailEvent`
-8. Returns token pair
+5. Generates JWT token pair (access + refresh)
+6. Publishes `AuthLoggedInByEmailEvent` and `AuthUpdatedLastLoginAtEvent`
+7. Returns token pair
 
 **Input:**
 
@@ -311,12 +253,48 @@ Logs in a user with email and password.
 - Email must exist
 - Password must match
 - User must exist
-- JWT tokens include user role and tenant IDs
+- JWT tokens include user role
 
-**Events Published:**
+### AuthRefreshTokenCommand
 
-- `AuthLoggedInByEmailEvent` - Published when login is successful
-- `AuthUpdatedLastLoginAtEvent` - Published when last login is updated
+Refreshes an access token using a refresh token.
+
+**Handler:** `AuthRefreshTokenCommandHandler`
+
+**Process:**
+
+1. Verifies refresh token signature and expiration
+2. Extracts payload from refresh token
+3. Generates new access token with same payload
+4. Returns new access token
+
+**Input:**
+
+```typescript
+{
+  refreshToken: string; // Required
+}
+```
+
+**Output:** `string` (new access token)
+
+### AuthCreateCommand
+
+Creates a new auth record (used internally by saga).
+
+**Handler:** `AuthCreateCommandHandler`
+
+### AuthUpdateCommand
+
+Updates an existing auth record.
+
+**Handler:** `AuthUpdateCommandHandler`
+
+### AuthDeleteCommand
+
+Deletes an auth record (soft delete).
+
+**Handler:** `AuthDeleteCommandHandler`
 
 ## Queries
 
@@ -333,18 +311,23 @@ Finds auth records by criteria with pagination. **Requires ADMIN role.**
 ```typescript
 {
   criteria: Criteria {
-    filters?: Filter[]
-    sorts?: Sort[]
-    pagination?: Pagination
+    filters?: Filter[];    // Optional filters
+    sorts?: Sort[];         // Optional sorting
+    pagination?: Pagination; // Optional pagination
   }
 }
 ```
 
 **Output:** `PaginatedResult<AuthViewModel>`
 
+**Example Filters:**
+
+- Filter by provider: `{ field: "provider", operator: "EQUALS", value: "LOCAL" }`
+- Filter by email verified: `{ field: "emailVerified", operator: "EQUALS", value: true }`
+
 ## Events
 
-The module publishes domain events for important state changes:
+The module publishes domain events for important state changes. These events are handled asynchronously by event handlers:
 
 ### AuthCreatedEvent
 
@@ -392,7 +375,7 @@ Published when auth is updated.
 
 ## JWT Authentication
 
-The module provides comprehensive JWT authentication support.
+The module provides comprehensive JWT authentication support with access and refresh tokens.
 
 ### JWT Payload
 
@@ -405,7 +388,6 @@ interface IJwtPayload {
   email?: string; // User email
   username?: string; // Username
   role: string; // User role (ADMIN, USER)
-  tenantIds: string[]; // Array of tenant IDs the user belongs to
 }
 ```
 
@@ -422,11 +404,15 @@ interface ITokenPair {
 
 ### JWT Service
 
-The `JwtAuthService` provides:
+The `JwtAuthService` provides the following methods:
 
-- `generateTokenPair(payload)`: Generates access and refresh tokens
-- `verifyToken(token)`: Verifies and decodes a token
+- `generateTokenPair(payload)`: Generates both access and refresh tokens
+- `generateAccessToken(payload)`: Generates access token only
+- `generateRefreshToken(payload)`: Generates refresh token only
+- `verifyAccessToken(token)`: Verifies and decodes an access token
+- `verifyRefreshToken(token)`: Verifies and decodes a refresh token
 - `refreshToken(refreshToken)`: Generates new access token from refresh token
+- `decodeToken(token)`: Decodes token without verification
 
 ### JWT Strategy
 
@@ -435,18 +421,11 @@ The `JwtStrategy` (Passport strategy) validates JWT tokens:
 1. Extracts token from `Authorization: Bearer <token>` header
 2. Verifies token signature and expiration
 3. Loads auth aggregate from database
-4. Attaches user data to request (role, userId, tenantIds)
+4. Attaches user data to request (role, userId, email)
 
-### Environment Variables
+The validated user is attached to the request object and can be accessed via `@CurrentUser()` decorator.
 
-```env
-JWT_ACCESS_SECRET=your-access-secret-key
-JWT_REFRESH_SECRET=your-refresh-secret-key
-JWT_ACCESS_EXPIRATION=15m
-JWT_REFRESH_EXPIRATION=7d
-```
-
-## Guards
+## Guards and Authorization
 
 The module provides comprehensive guards for access control:
 
@@ -458,14 +437,16 @@ Validates JWT token and extracts user information.
 
 ```typescript
 @UseGuards(JwtAuthGuard)
+@Query(() => UserResponseDto)
+async getUser() { ... }
 ```
 
 **Features:**
 
-- Validates JWT token from `Authorization` header
+- Validates JWT token from `Authorization: Bearer <token>` header
 - Extracts user data from token
 - Attaches user to request object
-- Throws `UnauthorizedException` if token is invalid
+- Throws `UnauthorizedException` if token is invalid or expired
 
 ### RolesGuard
 
@@ -476,14 +457,16 @@ Enforces role-based access control.
 ```typescript
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN)
+@Query(() => UsersResponseDto)
+async getAllUsers() { ... }
 ```
 
 **Features:**
 
 - Validates user has required role
-- Supports multiple roles (OR logic)
+- Supports multiple roles (OR logic): `@Roles(UserRoleEnum.ADMIN, UserRoleEnum.MODERATOR)`
 - Throws `ForbiddenException` if role doesn't match
-- Admins bypass role checks
+- Must be used with `JwtAuthGuard`
 
 ### OwnerGuard
 
@@ -493,6 +476,10 @@ Ensures users can only access their own resources.
 
 ```typescript
 @UseGuards(JwtAuthGuard, OwnerGuard)
+@Mutation(() => MutationResponseDto)
+async updateUser(@Args('input') input: UpdateUserRequestDto) {
+  // User can only update their own profile
+}
 ```
 
 **Features:**
@@ -502,54 +489,46 @@ Ensures users can only access their own resources.
 - Throws `ForbiddenException` if user doesn't own resource
 - Extracts resource ID from GraphQL args (`input.id`)
 
-### TenantGuard
+### Public Decorator
 
-Validates tenant access using `x-tenant-id` header.
-
-**Usage:**
-
-```typescript
-@UseGuards(JwtAuthGuard, TenantGuard)
-```
-
-**Features:**
-
-- Validates `x-tenant-id` header is present
-- Checks if tenant ID is in user's `tenantIds` array
-- Admins can access any tenant
-- Throws `ForbiddenException` if tenant access is denied
-- **Required Header:** `x-tenant-id: <tenant-uuid>`
-
-### TenantRolesGuard
-
-Enforces tenant member role-based access control.
+Marks endpoints as public (no authentication required).
 
 **Usage:**
 
 ```typescript
-@UseGuards(JwtAuthGuard, TenantGuard, TenantRolesGuard)
-@TenantRoles(TenantMemberRoleEnum.OWNER, TenantMemberRoleEnum.ADMIN)
+@Public()
+@Mutation(() => LoginResponseDto)
+async loginByEmail(@Args('input') input: AuthLoginByEmailRequestDto) {
+  // This endpoint is public
+}
 ```
 
-**Features:**
+### CurrentUser Decorator
 
-- Requires `x-tenant-id` header
-- Queries tenant member to get user's role in tenant
-- Validates user has required tenant role
-- Throws `ForbiddenException` if role doesn't match
-- Supports multiple roles (OR logic)
+Extracts the authenticated user from the request.
+
+**Usage:**
+
+```typescript
+@UseGuards(JwtAuthGuard)
+@Query(() => UserResponseDto)
+async getCurrentUser(@CurrentUser() user: any) {
+  // user contains: id, userId, email, role, etc.
+  return user;
+}
+```
 
 ## Repositories
 
 The module uses two repositories following CQRS pattern:
 
-### Write Repository (Prisma)
+### Write Repository (TypeORM)
 
 **Interface:** `AuthWriteRepository`
 
-**Implementation:** `AuthPrismaRepository`
+**Implementation:** `AuthTypeormRepository`
 
-**Database:** PostgreSQL (Master database)
+**Database:** PostgreSQL
 
 **Operations:**
 
@@ -561,9 +540,10 @@ The module uses two repositories following CQRS pattern:
 
 **Features:**
 
-- Stores auth records in master database (not tenant-specific)
-- Indexed on `email` for performance
+- Stores auth records in PostgreSQL
+- Indexed on `email` and `userId` for performance
 - Soft delete support
+- Uses TypeORM entities
 
 ### Read Repository (MongoDB)
 
@@ -584,6 +564,7 @@ The module uses two repositories following CQRS pattern:
 
 - Optimized for read operations
 - Supports complex queries with filters, sorts, and pagination
+- Automatically synchronized via event handlers
 
 ## GraphQL API
 
@@ -595,6 +576,7 @@ The module exposes a GraphQL API through two resolvers:
 
 - `loginByEmail` - Public (no authentication required)
 - `registerByEmail` - Public (no authentication required)
+- `refreshToken` - Public (no authentication required)
 
 **Protected Endpoints:**
 
@@ -603,8 +585,6 @@ The module exposes a GraphQL API through two resolvers:
 ### AuthMutationsResolver
 
 Handles write operations (mutations). **Marked as @Public()** - login and register don't require authentication.
-
-**Mutations:**
 
 #### loginByEmail
 
@@ -642,14 +622,6 @@ mutation LoginByEmail($input: AuthLoginByEmailRequestDto!) {
   }
 }
 ```
-
-**Process:**
-
-1. Validates email and password
-2. Verifies password using bcrypt
-3. Updates last login timestamp
-4. Generates JWT token pair
-5. Returns tokens
 
 #### registerByEmail
 
@@ -690,19 +662,31 @@ mutation RegisterByEmail($input: AuthRegisterByEmailRequestDto!) {
 }
 ```
 
-**Process:**
+#### refreshToken
 
-1. Validates email is unique
-2. Creates user
-3. Hashes password
-4. Creates auth record
-5. Returns auth ID
+Refreshes an access token using a refresh token.
+
+```graphql
+mutation RefreshToken($input: AuthRefreshTokenRequestDto!) {
+  refreshToken(input: $input) {
+    accessToken
+  }
+}
+```
+
+**Variables:**
+
+```json
+{
+  "input": {
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
 
 ### AuthQueryResolver
 
 Handles read operations (queries). **Requires ADMIN role.**
-
-**Queries:**
 
 #### findAuthsByCriteria
 
@@ -722,6 +706,7 @@ query FindAuthsByCriteria($input: AuthFindByCriteriaRequestDto) {
     total
     page
     limit
+    totalPages
   }
 }
 ```
@@ -746,7 +731,7 @@ query FindAuthsByCriteria($input: AuthFindByCriteriaRequestDto) {
 }
 ```
 
-## Examples
+## Usage Examples
 
 ### Complete Authentication Flow
 
@@ -772,74 +757,152 @@ mutation {
 
 # 3. Use access token in subsequent requests
 # Header: Authorization: Bearer <accessToken>
-# Header: x-tenant-id: <tenant-uuid> (if required)
+
+# 4. Refresh token when access token expires
+mutation {
+  refreshToken(input: { refreshToken: "<refreshToken>" }) {
+    accessToken
+  }
+}
 ```
 
 ### Using Guards in Other Modules
 
 ```typescript
+import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
+import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
+import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
+import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { Public } from '@/generic/auth/infrastructure/decorators/public/public.decorator';
+import { CurrentUser } from '@/generic/auth/infrastructure/decorators/current-user/current-user.decorator';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
+
 // Require authentication
 @UseGuards(JwtAuthGuard)
 @Query(() => UserResponseDto)
-async getUser() { ... }
+async getUser(@CurrentUser() user: any) {
+  return user;
+}
 
 // Require ADMIN role
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRoleEnum.ADMIN)
 @Query(() => UsersResponseDto)
-async getAllUsers() { ... }
+async getAllUsers() {
+  // Only admins can access
+}
 
-// Require tenant context
-@UseGuards(JwtAuthGuard, TenantGuard)
-@Query(() => TenantDataResponseDto)
-async getTenantData() { ... }
-
-// Require tenant role
-@UseGuards(JwtAuthGuard, TenantGuard, TenantRolesGuard)
-@TenantRoles(TenantMemberRoleEnum.OWNER, TenantMemberRoleEnum.ADMIN)
+// Require ownership
+@UseGuards(JwtAuthGuard, OwnerGuard)
 @Mutation(() => MutationResponseDto)
-async updateTenantSettings() { ... }
+async updateUser(@Args('input') input: UpdateUserRequestDto) {
+  // User can only update their own profile
+}
 
 // Public endpoint (no authentication)
 @Public()
 @Query(() => PublicDataResponseDto)
-async getPublicData() { ... }
+async getPublicData() {
+  // No authentication required
+}
 ```
+
+### Using JWT Service Programmatically
+
+```typescript
+import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
+
+@Injectable()
+export class MyService {
+  constructor(private readonly jwtAuthService: JwtAuthService) {}
+
+  async generateTokens(userId: string, email: string, role: string) {
+    const tokens = this.jwtAuthService.generateTokenPair({
+      id: 'auth-id',
+      userId,
+      email,
+      role,
+    });
+    return tokens;
+  }
+
+  async verifyToken(token: string) {
+    try {
+      const payload = this.jwtAuthService.verifyAccessToken(token);
+      return payload;
+    } catch (error) {
+      // Token is invalid or expired
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
+}
+```
+
+## Configuration
+
+### Environment Variables
+
+```env
+# JWT Configuration
+JWT_ACCESS_SECRET=your-access-secret-key
+JWT_REFRESH_SECRET=your-refresh-secret-key
+JWT_ACCESS_EXPIRATION=15m
+JWT_REFRESH_EXPIRATION=7d
+
+# Password Hashing (optional, defaults to 10)
+BCRYPT_SALT_ROUNDS=10
+
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/project_db
+MONGODB_URI=mongodb://localhost:27017/project_event_store
+```
+
+### Module Registration
+
+The Auth Module is automatically registered as a global module in the application. It exports:
+
+- Guards: `JwtAuthGuard`, `RolesGuard`, `OwnerGuard`
+- Services: `JwtAuthService`, `PasswordHashingService`, and assertion services
+- Decorators: `@Public()`, `@Roles()`, `@CurrentUser()`
+
+These can be used in any module without importing `AuthModule`.
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Invalid Credentials:**
-   - Solution: Verify email and password are correct
+1. **Invalid Credentials**
+   - **Solution**: Verify email and password are correct
    - Check if user exists
    - Verify password hash matches
+   - Error: `UnauthorizedException: Invalid credentials`
 
-2. **Email Already Exists:**
-   - Solution: Email must be unique
+2. **Email Already Exists**
+   - **Solution**: Email must be unique
    - Use a different email or login instead
    - Error: `AuthEmailAlreadyExistsException`
 
-3. **JWT Token Invalid:**
-   - Solution: Verify token is not expired
+3. **JWT Token Invalid or Expired**
+   - **Solution**: Verify token is not expired
    - Check token signature matches secret
    - Ensure token is in `Authorization: Bearer <token>` format
+   - Use refresh token to get new access token
+   - Error: `UnauthorizedException: Invalid access token`
 
-4. **Tenant Access Denied:**
-   - Solution: Ensure `x-tenant-id` header is present
-   - Verify tenant ID is in user's `tenantIds` array
-   - Check user is a member of the tenant
-   - Error: `"Tenant ID is required. Please provide x-tenant-id header."`
+4. **Insufficient Permissions**
+   - **Solution**: Check user has required role
+   - Verify user role in JWT payload
+   - Error: `ForbiddenException: Insufficient permissions`
 
-5. **Insufficient Permissions:**
-   - Solution: Check user has required role
-   - Verify tenant member role if using TenantRolesGuard
-   - Error: `"Insufficient permissions"` or `"Insufficient tenant permissions"`
-
-6. **User Not Found:**
-   - Solution: Verify auth record exists
+5. **User Not Found**
+   - **Solution**: Verify auth record exists
    - Check if user was soft deleted
    - Error: `AuthNotFoundException`
+
+6. **Password Verification Failed**
+   - **Solution**: Verify password is correct
+   - Check if password was hashed correctly
+   - Error: `PasswordVerificationFailedException`
 
 ### Debugging
 
@@ -857,95 +920,130 @@ This will show detailed logs for:
 - Password hashing and verification
 - Repository operations
 - Event handling
+- Saga orchestration
 
-## Database Schema
+### Database Issues
 
-### Prisma Schema (Master Database)
+**TypeORM (Write Repository):**
 
-```prisma
-enum AuthProviderEnum {
-  LOCAL
-  GOOGLE
-  APPLE
-}
+- Ensure PostgreSQL is running
+- Check database connection string
+- Verify migrations are applied
+- Check entity mappings
 
-model Auth {
-  id               String           @id @default(uuid())
-  provider         AuthProviderEnum
-  providerId       String?
-  email            String?          @unique
-  phoneNumber      String?
-  password         String?
-  emailVerified    Boolean          @default(false)
-  twoFactorEnabled Boolean          @default(false)
-  lastLoginAt      DateTime?
+**MongoDB (Read Repository):**
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  @@index([email])
-  @@index([userId])
-}
-```
-
-**Note:** Auth records are stored in the master database, not in tenant-specific databases. This allows for:
-
-- Centralized authentication
-- Cross-tenant user management
-- Efficient auth lookup
-- Simplified authentication flow
-
-### MongoDB Schema (Read Database)
-
-The MongoDB collection stores view models with the same structure as the Prisma model, optimized for read operations.
-
-## Best Practices
-
-1. **Password Security** - Always hash passwords using bcrypt before storing
-2. **Token Expiration** - Use short-lived access tokens (15m) and long-lived refresh tokens (7d)
-3. **Token Storage** - Store tokens securely (httpOnly cookies or secure storage)
-4. **Tenant Context** - Always include `x-tenant-id` header for tenant-specific operations
-5. **Role Management** - Use appropriate guards for different access levels
-6. **Public Endpoints** - Mark public endpoints with `@Public()` decorator
-7. **Error Handling** - Provide clear error messages without exposing sensitive information
+- Ensure MongoDB is running
+- Check MongoDB connection string
+- Verify collections are created
+- Check event handlers are processing events
 
 ## Integration with Other Modules
 
 ### User Context
 
-- Creates user automatically during registration
+- Creates user automatically during registration via saga
 - Links auth to user via `userId`
 - Uses user role in JWT payload
+- Queries user data during login
 
-### Tenant Members Module
+### Saga Context
 
-- Queries tenant members to get user's tenant IDs
-- Includes tenant IDs in JWT payload
-- Validates tenant membership for access control
+- Uses saga orchestration for registration flow
+- Tracks registration steps and compensations
+- Provides audit trail for registration process
 
-### Other Modules
+### Shared Module
 
-- Guards are exported globally and can be used in any module
-- JWT strategy is available application-wide
-- Services can be injected where needed
+- Uses shared value objects and utilities
+- Uses shared domain events infrastructure
+- Uses shared GraphQL DTOs and mappers
 
-## Environment Variables
+## Best Practices
 
-```env
-# JWT Configuration
-JWT_ACCESS_SECRET=your-access-secret-key
-JWT_REFRESH_SECRET=your-refresh-secret-key
-JWT_ACCESS_EXPIRATION=15m
-JWT_REFRESH_EXPIRATION=7d
+1. **Password Security**
+   - Always hash passwords using bcrypt before storing
+   - Never store plain text passwords
+   - Use appropriate salt rounds (default: 10)
 
-# Password Hashing
-BCRYPT_SALT_ROUNDS=10
+2. **Token Management**
+   - Use short-lived access tokens (15m recommended)
+   - Use long-lived refresh tokens (7d recommended)
+   - Store tokens securely (httpOnly cookies or secure storage)
+   - Implement token rotation for refresh tokens
+
+3. **Authorization**
+   - Use appropriate guards for different access levels
+   - Always use `JwtAuthGuard` before other guards
+   - Mark public endpoints with `@Public()` decorator
+   - Use role-based access control for admin operations
+
+4. **Error Handling**
+   - Provide clear error messages without exposing sensitive information
+   - Don't reveal if email exists during login attempts
+   - Log authentication failures for security monitoring
+
+5. **Event Handling**
+   - Event handlers update read models asynchronously
+   - Don't rely on read models for immediate consistency
+   - Use write repository for critical operations
+
+6. **Testing**
+   - Mock JWT tokens in tests
+   - Test guards independently
+   - Test password hashing and verification
+   - Test saga compensation flows
+
+## Database Schema
+
+### TypeORM Entity (PostgreSQL)
+
+```typescript
+@Entity('auths')
+export class AuthTypeormEntity extends BaseTypeormEntity {
+  @Column({ type: 'varchar', nullable: true, unique: true })
+  email: string | null;
+
+  @Column({ type: 'varchar', nullable: true })
+  phoneNumber: string | null;
+
+  @Column({ type: 'varchar', nullable: true })
+  password: string | null;
+
+  @Column({ type: 'boolean', default: false })
+  emailVerified: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  twoFactorEnabled: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  lastLoginAt: Date | null;
+
+  @Column({ type: 'enum', enum: AuthProviderEnum })
+  provider: AuthProviderEnum;
+
+  @Column({ type: 'varchar', nullable: true })
+  providerId: string | null;
+
+  @Column({ type: 'uuid' })
+  userId: string;
+
+  @Index(['email'])
+  @Index(['userId'])
+}
 ```
+
+**Note:** Auth records are stored in PostgreSQL. This allows for:
+
+- Centralized authentication
+- Efficient auth lookup
+- Transactional consistency
+- Foreign key relationships with users
+
+### MongoDB Collection (Read Database)
+
+The MongoDB collection stores view models with the same structure, optimized for read operations and complex queries.
 
 ## License
 
-This module is part of the SaaS Boilerplate project.
+This module is part of the Project Starter project.

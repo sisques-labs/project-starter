@@ -21,7 +21,7 @@ The Saga Context implements the Saga orchestration pattern, which is essential f
 - ✅ Event-driven architecture
 - ✅ CQRS pattern with separate read/write repositories
 - ✅ GraphQL API for all operations
-- ✅ Support for both Prisma (write) and MongoDB (read) repositories
+- ✅ Support for both TypeORM (write) and MongoDB (read) repositories
 
 ## Architecture
 
@@ -54,7 +54,7 @@ module/
 │   └── primitives/   # Primitive types
 ├── infrastructure/   # Infrastructure layer
 │   └── database/     # Database implementations
-│       ├── prisma/   # Prisma write repository
+│       ├── typeorm/  # TypeORM write repository
 │       └── mongodb/  # MongoDB read repository
 └── transport/        # Transport layer
     └── graphql/      # GraphQL resolvers and DTOs
@@ -187,7 +187,7 @@ These events are automatically handled to maintain read models and create logs.
 
 The Saga Context uses a dual repository pattern:
 
-- **Write Repository (Prisma)**: Used for command operations, stores data in PostgreSQL
+- **Write Repository (TypeORM)**: Used for command operations, stores data in PostgreSQL
 - **Read Repository (MongoDB)**: Used for query operations, optimized for read performance
 
 ## Integration
