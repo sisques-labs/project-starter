@@ -1,9 +1,7 @@
 import { AppResolver } from '@/app.resolver';
 import { AuthContextModule } from '@/auth-context/auth-context.module';
-import { EventContextModule } from '@/event-store-context/event-store-context.module';
-import { FeaturesModule } from '@/features/features.module';
+import { CoreModule } from '@/core/core.module';
 import { HealthContextModule } from '@/health-context/health-context.module';
-import { LLMContextModule } from '@/llm-context/llm-context.module';
 import { LoggingContextModule } from '@/logging-context/logging-context.module';
 import { SagaContextModule } from '@/saga-context/saga-context.module';
 import { SharedModule } from '@/shared/shared.module';
@@ -18,15 +16,13 @@ import { join } from 'path';
 
 const CONTEXT_MODULES = [
   LoggingContextModule,
-  EventContextModule,
   AuthContextModule,
   UserContextModule,
   HealthContextModule,
-  LLMContextModule,
   SagaContextModule,
 ];
 
-const MODULES = [FeaturesModule, SharedModule];
+const MODULES = [CoreModule, SharedModule];
 
 @Module({
   imports: [

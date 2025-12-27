@@ -21,7 +21,7 @@ export class SagaStepViewModelFactory
   private readonly logger = new Logger(SagaStepViewModelFactory.name);
 
   /**
-   * Creates a new tenant view model from a DTO.
+   * Creates a new saga step view model from a DTO.
    * @param data - The data to create the view model from.
    * @returns The created view model.
    */

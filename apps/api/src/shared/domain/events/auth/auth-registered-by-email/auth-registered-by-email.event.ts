@@ -3,7 +3,7 @@ import { BaseEvent } from '@/shared/domain/events/base-event.interface';
 import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 /**
- * Auth registered by email event
+ * Auth registered by email   event
  *
  * This event extends BaseEvent with IAuthEventData, which includes IEventDataWithTenantContext.
  * This means the event can optionally include tenantId and tenantName for saga orchestration.

@@ -53,7 +53,6 @@ export class AuthMutationsResolver {
       new AuthRegisterByEmailCommand({
         email: input.email,
         password: input.password,
-        tenantName: input.tenantName,
       }),
     );
 

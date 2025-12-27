@@ -49,13 +49,11 @@ describe('JwtStrategy', () => {
       const authId = '123e4567-e89b-12d3-a456-426614174000';
       const userId = '123e4567-e89b-12d3-a456-426614174001';
 
-      const tenantIds = ['tenant-1', 'tenant-2'];
       const payload: IJwtPayload = {
         id: authId,
         userId: userId,
         email: 'test@example.com',
         role: UserRoleEnum.ADMIN,
-        tenantIds: tenantIds,
       };
 
       const mockAuth = new AuthAggregate(
@@ -84,7 +82,6 @@ describe('JwtStrategy', () => {
         ...mockAuth,
         role: UserRoleEnum.ADMIN,
         userId: userId,
-        tenantIds: tenantIds,
       });
       expect(mockAuthWriteRepository.findById).toHaveBeenCalledWith(authId);
       expect(mockAuthWriteRepository.findById).toHaveBeenCalledTimes(1);
@@ -96,7 +93,6 @@ describe('JwtStrategy', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: UserRoleEnum.USER,
-        tenantIds: [],
       };
 
       mockAuthWriteRepository.findById.mockResolvedValue(null);

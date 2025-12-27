@@ -7,9 +7,6 @@ import { SagaInstanceChangeStatusCommand } from '@/saga-context/saga-instance/ap
 import { SagaInstanceCreateCommand } from '@/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command';
 import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event';
 import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
-import { TenantMemberAddCommand } from '@/tenant-context/tenant-members/application/commands/tenant-member-add/tenant-member-add.command';
-import { TenantCreateCommand } from '@/tenant-context/tenants/application/commands/tenant-create/tenant-create.command';
-import { TenantDeleteCommand } from '@/tenant-context/tenants/application/commands/tenant-delete/tenant-delete.command';
 import { UserDeleteCommand } from '@/user-context/users/application/commands/delete-user/delete-user.command';
 import { UserCreateCommand } from '@/user-context/users/application/commands/user-create/user-create.command';
 import { CommandBus } from '@nestjs/cqrs';
@@ -20,12 +17,10 @@ describe('AuthRegistrationSaga', () => {
 
   const authId = '123e4567-e89b-12d3-a456-426614174000';
   const userId = '123e4567-e89b-12d3-a456-426614174001';
-  const tenantId = '223e4567-e89b-12d3-a456-426614174000';
-  const tenantMemberId = '323e4567-e89b-12d3-a456-426614174000';
   const sagaInstanceId = '423e4567-e89b-12d3-a456-426614174000';
   const sagaStepId = '523e4567-e89b-12d3-a456-426614174000';
 
-  const createEvent = (tenantName?: string): AuthRegistrationRequestedEvent => {
+  const createEvent = (): AuthRegistrationRequestedEvent => {
     const eventData: IAuthEventData = {
       id: authId,
       userId: userId,
@@ -37,7 +32,6 @@ describe('AuthRegistrationSaga', () => {
       provider: AuthProviderEnum.LOCAL,
       providerId: null,
       twoFactorEnabled: false,
-      tenantName: tenantName,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -65,7 +59,7 @@ describe('AuthRegistrationSaga', () => {
   });
 
   describe('handle', () => {
-    it('should complete registration successfully without tenant', async () => {
+    it('should complete registration successfully', async () => {
       const event = createEvent();
 
       // Mock saga instance creation
@@ -107,44 +101,6 @@ describe('AuthRegistrationSaga', () => {
         (call) => call[0] instanceof SagaInstanceChangeStatusCommand,
       );
       expect(completeCalls.length).toBeGreaterThan(0);
-    });
-
-    it('should complete registration successfully with tenant', async () => {
-      const event = createEvent('Test Tenant');
-
-      // Mock saga instance creation
-      mockCommandBus.execute
-        .mockResolvedValueOnce(sagaInstanceId) // createSagaInstance
-        .mockResolvedValueOnce(undefined) // changeStatus to RUNNING
-        .mockResolvedValueOnce(sagaStepId) // create step 1
-        .mockResolvedValueOnce(undefined) // update step 1 to RUNNING
-        .mockResolvedValueOnce(userId) // UserCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 1 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 2
-        .mockResolvedValueOnce(undefined) // update step 2 to RUNNING
-        .mockResolvedValueOnce(authId) // AuthCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 2 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 3
-        .mockResolvedValueOnce(undefined) // update step 3 to RUNNING
-        .mockResolvedValueOnce(tenantId) // TenantCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 3 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 4
-        .mockResolvedValueOnce(undefined) // update step 4 to RUNNING
-        .mockResolvedValueOnce(tenantMemberId) // TenantMemberAddCommand
-        .mockResolvedValueOnce(undefined) // update step 4 to COMPLETED
-        .mockResolvedValueOnce(undefined); // completeSagaInstance
-
-      await saga.handle(event);
-
-      // Verify tenant creation
-      expect(mockCommandBus.execute).toHaveBeenCalledWith(
-        expect.any(TenantCreateCommand),
-      );
-
-      // Verify tenant member creation
-      expect(mockCommandBus.execute).toHaveBeenCalledWith(
-        expect.any(TenantMemberAddCommand),
-      );
     });
 
     it('should execute compensation actions when user creation fails', async () => {
@@ -197,113 +153,13 @@ describe('AuthRegistrationSaga', () => {
       );
     });
 
-    it('should execute compensation actions when tenant creation fails', async () => {
-      const event = createEvent('Test Tenant');
-      const error = new Error('Tenant creation failed');
-
-      // Mock saga instance creation, user and auth creation success, tenant creation failure
-      mockCommandBus.execute
-        .mockResolvedValueOnce(sagaInstanceId) // createSagaInstance
-        .mockResolvedValueOnce(undefined) // changeStatus to RUNNING
-        .mockResolvedValueOnce(sagaStepId) // create step 1
-        .mockResolvedValueOnce(undefined) // update step 1 to RUNNING
-        .mockResolvedValueOnce(userId) // UserCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 1 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 2
-        .mockResolvedValueOnce(undefined) // update step 2 to RUNNING
-        .mockResolvedValueOnce(authId) // AuthCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 2 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 3
-        .mockResolvedValueOnce(undefined) // update step 3 to RUNNING
-        .mockRejectedValueOnce(error) // TenantCreateCommand fails
-        .mockResolvedValueOnce(undefined) // update step 3 to FAILED
-        .mockResolvedValueOnce(undefined) // AuthDeleteCommand (compensation)
-        .mockResolvedValueOnce(undefined) // UserDeleteCommand (compensation)
-        .mockResolvedValueOnce(undefined); // failSagaInstance
-
-      await expect(saga.handle(event)).rejects.toThrow(error);
-
-      // Verify compensation actions were called
-      const deleteCalls = mockCommandBus.execute.mock.calls.filter(
-        (call) =>
-          call[0] instanceof AuthDeleteCommand ||
-          call[0] instanceof UserDeleteCommand,
-      );
-
-      expect(deleteCalls.length).toBe(2);
-
-      // Verify order: AuthDelete should be called before UserDelete (reverse order)
-      const authDeleteIndex = mockCommandBus.execute.mock.calls.findIndex(
-        (call) => call[0] instanceof AuthDeleteCommand,
-      );
-      const userDeleteIndex = mockCommandBus.execute.mock.calls.findIndex(
-        (call) => call[0] instanceof UserDeleteCommand,
-      );
-      expect(authDeleteIndex).toBeLessThan(userDeleteIndex);
-    });
-
-    it('should execute compensation actions when tenant member creation fails', async () => {
-      const event = createEvent('Test Tenant');
-      const error = new Error('Tenant member creation failed');
-
-      // Mock saga instance creation, all steps success except tenant member
-      mockCommandBus.execute
-        .mockResolvedValueOnce(sagaInstanceId) // createSagaInstance
-        .mockResolvedValueOnce(undefined) // changeStatus to RUNNING
-        .mockResolvedValueOnce(sagaStepId) // create step 1
-        .mockResolvedValueOnce(undefined) // update step 1 to RUNNING
-        .mockResolvedValueOnce(userId) // UserCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 1 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 2
-        .mockResolvedValueOnce(undefined) // update step 2 to RUNNING
-        .mockResolvedValueOnce(authId) // AuthCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 2 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 3
-        .mockResolvedValueOnce(undefined) // update step 3 to RUNNING
-        .mockResolvedValueOnce(tenantId) // TenantCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 3 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 4
-        .mockResolvedValueOnce(undefined) // update step 4 to RUNNING
-        .mockRejectedValueOnce(error) // TenantMemberAddCommand fails
-        .mockResolvedValueOnce(undefined) // update step 4 to FAILED
-        .mockResolvedValueOnce(undefined) // TenantDeleteCommand (compensation)
-        .mockResolvedValueOnce(undefined) // AuthDeleteCommand (compensation)
-        .mockResolvedValueOnce(undefined) // UserDeleteCommand (compensation)
-        .mockResolvedValueOnce(undefined); // failSagaInstance
-
-      await expect(saga.handle(event)).rejects.toThrow(error);
-
-      // Verify compensation actions were called
-      const deleteCalls = mockCommandBus.execute.mock.calls.filter(
-        (call) =>
-          call[0] instanceof TenantDeleteCommand ||
-          call[0] instanceof AuthDeleteCommand ||
-          call[0] instanceof UserDeleteCommand,
-      );
-
-      expect(deleteCalls.length).toBe(3);
-
-      // Verify order: TenantDelete -> AuthDelete -> UserDelete (reverse order)
-      const tenantDeleteIndex = mockCommandBus.execute.mock.calls.findIndex(
-        (call) => call[0] instanceof TenantDeleteCommand,
-      );
-      const authDeleteIndex = mockCommandBus.execute.mock.calls.findIndex(
-        (call) => call[0] instanceof AuthDeleteCommand,
-      );
-      const userDeleteIndex = mockCommandBus.execute.mock.calls.findIndex(
-        (call) => call[0] instanceof UserDeleteCommand,
-      );
-      expect(tenantDeleteIndex).toBeLessThan(authDeleteIndex);
-      expect(authDeleteIndex).toBeLessThan(userDeleteIndex);
-    });
-
     it('should execute compensation actions in reverse order', async () => {
-      const event = createEvent('Test Tenant');
-      const error = new Error('Tenant member creation failed');
+      const event = createEvent();
+      const error = new Error('Saga completion failed');
 
       const compensationOrder: string[] = [];
 
-      // Mock saga instance creation, all steps success except tenant member
+      // Mock saga instance creation, both steps success, but completeSagaInstance fails
       mockCommandBus.execute
         .mockResolvedValueOnce(sagaInstanceId) // createSagaInstance
         .mockResolvedValueOnce(undefined) // changeStatus to RUNNING
@@ -315,22 +171,9 @@ describe('AuthRegistrationSaga', () => {
         .mockResolvedValueOnce(undefined) // update step 2 to RUNNING
         .mockResolvedValueOnce(authId) // AuthCreateCommand
         .mockResolvedValueOnce(undefined) // update step 2 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 3
-        .mockResolvedValueOnce(undefined) // update step 3 to RUNNING
-        .mockResolvedValueOnce(tenantId) // TenantCreateCommand
-        .mockResolvedValueOnce(undefined) // update step 3 to COMPLETED
-        .mockResolvedValueOnce(sagaStepId) // create step 4
-        .mockResolvedValueOnce(undefined) // update step 4 to RUNNING
-        .mockRejectedValueOnce(error) // TenantMemberAddCommand fails
-        .mockResolvedValueOnce(undefined) // update step 4 to FAILED
+        .mockRejectedValueOnce(error) // completeSagaInstance fails
         .mockImplementationOnce((command) => {
           // Track compensation order
-          if (command instanceof TenantDeleteCommand) {
-            compensationOrder.push('tenant');
-          }
-          return Promise.resolve(undefined);
-        })
-        .mockImplementationOnce((command) => {
           if (command instanceof AuthDeleteCommand) {
             compensationOrder.push('auth');
           }
@@ -346,8 +189,8 @@ describe('AuthRegistrationSaga', () => {
 
       await expect(saga.handle(event)).rejects.toThrow(error);
 
-      // Verify compensation order is reverse (tenant -> auth -> user)
-      expect(compensationOrder).toEqual(['tenant', 'auth', 'user']);
+      // Verify compensation order is reverse (auth -> user)
+      expect(compensationOrder).toEqual(['auth', 'user']);
     });
   });
 });

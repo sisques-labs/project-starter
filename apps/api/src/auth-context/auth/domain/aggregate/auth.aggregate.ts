@@ -164,7 +164,7 @@ export class AuthAggregate extends BaseAggregate {
    * @param password - The password of the auth.
    * @param generateEvent - Whether to generate the auth registered by email event. Default is true.
    */
-  public registerByEmail(tenantName: string, generateEvent: boolean = true) {
+  public registerByEmail(generateEvent: boolean = true) {
     if (generateEvent) {
       this.apply(
         new AuthRegisteredByEmailEvent(
@@ -175,7 +175,6 @@ export class AuthAggregate extends BaseAggregate {
           },
           {
             ...this.toPrimitives(),
-            tenantName,
           },
         ),
       );

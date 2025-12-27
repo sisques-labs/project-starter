@@ -12,12 +12,8 @@ import { CommandBus } from '@nestjs/cqrs';
  * Saga that orchestrates the complete user registration flow:
  * 1. Create user
  * 2. Create auth
- * 3. If tenantName is provided in the event, create tenant
- * 4. Associate user as tenant member with OWNER role
  *
  * Compensation flow (in reverse order):
- * - Delete tenant member (if created)
- * - Delete tenant (if created)
  * - Delete user
  * - Delete auth
  *
@@ -36,10 +32,9 @@ export class AuthRegistrationSaga extends BaseSaga {
   async handle(event: AuthRegistrationRequestedEvent): Promise<void> {
     const authId = event.aggregateId;
     const userId = event.data.userId;
-    const tenantName = event.data.tenantName;
 
     this.logger.log(
-      `🚀 Starting complete user registration SAGA for auth: ${authId}, user: ${userId}${tenantName ? `, tenant: ${tenantName}` : ''}`,
+      `🚀 Starting complete user registration SAGA for auth: ${authId}, user: ${userId}`,
     );
 
     const sagaInstanceId = await this.createSagaInstance(

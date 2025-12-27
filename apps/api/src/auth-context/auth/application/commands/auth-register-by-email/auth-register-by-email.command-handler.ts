@@ -46,7 +46,6 @@ export class AuthRegisterByEmailCommandHandler
       provider: AuthProviderEnum.LOCAL,
       providerId: null,
       twoFactorEnabled: false,
-      tenantName: command.tenantName?.value,
       createdAt: now,
       updatedAt: now,
     };
@@ -62,7 +61,7 @@ export class AuthRegisterByEmailCommandHandler
 
     // 03: Execute the saga synchronously to wait for completion
     // This ensures the client gets immediate feedback on success/failure
-    // The saga will handle all the registration steps (create user, auth, tenant, etc.)
+    // The saga will handle all the registration steps (create user, auth, etc.)
     await this.authRegistrationSaga.handle(registrationEvent);
 
     // 05: Return the auth id

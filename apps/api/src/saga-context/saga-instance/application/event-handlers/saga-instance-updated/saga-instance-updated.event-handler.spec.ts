@@ -1,12 +1,12 @@
-import { SagaInstanceUpdatedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-updated/tenant-member-updated.event-handler';
+import { SagaInstanceUpdatedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-updated/saga-instance-updated.event-handler';
 import { AssertSagaInstanceViewModelExistsService } from '@/saga-context/saga-instance/application/services/assert-saga-instance-view-model-exists/assert-saga-instance-view-model-exists.service';
+import { SagaInstanceStatusEnum } from '@/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import {
   SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
   SagaInstanceReadRepository,
 } from '@/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
 import { SagaInstanceViewModel } from '@/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { SagaInstanceUpdatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event';
-import { SagaInstanceStatusEnum } from '@/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { Test } from '@nestjs/testing';
 
 describe('SagaInstanceUpdatedEventHandler', () => {

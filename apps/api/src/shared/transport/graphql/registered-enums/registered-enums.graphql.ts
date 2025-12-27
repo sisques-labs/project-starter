@@ -1,4 +1,3 @@
-import { PromptStatusEnum } from '@/llm-context/prompt/domain/enum/prompt-status.enum';
 import { SagaInstanceStatusEnum } from '@/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { SagaLogTypeEnum } from '@/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaStepStatusEnum } from '@/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
@@ -29,11 +28,6 @@ const registeredEnums = [
     enum: UserStatusEnum,
     name: 'UserStatusEnum',
     description: 'The status of the user',
-  },
-  {
-    enum: PromptStatusEnum,
-    name: 'PromptStatusEnum',
-    description: 'The status of the prompt',
   },
   {
     enum: SagaInstanceStatusEnum,

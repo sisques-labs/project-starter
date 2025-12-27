@@ -5,10 +5,10 @@ import { SagaInstanceUpdateCommandHandler } from '@/saga-context/saga-instance/a
 import { SagaInstanceCreatedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-created/saga-instance-created.event-handler';
 import { SagaInstanceDeletedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-deleted/saga-instance-deleted.event-handler';
 import { SagaInstanceStatusChangedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-status-chaged/saga-instance-status-changed.event-handler';
-import { SagaInstanceUpdatedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-updated/tenant-member-updated.event-handler';
+import { SagaInstanceUpdatedEventHandler } from '@/saga-context/saga-instance/application/event-handlers/saga-instance-updated/saga-instance-updated.event-handler';
 import { FindSagaInstancesByCriteriaQueryHandler } from '@/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query-handler';
 import { FindSagaInstanceByIdQueryHandler } from '@/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query-handler';
-import { FindSagaInstanceViewModelByIdQueryHandler } from '@/saga-context/saga-instance/application/queries/tenant-member-find-view-model-by-id/saga-instance-find-view-model-by-id.query-handler';
+import { FindSagaInstanceViewModelByIdQueryHandler } from '@/saga-context/saga-instance/application/queries/saga-instance-view-model-find-by-id/saga-instance-view-model-find-by-id.query-handler';
 import { AssertSagaInstanceExistsService } from '@/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
 import { AssertSagaInstanceNotExistsService } from '@/saga-context/saga-instance/application/services/assert-saga-instance-not-exists/assert-saga-instance-not-exists.service';
 import { AssertSagaInstanceViewModelExistsService } from '@/saga-context/saga-instance/application/services/assert-saga-instance-view-model-exists/assert-saga-instance-view-model-exists.service';
@@ -39,10 +39,9 @@ const SERVICES = [
 const QUERY_HANDLERS = [
   FindSagaInstancesByCriteriaQueryHandler,
   FindSagaInstanceByIdQueryHandler,
-
-  // View models
-  FindSagaInstanceViewModelByIdQueryHandler,
 ];
+
+const QUERY_HANDLERS_VIEW_MODELS = [FindSagaInstanceViewModelByIdQueryHandler];
 
 const COMMAND_HANDLERS = [
   SagaInstanceCreateCommandHandler,
@@ -85,6 +84,7 @@ const ENTITIES = [SagaInstanceTypeormEntity];
     ...RESOLVERS,
     ...SERVICES,
     ...QUERY_HANDLERS,
+    ...QUERY_HANDLERS_VIEW_MODELS,
     ...COMMAND_HANDLERS,
     ...EVENT_HANDLERS,
     ...REPOSITORIES,

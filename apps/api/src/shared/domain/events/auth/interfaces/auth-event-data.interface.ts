@@ -1,10 +1,9 @@
-import { IEventDataWithTenantContext } from '@/shared/domain/interfaces/event-data-with-tenant-context.interface';
+import { IBaseEventData } from '@/shared/domain/interfaces/base-event-data.interface';
 
 /**
  * Event data interface for auth-related events.
- * Extends IEventDataWithTenantContext to support both global and tenant-specific auth operations.
  */
-export interface IAuthEventData extends IEventDataWithTenantContext {
+export interface IAuthEventData extends IBaseEventData {
   id: string;
   userId: string;
   email: string | null;

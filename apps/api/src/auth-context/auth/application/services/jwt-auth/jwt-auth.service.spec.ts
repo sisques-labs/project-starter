@@ -42,7 +42,6 @@ describe('JwtAuthService', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: 'USER',
-        tenantIds: ['tenant-1', 'tenant-2'],
       };
       const expectedToken = 'access-token';
 
@@ -66,7 +65,6 @@ describe('JwtAuthService', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: 'USER',
-        tenantIds: ['tenant-1', 'tenant-2'],
       };
       const expectedToken = 'refresh-token';
 
@@ -90,7 +88,6 @@ describe('JwtAuthService', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: 'USER',
-        tenantIds: ['tenant-1', 'tenant-2'],
       };
       const accessToken = 'access-token';
       const refreshToken = 'refresh-token';
@@ -117,7 +114,6 @@ describe('JwtAuthService', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: 'USER',
-        tenantIds: ['tenant-1', 'tenant-2'],
       };
 
       mockJwtService.verify.mockReturnValue(expectedPayload);
@@ -155,7 +151,6 @@ describe('JwtAuthService', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: 'USER',
-        tenantIds: ['tenant-1', 'tenant-2'],
       };
 
       mockJwtService.verify.mockReturnValue(expectedPayload);
@@ -193,7 +188,6 @@ describe('JwtAuthService', () => {
         userId: '123e4567-e89b-12d3-a456-426614174001',
         email: 'test@example.com',
         role: 'USER',
-        tenantIds: ['tenant-1', 'tenant-2'],
       };
 
       mockJwtService.decode.mockReturnValue(expectedPayload);

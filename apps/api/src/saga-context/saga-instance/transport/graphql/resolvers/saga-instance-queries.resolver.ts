@@ -1,5 +1,5 @@
 import { FindSagaInstancesByCriteriaQuery } from '@/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
-import { FindSagaInstanceViewModelByIdQuery } from '@/saga-context/saga-instance/application/queries/tenant-member-find-view-model-by-id/saga-instance-find-view-model-by-id.query';
+import { FindSagaInstanceViewModelByIdQuery } from '@/saga-context/saga-instance/application/queries/saga-instance-view-model-find-by-id/saga-instance-view-model-find-by-id.query';
 import { SagaInstanceFindByCriteriaRequestDto } from '@/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-criteria.request.dto';
 import { SagaInstanceFindByIdRequestDto } from '@/saga-context/saga-instance/transport/graphql/dtos/requests/saga-instance-find-by-id.request.dto';
 import {
