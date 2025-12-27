@@ -146,7 +146,7 @@ describe('AuthLoginByEmailCommandHandler', () => {
       mockAssertAuthEmailExistsService.execute.mockResolvedValue(mockAuth);
       mockPasswordHashingService.verifyPassword.mockResolvedValue(true);
       // Mock queryBus.execute to return different values for different queries
-      mockQueryBus.execute.mockImplementation((query: any) => {
+      mockQueryBus.execute.mockImplementation((_query: any) => {
         // UserFindByIdQuery returns UserAggregate
         return Promise.resolve(mockUser);
       });

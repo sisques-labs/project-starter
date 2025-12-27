@@ -1,7 +1,4 @@
-import { routing } from '@/shared/presentation/i18n/routing';
-import Providers from '@/shared/presentation/providers/providers';
 import type { Metadata } from 'next';
-import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -20,35 +17,10 @@ export const metadata: Metadata = {
   description: 'Sisques Labs Web App',
 };
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-export default async function LocaleLayout({
+export default function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = await params;
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
-
-  return (
-    <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers
-          apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4100'}
-          messages={messages}
-        >
-          {children}
-        </Providers>
-      </body>
-    </html>
-  );
+  return children;
 }
