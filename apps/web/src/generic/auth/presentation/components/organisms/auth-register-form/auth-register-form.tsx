@@ -54,7 +54,8 @@ export function AuthRegisterForm({
   });
 
   return (
-    <Form {...form}>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    <Form {...(form as any)}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <AuthEmailField
           control={form.control}

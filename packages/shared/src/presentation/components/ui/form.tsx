@@ -9,8 +9,6 @@ import {
   useFormContext,
   useFormState,
   type ControllerProps,
-  type FieldPath,
-  type FieldValues,
 } from 'react-hook-form';
 
 import { Label } from '@repo/shared/presentation/components/ui/label';
@@ -18,29 +16,19 @@ import { cn } from '@repo/shared/presentation/lib/utils';
 
 const Form = FormProvider;
 
-type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = {
-  name: TName;
-};
+const FormFieldContext = React.createContext<{ name: string }>({
+  name: '',
+});
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue,
-);
-
-const FormField = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-  ...props
-}: ControllerProps<TFieldValues, TName>) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function FormField(props: ControllerProps<any, any>) {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
+    <FormFieldContext.Provider value={{ name: String(props.name) }}>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <Controller {...(props as any)} />
     </FormFieldContext.Provider>
   );
-};
+}
 
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);

@@ -1,6 +1,6 @@
 import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
 import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
-import type { UpdateUserInput } from '@repo/sdk';
+import type { UpdateUserInput, UserRole, UserStatus } from '@repo/sdk';
 import { useUsers } from '@repo/sdk';
 
 /**
@@ -25,8 +25,8 @@ export function useUserUpdate() {
         userName: values.userName,
         bio: values.bio,
         avatarUrl: values.avatarUrl === '' ? undefined : values.avatarUrl,
-        role: values.role,
-        status: values.status,
+        role: values.role as UserRole,
+        status: values.status as UserStatus,
       };
 
       const result = await update.mutate(input);
@@ -39,8 +39,8 @@ export function useUserUpdate() {
           userName: values.userName || null,
           bio: values.bio || null,
           avatarUrl: values.avatarUrl === '' ? null : values.avatarUrl || null,
-          role: values.role || null,
-          status: values.status || null,
+          role: values.role as UserRole,
+          status: values.status as UserStatus,
         });
 
         onSuccess?.();

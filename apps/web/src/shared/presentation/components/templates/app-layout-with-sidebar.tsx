@@ -59,7 +59,7 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
   const onLogout = useMemo(() => {
     if (!profile?.userId) return undefined;
     return () => handleLogout(profile.userId);
-  }, [profile?.userId, handleLogout]);
+  }, [profile, handleLogout]);
 
   // If auth route, render children without sidebar
   if (isAuthRoute) {

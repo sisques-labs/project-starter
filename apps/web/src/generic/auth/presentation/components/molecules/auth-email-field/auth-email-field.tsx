@@ -28,8 +28,10 @@ export function AuthEmailField<T extends FieldValues>({
 
   return (
     <FormField
-      control={control}
-      name={name}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      control={control as any}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      name={name as any}
       render={({ field }) => (
         <FormItem>
           <FormLabel>{t('authPage.fields.email.label')}</FormLabel>
