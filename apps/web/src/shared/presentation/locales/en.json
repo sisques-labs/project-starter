@@ -8,6 +8,11 @@
     "cancel": "Cancel",
     "delete": "Delete"
   },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "settings": "Settings"
+  },
   "authPage": {
     "title": {
       "login": "Welcome back",
@@ -61,29 +66,6 @@
       "confirmPassword": {
         "required": "Please confirm your password",
         "mismatch": "Passwords don't match"
-      }
-    },
-    "tenantModal": {
-      "title": "Create your workspace",
-      "description": "Create a workspace to get started. You can skip this step and create one later.",
-      "fields": {
-        "name": {
-          "label": "Workspace name",
-          "placeholder": "My Company"
-        },
-        "email": {
-          "label": "Email",
-          "placeholder": "contact@company.com"
-        },
-        "description": {
-          "label": "Description",
-          "placeholder": "A brief description of your workspace"
-        }
-      },
-      "actions": {
-        "create": "Create workspace",
-        "skip": "Skip for now",
-        "creating": "Creating..."
       }
     }
   }

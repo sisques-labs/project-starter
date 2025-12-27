@@ -32,7 +32,7 @@ export function useAuthLogin() {
     await loginService.execute({
       credentials: values,
       onSuccess: () => {
-        router.push(`/${locale}${routes.dashboard}`);
+        router.push(`/${locale}${routes.home}`);
       },
       onError: (error) => {
         // Error handling is delegated to the SDK hook state

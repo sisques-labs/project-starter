@@ -1,144 +1,67 @@
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
+import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 export const useRoutes = () => {
   const pathname = usePathname();
 
   const routes = {
-    // Main routes
-    dashboard: '/dashboard',
+    home: '/',
 
-    // User Management
-    users: '/users',
-    auth: '/auth',
+    feature1: '/feature1',
+    feature2: '/feature2',
+    feature3: '/feature3',
 
-    // Tenant Management
-    tenants: '/tenants',
-    tenantMembers: '/tenant-members',
-
-    // Billing & Subscriptions
-    subscriptionPlans: '/subscription-plans',
-    subscriptions: '/subscriptions',
-    payments: '/payments',
-
-    // AI/LLM
-    prompts: '/prompts',
-    promptTags: '/prompt-tags',
-
-    // System & Monitoring
-    events: '/events',
-    health: '/health',
-    features: '/features',
-
-    // Test routes (can be removed in production)
-    sdkTest: '/sdk-test',
-    sdkTestHooks: '/sdk-test-hooks',
+    settings: '/settings',
   } as const;
 
   /**
    * Generates sidebar data structure with active state based on current pathname
    */
   const getSidebarData = (): SidebarData => {
+    const t = useTranslations('nav');
     return {
       navMain: [
         {
-          title: 'Main',
+          title: t('home'),
           url: '#',
           items: [
             {
-              title: 'Dashboard',
-              url: routes.dashboard,
-              isActive: pathname === routes.dashboard,
+              title: t('home'),
+              url: routes.home,
+              isActive: pathname === routes.home,
             },
           ],
         },
         {
-          title: 'User Management',
+          title: t('features'),
           url: '#',
           items: [
             {
-              title: 'Authentication',
-              url: routes.auth,
-              isActive: pathname === routes.auth,
+              title: t('feature1'),
+              url: routes.feature1,
+              isActive: pathname === routes.feature1,
             },
             {
-              title: 'Users',
-              url: routes.users,
-              isActive: pathname === routes.users,
+              title: t('feature2'),
+              url: routes.feature2,
+              isActive: pathname === routes.feature2,
+            },
+            {
+              title: t('feature3'),
+              url: routes.feature3,
+              isActive: pathname === routes.feature3,
             },
           ],
         },
         {
-          title: 'Tenant Management',
-          url: '#',
+          title: t('settings'),
+          url: routes.settings,
           items: [
             {
-              title: 'Tenants',
-              url: routes.tenants,
-              isActive: pathname === routes.tenants,
-            },
-            {
-              title: 'Tenant Members',
-              url: routes.tenantMembers,
-              isActive: pathname === routes.tenantMembers,
-            },
-          ],
-        },
-        {
-          title: 'Billing & Subscriptions',
-          url: '#',
-          items: [
-            {
-              title: 'Subscription Plans',
-              url: routes.subscriptionPlans,
-              isActive: pathname === routes.subscriptionPlans,
-            },
-            {
-              title: 'Subscriptions',
-              url: routes.subscriptions,
-              isActive: pathname === routes.subscriptions,
-            },
-            {
-              title: 'Payments',
-              url: routes.payments,
-              isActive: pathname === routes.payments,
-            },
-          ],
-        },
-        {
-          title: 'Artificial Intelligence',
-          url: '#',
-          items: [
-            {
-              title: 'Prompts',
-              url: routes.prompts,
-              isActive: pathname === routes.prompts,
-            },
-            {
-              title: 'Prompt Tags',
-              url: routes.promptTags,
-              isActive: pathname === routes.promptTags,
-            },
-          ],
-        },
-        {
-          title: 'System & Monitoring',
-          url: '#',
-          items: [
-            {
-              title: 'Events',
-              url: routes.events,
-              isActive: pathname === routes.events,
-            },
-            {
-              title: 'Health',
-              url: routes.health,
-              isActive: pathname === routes.health,
-            },
-            {
-              title: 'Features',
-              url: routes.features,
-              isActive: pathname === routes.features,
+              title: t('settings'),
+              url: routes.settings,
+              isActive: pathname === routes.settings,
             },
           ],
         },

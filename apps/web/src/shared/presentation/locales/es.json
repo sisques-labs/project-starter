@@ -8,6 +8,11 @@
     "cancel": "Cancelar",
     "delete": "Eliminar"
   },
+  "nav": {
+    "home": "Inicio",
+    "features": "Características",
+    "settings": "Configuración"
+  },
   "authPage": {
     "title": {
       "login": "Bienvenido de nuevo",
@@ -61,29 +66,6 @@
       "confirmPassword": {
         "required": "Por favor confirma tu contraseña",
         "mismatch": "Las contraseñas no coinciden"
-      }
-    },
-    "tenantModal": {
-      "title": "Crea tu espacio de trabajo",
-      "description": "Crea un espacio de trabajo para comenzar. Puedes omitir este paso y crear uno más tarde.",
-      "fields": {
-        "name": {
-          "label": "Nombre del espacio de trabajo",
-          "placeholder": "Mi Empresa"
-        },
-        "email": {
-          "label": "Email",
-          "placeholder": "contacto@empresa.com"
-        },
-        "description": {
-          "label": "Descripción",
-          "placeholder": "Una breve descripción de tu espacio de trabajo"
-        }
-      },
-      "actions": {
-        "create": "Crear espacio de trabajo",
-        "skip": "Omitir por ahora",
-        "creating": "Creando..."
       }
     }
   }
