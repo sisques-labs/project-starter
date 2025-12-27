@@ -5,13 +5,10 @@ import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interf
 /**
  * Auth registered by email   event
  *
- * This event extends BaseEvent with IAuthEventData, which includes IEventDataWithTenantContext.
- * This means the event can optionally include tenantId and tenantName for saga orchestration.
- *
  * @class AuthRegisteredByEmailEvent
  * @extends {BaseEvent<IAuthEventData>}
  * @param metadata - The metadata of the event
- * @param data - The data of the event (includes optional tenantId and tenantName via IEventDataWithTenantContext)
+ * @param data - The data of the event
  */
 export class AuthRegisteredByEmailEvent extends BaseEvent<IAuthEventData> {
   /**
