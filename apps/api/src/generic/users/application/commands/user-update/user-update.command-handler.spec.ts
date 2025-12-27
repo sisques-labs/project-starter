@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { IUserUpdateCommandDto } from '@/generic/users/application/dtos/commands/user-update/user-update-command.dto';
 import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
 import { AssertUserExsistsService } from '@/generic/users/application/services/assert-user-exsits/assert-user-exsits.service';
@@ -12,7 +13,6 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 import { UserUpdateCommand } from './user-update.command';
 import { UserUpdateCommandHandler } from './user-update.command-handler';
 

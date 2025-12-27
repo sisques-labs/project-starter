@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaInstanceCreatedEventHandler } from '@/generic/saga-context/saga-instance/application/event-handlers/saga-instance-created/saga-instance-created.event-handler';
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { SagaInstanceViewModelFactory } from '@/generic/saga-context/saga-instance/domain/factories/saga-instance-view-model/saga-instance-view-model.factory';
@@ -7,7 +8,6 @@ import {
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
 import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { SagaInstanceCreatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-created/saga-instance-created.event';
-import { Test } from '@nestjs/testing';
 
 describe('SagaInstanceCreatedEventHandler', () => {
   let handler: SagaInstanceCreatedEventHandler;

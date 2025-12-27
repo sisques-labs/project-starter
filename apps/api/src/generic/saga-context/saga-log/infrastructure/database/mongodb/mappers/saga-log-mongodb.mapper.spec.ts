@@ -1,9 +1,9 @@
+import { Test } from '@nestjs/testing';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaLogViewModelFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 import { SagaLogMongoDbDto } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/dtos/saga-log-mongodb.dto';
 import { SagaLogMongoDBMapper } from '@/generic/saga-context/saga-log/infrastructure/database/mongodb/mappers/saga-log-mongodb.mapper';
-import { Test } from '@nestjs/testing';
 
 describe('SagaLogMongoDBMapper', () => {
   let mapper: SagaLogMongoDBMapper;

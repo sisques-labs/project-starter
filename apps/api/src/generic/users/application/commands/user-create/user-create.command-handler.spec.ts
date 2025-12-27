@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { IUserCreateCommandDto } from '@/generic/users/application/dtos/commands/user-create/user-create-command.dto';
 import { UserUsernameIsNotUniqueException } from '@/generic/users/application/exceptions/user-username-is-not-unique/user-username-is-not-unique.exception';
 import { AssertUserUsernameIsUniqueService } from '@/generic/users/application/services/assert-user-username-is-unique/assert-user-username-is-unique.service';
@@ -12,7 +13,6 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { UserCreatedEvent } from '@/shared/domain/events/users/user-created/user-created.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 import { UserCreateCommand } from './user-create.command';
 import { UserCreateCommandHandler } from './user-create.command-handler';
 

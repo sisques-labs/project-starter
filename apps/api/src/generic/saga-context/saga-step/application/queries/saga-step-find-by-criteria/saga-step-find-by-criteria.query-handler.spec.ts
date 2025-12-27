@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { FindSagaStepsByCriteriaQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query';
 import { FindSagaStepsByCriteriaQueryHandler } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query-handler';
 import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
@@ -8,7 +9,6 @@ import {
 import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaStepsByCriteriaQueryHandler', () => {
   let handler: FindSagaStepsByCriteriaQueryHandler;

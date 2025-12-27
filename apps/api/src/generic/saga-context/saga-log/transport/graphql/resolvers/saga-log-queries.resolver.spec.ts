@@ -1,3 +1,4 @@
+import { QueryBus } from '@nestjs/cqrs';
 import { FindSagaLogsByCriteriaQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query';
 import { FindSagaLogViewModelByIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query';
 import { FindSagaLogViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query';
@@ -16,7 +17,6 @@ import { SagaLogGraphQLMapper } from '@/generic/saga-context/saga-log/transport/
 import { SagaLogQueryResolver } from '@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-queries.resolver';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { QueryBus } from '@nestjs/cqrs';
 
 describe('SagaLogQueryResolver', () => {
   let resolver: SagaLogQueryResolver;

@@ -1,3 +1,5 @@
+import { UnauthorizedException } from '@nestjs/common';
+import { EventBus, QueryBus } from '@nestjs/cqrs';
 import { AuthLoginByEmailCommandHandler } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command-handler';
 import { AssertAuthEmailExistsService } from '@/generic/auth/application/services/assert-auth-email-exists/assert-auth-email-exists.service';
 import { JwtAuthService } from '@/generic/auth/application/services/jwt-auth/jwt-auth.service';
@@ -7,8 +9,8 @@ import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum
 import { ITokenPair } from '@/generic/auth/domain/interfaces/token-pair.interface';
 import { AuthReadRepository } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthWriteRepository } from '@/generic/auth/domain/repositories/auth-write.repository';
-import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
 import { AuthEmailValueObject } from '@/generic/auth/domain/value-objects/auth-email/auth-email.vo';
+import { AuthEmailVerifiedValueObject } from '@/generic/auth/domain/value-objects/auth-email-verified/auth-email-verified.vo';
 import { AuthPasswordValueObject } from '@/generic/auth/domain/value-objects/auth-password/auth-password.vo';
 import { AuthProviderValueObject } from '@/generic/auth/domain/value-objects/auth-provider/auth-provider.vo';
 import { AuthTwoFactorEnabledValueObject } from '@/generic/auth/domain/value-objects/auth-two-factor-enabled/auth-two-factor-enabled.vo';
@@ -22,8 +24,6 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { UnauthorizedException } from '@nestjs/common';
-import { EventBus, QueryBus } from '@nestjs/cqrs';
 import { AuthLoginByEmailCommand } from './auth-login-by-email.command';
 
 describe('AuthLoginByEmailCommandHandler', () => {

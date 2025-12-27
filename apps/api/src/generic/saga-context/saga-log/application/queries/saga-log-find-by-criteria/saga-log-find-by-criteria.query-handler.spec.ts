@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { FindSagaLogsByCriteriaQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query';
 import { FindSagaLogsByCriteriaQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-criteria/saga-log-find-by-criteria.query-handler';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
@@ -8,7 +9,6 @@ import {
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaLogsByCriteriaQueryHandler', () => {
   let handler: FindSagaLogsByCriteriaQueryHandler;

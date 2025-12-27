@@ -1,6 +1,6 @@
+import { Column, Entity, Index } from 'typeorm';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/entities/base-typeorm.entity';
-import { Column, Entity, Index } from 'typeorm';
 
 @Entity('auths')
 @Index(['email'])

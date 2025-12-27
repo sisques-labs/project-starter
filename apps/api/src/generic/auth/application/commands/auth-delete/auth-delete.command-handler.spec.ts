@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
 import { AuthDeleteCommandHandler } from '@/generic/auth/application/commands/auth-delete/auth-delete.command-handler';
 import { IAuthDeleteCommandDto } from '@/generic/auth/application/dtos/commands/auth-delete/auth-delete-command.dto';
@@ -13,7 +14,6 @@ import { AuthDeletedEvent } from '@/shared/domain/events/auth/auth-deleted/auth-
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('AuthDeleteCommandHandler', () => {
   let handler: AuthDeleteCommandHandler;

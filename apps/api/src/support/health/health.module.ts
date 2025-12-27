@@ -1,3 +1,4 @@
+import { Module } from '@nestjs/common';
 import { SharedModule } from '@/shared/shared.module';
 import { HealthCheckQueryHandler } from '@/support/health/application/queries/health-check/health-check.query-handler';
 import { HealthCheckService } from '@/support/health/application/services/health-check/health-check.service';
@@ -8,7 +9,6 @@ import { HealthGraphQLMapper } from '@/support/health/transport/graphql/mappers/
 import { HealthQueryResolver } from '@/support/health/transport/graphql/resolvers/health-queries.resolver';
 import { HealthController } from '@/support/health/transport/rest/controllers/health.controller';
 import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health-rest.mapper';
-import { Module } from '@nestjs/common';
 
 const RESOLVERS = [HealthQueryResolver];
 

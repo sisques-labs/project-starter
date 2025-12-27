@@ -1,6 +1,6 @@
+import { Column, Entity, Index } from 'typeorm';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/entities/base-typeorm.entity';
-import { Column, Entity, Index } from 'typeorm';
 
 @Entity('saga_logs')
 @Index(['sagaInstanceId'])

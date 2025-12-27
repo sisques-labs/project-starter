@@ -1,8 +1,8 @@
+import { QueryBus } from '@nestjs/cqrs';
 import { HealthCheckQuery } from '@/support/health/application/queries/health-check/health-check.query';
 import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
 import { HealthGraphQLMapper } from '@/support/health/transport/graphql/mappers/health.mapper';
 import { HealthQueryResolver } from '@/support/health/transport/graphql/resolvers/health-queries.resolver';
-import { QueryBus } from '@nestjs/cqrs';
 
 describe('HealthQueryResolver', () => {
   let resolver: HealthQueryResolver;

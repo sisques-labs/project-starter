@@ -1,3 +1,5 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SagaInstanceChangeStatusCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command-handler';
 import { SagaInstanceCreateCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command-handler';
 import { SagaInstanceDeleteCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command-handler';
@@ -25,8 +27,6 @@ import { SagaInstanceGraphQLMapper } from '@/generic/saga-context/saga-instance/
 import { SagaInstanceMutationsResolver } from '@/generic/saga-context/saga-instance/transport/graphql/resolvers/saga-instance-mutations.resolver';
 import { SagaInstanceQueryResolver } from '@/generic/saga-context/saga-instance/transport/graphql/resolvers/saga-instance-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 const RESOLVERS = [SagaInstanceQueryResolver, SagaInstanceMutationsResolver];
 

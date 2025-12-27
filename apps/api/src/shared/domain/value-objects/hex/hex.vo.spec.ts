@@ -1,5 +1,5 @@
-import { HexValueObject } from '@/shared/domain/value-objects/hex/hex.vo';
 import { InvalidHexException } from '@/shared/domain/exceptions/value-objects/invalid-hex/invalid-hex.exception';
+import { HexValueObject } from '@/shared/domain/value-objects/hex/hex.vo';
 
 describe('HexValueObject', () => {
   describe('constructor', () => {

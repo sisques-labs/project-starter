@@ -1,6 +1,6 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
-import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class HealthWriteDatabaseCheckService {

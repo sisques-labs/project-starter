@@ -1,3 +1,4 @@
+import { Repository } from 'typeorm';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthTypeormEntity } from '@/generic/auth/infrastructure/database/typeorm/entities/auth-typeorm.entity';
@@ -6,7 +7,6 @@ import { AuthTypeormRepository } from '@/generic/auth/infrastructure/database/ty
 import { AuthUuidValueObject } from '@/shared/domain/value-objects/identifiers/auth-uuid/auth-uuid.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { Repository } from 'typeorm';
 
 describe('AuthTypeormRepository', () => {
   let repository: AuthTypeormRepository;

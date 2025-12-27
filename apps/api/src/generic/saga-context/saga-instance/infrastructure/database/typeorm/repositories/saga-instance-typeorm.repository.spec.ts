@@ -1,3 +1,4 @@
+import { Repository } from 'typeorm';
 import { SagaInstanceAggregate } from '@/generic/saga-context/saga-instance/domain/aggregates/saga-instance.aggregate';
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { SagaInstanceEndDateValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-end-date/saga-instance-end-date.vo';
@@ -10,7 +11,6 @@ import { SagaInstanceTypeormRepository } from '@/generic/saga-context/saga-insta
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { Repository } from 'typeorm';
 
 describe('SagaInstanceTypeormRepository', () => {
   let repository: SagaInstanceTypeormRepository;

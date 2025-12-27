@@ -1,11 +1,11 @@
+import { Inject } from '@nestjs/common';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
   USER_READ_REPOSITORY_TOKEN,
   UserReadRepository,
 } from '@/generic/users/domain/repositories/user-read.repository';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Inject } from '@nestjs/common';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindUsersByCriteriaQuery } from './find-users-by-criteria.query';
 
 @QueryHandler(FindUsersByCriteriaQuery)

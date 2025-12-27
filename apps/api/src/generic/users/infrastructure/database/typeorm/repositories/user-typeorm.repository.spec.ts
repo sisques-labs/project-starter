@@ -1,3 +1,4 @@
+import { Repository } from 'typeorm';
 import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import { UserRoleValueObject } from '@/generic/users/domain/value-objects/user-role/user-role.vo';
 import { UserStatusValueObject } from '@/generic/users/domain/value-objects/user-status/user-status.vo';
@@ -10,7 +11,6 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { Repository } from 'typeorm';
 
 describe('UserTypeormRepository', () => {
   let repository: UserTypeormRepository;

@@ -1,3 +1,5 @@
+import { EventBus, QueryBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
 import { SagaStepCreateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command';
 import { SagaStepCreateCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command-handler';
 import { AssertSagaStepNotExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-not-exists/assert-saga-step-not-exists.service';
@@ -11,8 +13,6 @@ import { SagaStepResultValueObject } from '@/generic/saga-context/saga-step/doma
 import { SagaStepCreatedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-created/saga-step-created.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { EventBus, QueryBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
 
 describe('SagaStepCreateCommandHandler', () => {
   let handler: SagaStepCreateCommandHandler;

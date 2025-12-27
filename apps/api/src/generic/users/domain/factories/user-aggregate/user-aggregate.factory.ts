@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { UserAggregate } from '@/generic/users/domain/aggregates/user.aggregate';
 import { IUserCreateDto } from '@/generic/users/domain/dtos/entities/user-create/user-create.dto';
 import { UserPrimitives } from '@/generic/users/domain/primitives/user.primitives';
@@ -11,7 +12,6 @@ import { UserUserNameValueObject } from '@/generic/users/domain/value-objects/us
 import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interface';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { Injectable } from '@nestjs/common';
 
 /**
  * Factory class responsible for creating UserAggregate entities.

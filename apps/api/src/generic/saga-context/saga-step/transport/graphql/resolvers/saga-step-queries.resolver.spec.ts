@@ -1,3 +1,4 @@
+import { QueryBus } from '@nestjs/cqrs';
 import { FindSagaStepsByCriteriaQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-criteria/saga-step-find-by-criteria.query';
 import { FindSagaStepViewModelByIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-id/saga-step-find-view-model-by-id.query';
 import { FindSagaStepViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-view-model-by-saga-instance-id/saga-step-find-view-model-by-saga-instance-id.query';
@@ -14,7 +15,6 @@ import { SagaStepGraphQLMapper } from '@/generic/saga-context/saga-step/transpor
 import { SagaStepQueryResolver } from '@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-queries.resolver';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { QueryBus } from '@nestjs/cqrs';
 
 describe('SagaStepQueryResolver', () => {
   let resolver: SagaStepQueryResolver;

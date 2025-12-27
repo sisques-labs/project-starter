@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaStepDeletedEventHandler } from '@/generic/saga-context/saga-step/application/event-handlers/saga-step-deleted/saga-step-deleted.event-handler';
 import { AssertSagaStepViewModelExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service';
 import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
@@ -7,7 +8,6 @@ import {
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository';
 import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
 import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-step/saga-step-deleted/saga-step-deleted.event';
-import { Test } from '@nestjs/testing';
 
 describe('SagaStepDeletedEventHandler', () => {
   let handler: SagaStepDeletedEventHandler;

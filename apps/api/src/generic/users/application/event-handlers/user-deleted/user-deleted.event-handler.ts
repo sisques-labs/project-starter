@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { UserNotFoundException } from '@/generic/users/application/exceptions/user-not-found/user-not-found.exception';
 import {
   USER_READ_REPOSITORY_TOKEN,
@@ -5,8 +7,6 @@ import {
 } from '@/generic/users/domain/repositories/user-read.repository';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import { UserDeletedEvent } from '@/shared/domain/events/users/user-deleted/user-deleted.event';
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(UserDeletedEvent)
 export class UserDeletedEventHandler

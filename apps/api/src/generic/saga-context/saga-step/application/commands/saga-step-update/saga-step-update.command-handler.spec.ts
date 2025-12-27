@@ -1,3 +1,5 @@
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
 import { SagaStepUpdateCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command';
 import { SagaStepUpdateCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-update/saga-step-update.command-handler';
 import { ISagaStepUpdateCommandDto } from '@/generic/saga-context/saga-step/application/dtos/commands/saga-step-update/saga-step-update-command.dto';
@@ -19,8 +21,6 @@ import { SagaStepUpdatedEvent } from '@/shared/domain/events/saga-context/saga-s
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
 
 describe('SagaStepUpdateCommandHandler', () => {
   let handler: SagaStepUpdateCommandHandler;

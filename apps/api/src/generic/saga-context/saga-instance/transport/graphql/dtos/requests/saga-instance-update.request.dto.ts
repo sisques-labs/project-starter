@@ -1,4 +1,3 @@
-import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsDate,
@@ -8,6 +7,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 
 @InputType('SagaInstanceUpdateRequestDto')
 export class SagaInstanceUpdateRequestDto {

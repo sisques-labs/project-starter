@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { FindSagaStepsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-saga-instance-id/saga-step-find-by-saga-instance-id.query';
 import { FindSagaStepsBySagaInstanceIdQueryHandler } from '@/generic/saga-context/saga-step/application/queries/saga-step-find-by-saga-instance-id/saga-step-find-by-saga-instance-id.query-handler';
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
@@ -16,7 +17,6 @@ import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/doma
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaStepsBySagaInstanceIdQueryHandler', () => {
   let handler: FindSagaStepsBySagaInstanceIdQueryHandler;

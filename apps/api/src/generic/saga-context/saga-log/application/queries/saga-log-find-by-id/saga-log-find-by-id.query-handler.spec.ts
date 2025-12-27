@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaLogNotFoundException } from '@/generic/saga-context/saga-log/application/exceptions/saga-log-not-found/saga-log-not-found.exception';
 import { FindSagaLogByIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-id/saga-log-find-by-id.query';
 import { FindSagaLogByIdQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-by-id/saga-log-find-by-id.query-handler';
@@ -10,7 +11,6 @@ import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { SagaLogUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-log-uuid/saga-log-uuid.vo';
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaLogByIdQueryHandler', () => {
   let handler: FindSagaLogByIdQueryHandler;

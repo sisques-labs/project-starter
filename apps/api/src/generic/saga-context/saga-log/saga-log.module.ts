@@ -1,3 +1,5 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SagaLogCreateCommandHandler } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command-handler';
 import { SagaLogDeleteCommandHandler } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command-handler';
 import { SagaLogUpdateCommandHandler } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command-handler';
@@ -35,8 +37,6 @@ import { SagaLogGraphQLMapper } from '@/generic/saga-context/saga-log/transport/
 import { SagaLogMutationsResolver } from '@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-mutations.resolver';
 import { SagaLogQueryResolver } from '@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 const RESOLVERS = [SagaLogQueryResolver, SagaLogMutationsResolver];
 

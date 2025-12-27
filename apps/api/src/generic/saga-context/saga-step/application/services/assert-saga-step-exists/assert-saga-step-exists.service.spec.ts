@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaStepNotFoundException } from '@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception';
 import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
@@ -16,7 +17,6 @@ import { SagaStepStatusValueObject } from '@/generic/saga-context/saga-step/doma
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { Test } from '@nestjs/testing';
 
 describe('AssertSagaStepExistsService', () => {
   let service: AssertSagaStepExistsService;

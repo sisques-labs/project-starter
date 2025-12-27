@@ -1,7 +1,7 @@
-import { useRoutes } from '@/shared/presentation/hooks/use-routes';
 import { useAuth } from '@repo/sdk';
-import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { useRoutes } from '@/shared/presentation/hooks/use-routes';
 
 /**
  * Hook that provides logout functionality

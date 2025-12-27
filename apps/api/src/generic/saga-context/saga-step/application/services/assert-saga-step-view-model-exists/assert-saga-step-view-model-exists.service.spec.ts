@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaStepNotFoundException } from '@/generic/saga-context/saga-step/application/exceptions/saga-step-not-found/saga-step-not-found.exception';
 import { AssertSagaStepViewModelExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-view-model-exists/assert-saga-step-view-model-exists.service';
 import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
@@ -6,7 +7,6 @@ import {
   SagaStepReadRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-read.repository';
 import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
-import { Test } from '@nestjs/testing';
 
 describe('AssertSagaStepViewModelExistsService', () => {
   let service: AssertSagaStepViewModelExistsService;

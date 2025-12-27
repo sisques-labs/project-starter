@@ -1,3 +1,4 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
 import { HealthCheckQuery } from '@/support/health/application/queries/health-check/health-check.query';
 import { HealthReadDatabaseCheckService } from '@/support/health/application/services/health-read-database-check/health-read-database-check.service';
@@ -5,7 +6,6 @@ import { HealthWriteDatabaseCheckService } from '@/support/health/application/se
 import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
 import { HealthViewModelFactory } from '@/support/health/domain/factories/health-view-model.factory';
 import { HealthViewModel } from '@/support/health/domain/view-models/health.view-model';
-import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class HealthCheckService

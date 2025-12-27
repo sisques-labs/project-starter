@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { FindSagaInstancesByCriteriaQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
 import { FindSagaInstancesByCriteriaQueryHandler } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query-handler';
 import {
@@ -7,7 +8,6 @@ import {
 import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaInstancesByCriteriaQueryHandler', () => {
   let handler: FindSagaInstancesByCriteriaQueryHandler;

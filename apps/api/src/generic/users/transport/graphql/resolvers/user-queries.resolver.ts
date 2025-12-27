@@ -1,3 +1,6 @@
+import { UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { OwnerGuard } from '@/generic/auth/infrastructure/guards/owner/owner.guard';
@@ -13,9 +16,6 @@ import {
 import { UserGraphQLMapper } from '@/generic/users/transport/graphql/mappers/user.mapper';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { UseGuards } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { Args, Query, Resolver } from '@nestjs/graphql';
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)

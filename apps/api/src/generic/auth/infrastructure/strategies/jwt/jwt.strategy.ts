@@ -1,8 +1,3 @@
-import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';
-import {
-  AUTH_WRITE_REPOSITORY_TOKEN,
-  AuthWriteRepository,
-} from '@/generic/auth/domain/repositories/auth-write.repository';
 import {
   Inject,
   Injectable,
@@ -12,6 +7,11 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { IJwtPayload } from '@/generic/auth/domain/interfaces/jwt-payload.interface';
+import {
+  AUTH_WRITE_REPOSITORY_TOKEN,
+  AuthWriteRepository,
+} from '@/generic/auth/domain/repositories/auth-write.repository';
 
 /**
  * JWT Strategy

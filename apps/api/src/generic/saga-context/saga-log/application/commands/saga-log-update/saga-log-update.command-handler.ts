@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { SagaLogUpdateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command';
 import { AssertSagaLogExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-exists/assert-saga-log-exists.service';
 import { ISagaLogUpdateDto } from '@/generic/saga-context/saga-log/domain/dtos/entities/saga-log-update/saga-log-update.dto';
@@ -6,8 +8,6 @@ import {
   SagaLogWriteRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-write.repository';
 import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(SagaLogUpdateCommand)
 export class SagaLogUpdateCommandHandler

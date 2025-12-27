@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
 import { ISagaStepCreateDto } from '@/generic/saga-context/saga-step/domain/dtos/entities/saga-step-create/saga-step-create.dto';
 import { SagaStepPrimitives } from '@/generic/saga-context/saga-step/domain/primitives/saga-step.primitives';
@@ -15,7 +16,6 @@ import { IWriteFactory } from '@/shared/domain/interfaces/write-factory.interfac
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { Injectable } from '@nestjs/common';
 
 /**
  * Factory class responsible for creating SagaInstanceAggregate entities.

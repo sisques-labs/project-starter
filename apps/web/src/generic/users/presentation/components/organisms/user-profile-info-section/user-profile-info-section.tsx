@@ -1,5 +1,6 @@
 'use client';
 
+import type { AuthUserProfileResponse } from '@repo/sdk';
 import {
   Card,
   CardContent,
@@ -8,7 +9,6 @@ import {
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
 import { Separator } from '@repo/shared/presentation/components/ui/separator';
-import type { AuthUserProfileResponse } from '@repo/sdk';
 import { useTranslations } from 'next-intl';
 
 interface UserProfileInfoSectionProps {

@@ -1,9 +1,9 @@
+import { SetMetadata } from '@nestjs/common';
 import {
-  Roles,
   ROLES_KEY,
+  Roles,
 } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { SetMetadata } from '@nestjs/common';
 
 jest.mock('@nestjs/common', () => ({
   ...jest.requireActual('@nestjs/common'),

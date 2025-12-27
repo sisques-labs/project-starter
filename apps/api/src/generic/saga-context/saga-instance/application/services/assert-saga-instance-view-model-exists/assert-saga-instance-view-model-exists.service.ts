@@ -1,3 +1,4 @@
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SagaInstanceNotFoundException } from '@/generic/saga-context/saga-instance/application/exceptions/saga-instance-not-found/saga-instance-not-found.exception';
 import {
   SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
@@ -5,7 +6,6 @@ import {
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
 import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { IBaseService } from '@/shared/application/services/base-service/base-service.interface';
-import { Inject, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AssertSagaInstanceViewModelExistsService

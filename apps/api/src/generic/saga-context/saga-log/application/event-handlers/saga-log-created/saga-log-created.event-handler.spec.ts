@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaLogCreatedEventHandler } from '@/generic/saga-context/saga-log/application/event-handlers/saga-log-created/saga-log-created.event-handler';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaLogViewModelFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory';
@@ -7,7 +8,6 @@ import {
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 import { SagaLogCreatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event';
-import { Test } from '@nestjs/testing';
 
 describe('SagaLogCreatedEventHandler', () => {
   let handler: SagaLogCreatedEventHandler;

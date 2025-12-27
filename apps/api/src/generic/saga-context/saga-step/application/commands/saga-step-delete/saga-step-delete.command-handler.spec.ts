@@ -1,3 +1,5 @@
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
 import { SagaStepDeleteCommand } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command';
 import { SagaStepDeleteCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command-handler';
 import { AssertSagaStepExistsService } from '@/generic/saga-context/saga-step/application/services/assert-saga-step-exists/assert-saga-step-exists.service';
@@ -18,8 +20,6 @@ import { SagaStepDeletedEvent } from '@/shared/domain/events/saga-context/saga-s
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
 import { SagaStepUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-step-uuid/saga-step-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
 
 describe('SagaStepDeleteCommandHandler', () => {
   let handler: SagaStepDeleteCommandHandler;

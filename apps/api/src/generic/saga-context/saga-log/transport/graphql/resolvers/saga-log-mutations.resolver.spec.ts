@@ -1,3 +1,4 @@
+import { CommandBus } from '@nestjs/cqrs';
 import { SagaLogCreateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-create/saga-log-create.command';
 import { SagaLogDeleteCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-delete/saga-log-delete.command';
 import { SagaLogUpdateCommand } from '@/generic/saga-context/saga-log/application/commands/saga-log-update/saga-log-update.command';
@@ -8,7 +9,6 @@ import { SagaLogUpdateRequestDto } from '@/generic/saga-context/saga-log/transpo
 import { SagaLogMutationsResolver } from '@/generic/saga-context/saga-log/transport/graphql/resolvers/saga-log-mutations.resolver';
 import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
-import { CommandBus } from '@nestjs/cqrs';
 
 describe('SagaLogMutationsResolver', () => {
   let resolver: SagaLogMutationsResolver;

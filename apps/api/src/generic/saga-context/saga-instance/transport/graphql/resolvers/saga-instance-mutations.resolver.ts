@@ -1,3 +1,6 @@
+import { Logger } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { SagaInstanceChangeStatusCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command';
 import { SagaInstanceCreateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-create/saga-instance-create.command';
 import { SagaInstanceDeleteCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-delete/saga-instance-delete.command';
@@ -9,9 +12,6 @@ import { SagaInstanceUpdateRequestDto } from '@/generic/saga-context/saga-instan
 import { SagaInstanceGraphQLMapper } from '@/generic/saga-context/saga-instance/transport/graphql/mappers/saga-instance.mapper';
 import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
-import { Logger } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 @Resolver()
 // TODO: Add guards and roles

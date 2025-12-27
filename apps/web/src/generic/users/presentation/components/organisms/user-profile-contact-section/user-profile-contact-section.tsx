@@ -1,5 +1,6 @@
 'use client';
 
+import type { AuthUserProfileResponse } from '@repo/sdk';
 import {
   Card,
   CardContent,
@@ -7,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
-import type { AuthUserProfileResponse } from '@repo/sdk';
 import { Phone } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

@@ -1,5 +1,5 @@
-import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
 import { InvalidStringException } from '@/shared/domain/exceptions/value-objects/invalid-string/invalid-string.exception';
+import { StringValueObject } from '@/shared/domain/value-objects/string/string.vo';
 
 describe('StringValueObject', () => {
   describe('constructor', () => {

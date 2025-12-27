@@ -1,3 +1,4 @@
+import { Collection } from 'mongodb';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthMongoDbDto } from '@/generic/auth/infrastructure/database/mongodb/dtos/auth-mongodb.dto';
@@ -6,7 +7,6 @@ import { AuthMongoRepository } from '@/generic/auth/infrastructure/database/mong
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { Collection } from 'mongodb';
 
 describe('AuthMongoRepository', () => {
   let repository: AuthMongoRepository;

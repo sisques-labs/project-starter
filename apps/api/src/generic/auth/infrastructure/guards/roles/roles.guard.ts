@@ -1,5 +1,3 @@
-import { ROLES_KEY } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
-import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import {
   CanActivate,
   ExecutionContext,
@@ -8,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { ROLES_KEY } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
+import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 
 /**
  * Roles Guard

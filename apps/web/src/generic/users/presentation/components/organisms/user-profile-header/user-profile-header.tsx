@@ -1,5 +1,6 @@
 'use client';
 
+import type { AuthUserProfileResponse } from '@repo/sdk';
 import {
   Avatar,
   AvatarFallback,
@@ -10,7 +11,6 @@ import {
   Card,
   CardContent,
 } from '@repo/shared/presentation/components/ui/card';
-import type { AuthUserProfileResponse } from '@repo/sdk';
 import { useTranslations } from 'next-intl';
 
 interface UserProfileHeaderProps {

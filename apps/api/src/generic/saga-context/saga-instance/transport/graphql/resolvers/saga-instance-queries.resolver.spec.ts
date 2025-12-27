@@ -1,3 +1,4 @@
+import { QueryBus } from '@nestjs/cqrs';
 import { FindSagaInstancesByCriteriaQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
 import { FindSagaInstanceViewModelByIdQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-view-model-find-by-id/saga-instance-view-model-find-by-id.query';
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
@@ -7,7 +8,6 @@ import { SagaInstanceFindByIdRequestDto } from '@/generic/saga-context/saga-inst
 import { SagaInstanceGraphQLMapper } from '@/generic/saga-context/saga-instance/transport/graphql/mappers/saga-instance.mapper';
 import { SagaInstanceQueryResolver } from '@/generic/saga-context/saga-instance/transport/graphql/resolvers/saga-instance-queries.resolver';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { QueryBus } from '@nestjs/cqrs';
 
 describe('SagaInstanceQueryResolver', () => {
   let resolver: SagaInstanceQueryResolver;

@@ -1,10 +1,10 @@
+import { Injectable } from '@nestjs/common';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import {
   AuthResponseDto,
   PaginatedAuthResultDto,
 } from '@/generic/auth/transport/graphql/dtos/responses/auth.response.dto';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthGraphQLMapper {

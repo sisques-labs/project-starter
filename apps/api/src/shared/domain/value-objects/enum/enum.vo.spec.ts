@@ -1,5 +1,5 @@
-import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
 import { InvalidEnumValueException } from '@/shared/domain/exceptions/value-objects/invalid-enum-value/invalid-enum-value.exception';
+import { EnumValueObject } from '@/shared/domain/value-objects/enum/enum.vo';
 
 // Test enum for testing EnumValueObject
 enum TestEnum {

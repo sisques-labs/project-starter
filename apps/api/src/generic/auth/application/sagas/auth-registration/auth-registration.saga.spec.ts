@@ -1,3 +1,4 @@
+import { CommandBus } from '@nestjs/cqrs';
 import { AuthCreateCommand } from '@/generic/auth/application/commands/auth-create/auth-create.command';
 import { AuthDeleteCommand } from '@/generic/auth/application/commands/auth-delete/auth-delete.command';
 import { AuthRegistrationSaga } from '@/generic/auth/application/sagas/auth-registration/auth-registration.saga';
@@ -9,7 +10,6 @@ import { UserDeleteCommand } from '@/generic/users/application/commands/delete-u
 import { UserCreateCommand } from '@/generic/users/application/commands/user-create/user-create.command';
 import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event';
 import { IAuthEventData } from '@/shared/domain/events/auth/interfaces/auth-event-data.interface';
-import { CommandBus } from '@nestjs/cqrs';
 
 describe('AuthRegistrationSaga', () => {
   let saga: AuthRegistrationSaga;

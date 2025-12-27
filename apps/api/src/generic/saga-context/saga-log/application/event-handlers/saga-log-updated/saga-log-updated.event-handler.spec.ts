@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaLogUpdatedEventHandler } from '@/generic/saga-context/saga-log/application/event-handlers/saga-log-updated/saga-log-updated.event-handler';
 import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
@@ -7,7 +8,6 @@ import {
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 import { SagaLogUpdatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-updated/saga-log-updated.event';
-import { Test } from '@nestjs/testing';
 
 describe('SagaLogUpdatedEventHandler', () => {
   let handler: SagaLogUpdatedEventHandler;

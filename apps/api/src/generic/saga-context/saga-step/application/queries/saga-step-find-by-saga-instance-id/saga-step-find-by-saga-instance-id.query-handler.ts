@@ -1,10 +1,10 @@
+import { Inject, Logger } from '@nestjs/common';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { SagaStepAggregate } from '@/generic/saga-context/saga-step/domain/aggregates/saga-step.aggregate';
 import {
   SAGA_STEP_WRITE_REPOSITORY_TOKEN,
   SagaStepWriteRepository,
 } from '@/generic/saga-context/saga-step/domain/repositories/saga-step-write.repository';
-import { Inject, Logger } from '@nestjs/common';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindSagaStepsBySagaInstanceIdQuery } from './saga-step-find-by-saga-instance-id.query';
 
 @QueryHandler(FindSagaStepsBySagaInstanceIdQuery)

@@ -1,3 +1,4 @@
+import { EventBus } from '@nestjs/cqrs';
 import { UserDeleteCommand } from '@/generic/users/application/commands/delete-user/delete-user.command';
 import { UserDeleteCommandHandler } from '@/generic/users/application/commands/delete-user/delete-user.command-handler';
 import { IUserDeleteCommandDto } from '@/generic/users/application/dtos/commands/user-delete/user-delete-command.dto';
@@ -13,7 +14,6 @@ import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-sta
 import { UserDeletedEvent } from '@/shared/domain/events/users/user-deleted/user-deleted.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
 
 describe('UserDeleteCommandHandler', () => {
   let handler: UserDeleteCommandHandler;

@@ -1,6 +1,6 @@
-import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
-import { IUserEventData } from '@/shared/domain/events/users/interfaces/user-event-data.interface';
 import { BaseEvent } from '@/shared/domain/events/base-event.interface';
+import { IUserEventData } from '@/shared/domain/events/users/interfaces/user-event-data.interface';
+import { UserUpdatedEvent } from '@/shared/domain/events/users/user-updated/user-updated.event';
 import { IEventMetadata } from '@/shared/domain/interfaces/event-metadata.interface';
 
 describe('UserUpdatedEvent', () => {

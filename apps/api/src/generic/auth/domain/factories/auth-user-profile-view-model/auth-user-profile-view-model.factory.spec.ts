@@ -1,5 +1,5 @@
-import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
 import { AuthProviderEnum } from '@/generic/auth/domain/enums/auth-provider.enum';
+import { AuthUserProfileViewModelFactory } from '@/generic/auth/domain/factories/auth-user-profile-view-model/auth-user-profile-view-model.factory';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthUserProfileViewModel } from '@/generic/auth/domain/view-models/auth-user-profile/auth-user-profile.view-model';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';

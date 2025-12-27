@@ -1,10 +1,10 @@
+import { useAuth } from '@repo/sdk';
+import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { useMemo } from 'react';
 import { AuthLoginService } from '@/generic/auth/application/services/auth-login/auth-login.service';
 import { AuthLoginByEmailFormValues } from '@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
 import { useRoutes } from '@/shared/presentation/hooks/use-routes';
-import { useAuth } from '@repo/sdk';
-import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
 
 /**
  * Hook that provides login functionality using the AuthLoginService

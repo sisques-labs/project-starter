@@ -1,3 +1,6 @@
+import { Logger } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthLoginByEmailCommand } from '@/generic/auth/application/commands/auth-login-by-email/auth-login-by-email.command';
 import { AuthRefreshTokenCommand } from '@/generic/auth/application/commands/auth-refresh-token/auth-refresh-token.command';
 import { AuthRegisterByEmailCommand } from '@/generic/auth/application/commands/auth-register-by-email/auth-register-by-email.command';
@@ -10,9 +13,6 @@ import { RefreshTokenResponseDto } from '@/generic/auth/transport/graphql/dtos/r
 import { UpdateUserRequestDto } from '@/generic/users/transport/graphql/dtos/requests/update-user.request.dto';
 import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
 import { MutationResponseGraphQLMapper } from '@/shared/transport/graphql/mappers/mutation-response/mutation-response.mapper';
-import { Logger } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 @Resolver()
 @Public()

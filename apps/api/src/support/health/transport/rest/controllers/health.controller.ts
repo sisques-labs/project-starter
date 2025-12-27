@@ -1,6 +1,6 @@
+import { Controller, Get, Logger } from '@nestjs/common';
 import { HealthCheckService } from '@/support/health/application/services/health-check/health-check.service';
 import { HealthRestMapper } from '@/support/health/transport/rest/mappers/health-rest.mapper';
-import { Controller, Get, Logger } from '@nestjs/common';
 
 @Controller('health')
 export class HealthController {

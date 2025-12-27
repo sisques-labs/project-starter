@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { SagaLogViewModelFactory } from '@/generic/saga-context/saga-log/domain/factories/saga-log-view-model/saga-log-view-model.factory';
 import {
   SAGA_LOG_READ_REPOSITORY_TOKEN,
@@ -5,8 +7,6 @@ import {
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
 import { SagaLogCreatedEvent } from '@/shared/domain/events/saga-context/saga-log/saga-log-created/saga-log-created.event';
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(SagaLogCreatedEvent)
 export class SagaLogCreatedEventHandler

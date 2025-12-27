@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindSagaInstancesByCriteriaQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-criteria/saga-instance-find-by-criteria.query';
 import {
   SAGA_INSTANCE_READ_REPOSITORY_TOKEN,
@@ -5,8 +7,6 @@ import {
 } from '@/generic/saga-context/saga-instance/domain/repositories/saga-instance-read.repository';
 import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Inject, Logger } from '@nestjs/common';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindSagaInstancesByCriteriaQuery)
 export class FindSagaInstancesByCriteriaQueryHandler

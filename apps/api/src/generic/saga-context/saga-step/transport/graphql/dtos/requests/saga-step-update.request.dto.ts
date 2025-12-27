@@ -1,5 +1,3 @@
-import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
-
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsDate,
@@ -11,6 +9,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 
 @InputType('SagaStepUpdateRequestDto')
 export class SagaStepUpdateRequestDto {

@@ -1,6 +1,6 @@
+import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
 import { UserUuidValueObject } from '@/shared/domain/value-objects/identifiers/user-uuid/user-uuid.vo';
 import { UuidValueObject } from '@/shared/domain/value-objects/uuid/uuid.vo';
-import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
 
 describe('UserUuidValueObject', () => {
   const validUuid = '123e4567-e89b-12d3-a456-426614174000';

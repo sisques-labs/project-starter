@@ -1,3 +1,6 @@
+import { Logger, UseGuards } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { JwtAuthGuard } from '@/generic/auth/infrastructure/auth/jwt-auth.guard';
 import { Roles } from '@/generic/auth/infrastructure/decorators/roles/roles.decorator';
 import { RolesGuard } from '@/generic/auth/infrastructure/guards/roles/roles.guard';
@@ -16,9 +19,6 @@ import {
 import { SagaLogGraphQLMapper } from '@/generic/saga-context/saga-log/transport/graphql/mappers/saga-log.mapper';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
-import { Logger, UseGuards } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { Args, Query, Resolver } from '@nestjs/graphql';
 
 @Resolver()
 @UseGuards(JwtAuthGuard, RolesGuard)

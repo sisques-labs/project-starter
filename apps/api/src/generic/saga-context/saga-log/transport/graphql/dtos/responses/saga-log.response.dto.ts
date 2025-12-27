@@ -1,6 +1,6 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { BasePaginatedResultDto } from '@/shared/transport/graphql/dtos/responses/base-paginated-result/base-paginated-result.dto';
-import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType('SagaLogResponseDto')
 export class SagaLogResponseDto {

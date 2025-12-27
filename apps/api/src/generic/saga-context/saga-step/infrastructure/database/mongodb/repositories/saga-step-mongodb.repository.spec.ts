@@ -1,3 +1,4 @@
+import { Collection } from 'mongodb';
 import { SagaStepStatusEnum } from '@/generic/saga-context/saga-step/domain/enums/saga-step-status/saga-step-status.enum';
 import { SagaStepViewModel } from '@/generic/saga-context/saga-step/domain/view-models/saga-step/saga-step.view-model';
 import { SagaStepMongoDbDto } from '@/generic/saga-context/saga-step/infrastructure/database/mongodb/dtos/saga-step-mongodb.dto';
@@ -6,7 +7,6 @@ import { SagaStepMongoRepository } from '@/generic/saga-context/saga-step/infras
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { Collection } from 'mongodb';
 
 describe('SagaStepMongoRepository', () => {
   let repository: SagaStepMongoRepository;

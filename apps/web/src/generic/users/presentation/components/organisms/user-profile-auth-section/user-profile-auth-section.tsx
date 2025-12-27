@@ -1,5 +1,6 @@
 'use client';
 
+import type { AuthUserProfileResponse } from '@repo/sdk';
 import { Badge } from '@repo/shared/presentation/components/ui/badge';
 import {
   Card,
@@ -9,8 +10,7 @@ import {
   CardTitle,
 } from '@repo/shared/presentation/components/ui/card';
 import { Separator } from '@repo/shared/presentation/components/ui/separator';
-import type { AuthUserProfileResponse } from '@repo/sdk';
-import { CheckCircle2, XCircle, Shield, Mail } from 'lucide-react';
+import { CheckCircle2, Mail, Shield, XCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface UserProfileAuthSectionProps {

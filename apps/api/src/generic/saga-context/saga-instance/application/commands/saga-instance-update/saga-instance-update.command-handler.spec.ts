@@ -1,3 +1,5 @@
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
 import { SagaInstanceUpdateCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command';
 import { SagaInstanceUpdateCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-update/saga-instance-update.command-handler';
 import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
@@ -12,8 +14,6 @@ import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-insta
 import { SagaInstanceUpdatedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-updated/saga-instance-updated.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
 
 describe('SagaInstanceUpdateCommandHandler', () => {
   let handler: SagaInstanceUpdateCommandHandler;

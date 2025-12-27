@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { AuthUpdateCommand } from '@/generic/auth/application/commands/auth-update/auth-update.command';
 import { AssertAuthExistsService } from '@/generic/auth/application/services/assert-auth-exists/assert-auth-exsists.service';
 import { AuthAggregate } from '@/generic/auth/domain/aggregate/auth.aggregate';
@@ -7,8 +9,6 @@ import {
   AuthWriteRepository,
 } from '@/generic/auth/domain/repositories/auth-write.repository';
 import { BaseUpdateCommandHandler } from '@/shared/application/commands/update/base-update/base-update.command-handler';
-import { Inject, Logger } from '@nestjs/common';
-import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(AuthUpdateCommand)
 export class AuthUpdateCommandHandler

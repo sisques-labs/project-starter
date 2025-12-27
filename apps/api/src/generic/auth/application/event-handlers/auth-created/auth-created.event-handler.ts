@@ -1,3 +1,5 @@
+import { Inject, Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { AuthViewModelFactory } from '@/generic/auth/domain/factories/auth-view-model/auth-view-model.factory';
 import {
   AUTH_READ_REPOSITORY_TOKEN,
@@ -5,8 +7,6 @@ import {
 } from '@/generic/auth/domain/repositories/auth-read.repository';
 import { AuthViewModel } from '@/generic/auth/domain/view-models/auth.view-model';
 import { AuthCreatedEvent } from '@/shared/domain/events/auth/auth-created/auth-created.event';
-import { Inject, Logger } from '@nestjs/common';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(AuthCreatedEvent)
 export class AuthCreatedEventHandler

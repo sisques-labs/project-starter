@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { FindSagaLogViewModelsBySagaInstanceIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query';
 import { FindSagaLogViewModelsBySagaInstanceIdQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-saga-instance-id/saga-log-find-view-model-by-saga-instance-id.query-handler';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
@@ -6,7 +7,6 @@ import {
   SagaLogReadRepository,
 } from '@/generic/saga-context/saga-log/domain/repositories/saga-log-read.repository';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaLogViewModelsBySagaInstanceIdQueryHandler', () => {
   let handler: FindSagaLogViewModelsBySagaInstanceIdQueryHandler;

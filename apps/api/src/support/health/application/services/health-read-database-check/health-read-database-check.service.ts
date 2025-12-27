@@ -1,6 +1,6 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
 import { HealthStatusEnum } from '@/support/health/domain/enum/health-status.enum';
-import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class HealthReadDatabaseCheckService {

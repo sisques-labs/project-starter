@@ -1,10 +1,10 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import {
   PaginatedUserResultDto,
   UserResponseDto,
 } from '@/generic/users/transport/graphql/dtos/responses/user.response.dto';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
-import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class UserGraphQLMapper {

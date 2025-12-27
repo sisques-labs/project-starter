@@ -1,3 +1,4 @@
+import { Collection } from 'mongodb';
 import { IUserCreateViewModelDto } from '@/generic/users/domain/dtos/view-models/user-create/user-create-view-model.dto';
 import { UserViewModel } from '@/generic/users/domain/view-models/user.view-model';
 import { UserMongoDbDto } from '@/generic/users/infrastructure/database/mongodb/dtos/user-mongodb.dto';
@@ -10,7 +11,6 @@ import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 import { UserRoleEnum } from '@/shared/domain/enums/user-context/user/user-role/user-role.enum';
 import { UserStatusEnum } from '@/shared/domain/enums/user-context/user/user-status/user-status.enum';
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { Collection } from 'mongodb';
 
 describe('UserMongoRepository', () => {
   let repository: UserMongoRepository;

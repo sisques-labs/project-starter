@@ -1,8 +1,8 @@
+import { SetMetadata } from '@nestjs/common';
 import {
   IS_PUBLIC_KEY,
   Public,
 } from '@/generic/auth/infrastructure/decorators/public/public.decorator';
-import { SetMetadata } from '@nestjs/common';
 
 jest.mock('@nestjs/common', () => ({
   ...jest.requireActual('@nestjs/common'),

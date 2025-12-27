@@ -1,3 +1,5 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SagaStepChangeStatusCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-change-status/saga-step-change-status.command-handler';
 import { SagaStepCreateCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-create/saga-step-create.command-handler';
 import { SagaStepDeleteCommandHandler } from '@/generic/saga-context/saga-step/application/commands/saga-step-delete/saga-step-delete.command-handler';
@@ -27,8 +29,6 @@ import { SagaStepGraphQLMapper } from '@/generic/saga-context/saga-step/transpor
 import { SagaStepMutationsResolver } from '@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-mutations.resolver';
 import { SagaStepQueryResolver } from '@/generic/saga-context/saga-step/transport/graphql/resolvers/saga-step-queries.resolver';
 import { SharedModule } from '@/shared/shared.module';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 const RESOLVERS = [SagaStepQueryResolver, SagaStepMutationsResolver];
 

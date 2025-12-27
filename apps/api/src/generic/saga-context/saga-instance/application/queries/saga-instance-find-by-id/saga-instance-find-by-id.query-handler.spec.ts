@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { SagaInstanceNotFoundException } from '@/generic/saga-context/saga-instance/application/exceptions/saga-instance-not-found/saga-instance-not-found.exception';
 import { FindSagaInstanceByIdQuery } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query';
 import { FindSagaInstanceByIdQueryHandler } from '@/generic/saga-context/saga-instance/application/queries/saga-instance-find-by-id/saga-instance-find-by-id.query-handler';
@@ -8,7 +9,6 @@ import { SagaInstanceNameValueObject } from '@/generic/saga-context/saga-instanc
 import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-instance/domain/value-objects/saga-instance-status/saga-instance-status.vo';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaInstanceByIdQueryHandler', () => {
   let handler: FindSagaInstanceByIdQueryHandler;

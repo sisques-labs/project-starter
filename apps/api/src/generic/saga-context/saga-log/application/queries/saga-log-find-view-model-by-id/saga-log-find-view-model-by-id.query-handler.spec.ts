@@ -1,10 +1,10 @@
+import { Test } from '@nestjs/testing';
 import { SagaLogNotFoundException } from '@/generic/saga-context/saga-log/application/exceptions/saga-log-not-found/saga-log-not-found.exception';
 import { FindSagaLogViewModelByIdQuery } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query';
 import { FindSagaLogViewModelByIdQueryHandler } from '@/generic/saga-context/saga-log/application/queries/saga-log-find-view-model-by-id/saga-log-find-view-model-by-id.query-handler';
 import { AssertSagaLogViewModelExistsService } from '@/generic/saga-context/saga-log/application/services/assert-saga-log-view-model-exists/assert-saga-log-view-model-exists.service';
 import { SagaLogTypeEnum } from '@/generic/saga-context/saga-log/domain/enums/saga-log-type/saga-log-type.enum';
 import { SagaLogViewModel } from '@/generic/saga-context/saga-log/domain/view-models/saga-log/saga-log.view-model';
-import { Test } from '@nestjs/testing';
 
 describe('FindSagaLogViewModelByIdQueryHandler', () => {
   let handler: FindSagaLogViewModelByIdQueryHandler;

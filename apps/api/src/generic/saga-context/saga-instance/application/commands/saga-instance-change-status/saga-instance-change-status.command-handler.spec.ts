@@ -1,3 +1,5 @@
+import { EventBus } from '@nestjs/cqrs';
+import { Test } from '@nestjs/testing';
 import { SagaInstanceChangeStatusCommand } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command';
 import { SagaInstanceChangeStatusCommandHandler } from '@/generic/saga-context/saga-instance/application/commands/saga-instance-change-status/saga-instance-change-status.command-handler';
 import { AssertSagaInstanceExistsService } from '@/generic/saga-context/saga-instance/application/services/assert-saga-instance-exists/assert-saga-instance-exists.service';
@@ -12,8 +14,6 @@ import { SagaInstanceStatusValueObject } from '@/generic/saga-context/saga-insta
 import { SagaInstanceStatusChangedEvent } from '@/shared/domain/events/saga-context/saga-instance/saga-instance-status-changed/saga-instance-status-changed.event';
 import { DateValueObject } from '@/shared/domain/value-objects/date/date.vo';
 import { SagaInstanceUuidValueObject } from '@/shared/domain/value-objects/identifiers/saga-instance-uuid/saga-instance-uuid.vo';
-import { EventBus } from '@nestjs/cqrs';
-import { Test } from '@nestjs/testing';
 
 describe('SagaInstanceChangeStatusCommandHandler', () => {
   let handler: SagaInstanceChangeStatusCommandHandler;

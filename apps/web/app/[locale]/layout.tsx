@@ -1,10 +1,10 @@
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
 import { AppLayoutWithSidebar } from '@/shared/presentation/components/templates/app-layout-with-sidebar';
 import { routing } from '@/shared/presentation/i18n/routing';
 import Providers from '@/shared/presentation/providers/providers';
-import type { Metadata } from 'next';
-import { getMessages } from 'next-intl/server';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { notFound } from 'next/navigation';
 import '../globals.css';
 
 const geistSans = Geist({

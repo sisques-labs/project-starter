@@ -1,3 +1,4 @@
+import { Collection } from 'mongodb';
 import { SagaInstanceStatusEnum } from '@/generic/saga-context/saga-instance/domain/enums/saga-instance-status/saga-instance-status.enum';
 import { SagaInstanceViewModel } from '@/generic/saga-context/saga-instance/domain/view-models/saga-instance/saga-instance.view-model';
 import { SagaInstanceMongoDbDto } from '@/generic/saga-context/saga-instance/infrastructure/database/mongodb/dtos/saga-instance-mongodb.dto';
@@ -6,7 +7,6 @@ import { SagaInstanceMongoRepository } from '@/generic/saga-context/saga-instanc
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { PaginatedResult } from '@/shared/domain/entities/paginated-result.entity';
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { Collection } from 'mongodb';
 
 describe('SagaInstanceMongoRepository', () => {
   let repository: SagaInstanceMongoRepository;

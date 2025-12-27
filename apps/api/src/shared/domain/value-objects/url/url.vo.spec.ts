@@ -1,5 +1,5 @@
-import { UrlValueObject } from '@/shared/domain/value-objects/url/url.vo';
 import { InvalidUrlException } from '@/shared/domain/exceptions/value-objects/invalid-url/invalid-url.exception';
+import { UrlValueObject } from '@/shared/domain/value-objects/url/url.vo';
 
 describe('UrlValueObject', () => {
   describe('constructor', () => {

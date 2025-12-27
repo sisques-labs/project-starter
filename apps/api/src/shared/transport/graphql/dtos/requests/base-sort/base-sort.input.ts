@@ -1,6 +1,6 @@
-import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 
 @InputType('BaseSortInput')
 export class BaseSortInput {
