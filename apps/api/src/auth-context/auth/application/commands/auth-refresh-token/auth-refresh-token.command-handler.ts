@@ -1,7 +1,6 @@
 import { AssertAuthExistsService } from '@/auth-context/auth/application/services/assert-auth-exsists/assert-auth-exsists.service';
 import { JwtAuthService } from '@/auth-context/auth/application/services/jwt-auth/jwt-auth.service';
 import { AuthAggregate } from '@/auth-context/auth/domain/aggregate/auth.aggregate';
-import { FindTenantMemberByUserIdQuery } from '@/tenant-context/tenant-members/application/queries/tenant-member-find-by-user-id/tenant-member-find-by-user-id.query';
 import { UserFindByIdQuery } from '@/user-context/users/application/queries/user-find-by-id/user-find-by-id.query';
 import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
@@ -43,13 +42,6 @@ export class AuthRefreshTokenCommandHandler
       new UserFindByIdQuery({ id: auth.userId.value }),
     );
 
-    // 04: Get tenant members for the user to extract tenant IDs
-    const tenantMembers = await this.queryBus.execute(
-      new FindTenantMemberByUserIdQuery({ id: auth.userId.value }),
-    );
-    const tenantIds =
-      tenantMembers?.map((member) => member.tenantId.value) || [];
-
     // 05: Generate new access token with current user data
     const newAccessToken = this.jwtAuthService.generateAccessToken({
       id: auth.id.value,
@@ -57,7 +49,6 @@ export class AuthRefreshTokenCommandHandler
       email: auth.email?.value || undefined,
       username: user?.userName?.value ?? undefined,
       role: user?.role?.value ?? undefined,
-      tenantIds: tenantIds,
     });
 
     this.logger.log(`New access token generated for auth: ${auth.id.value}`);

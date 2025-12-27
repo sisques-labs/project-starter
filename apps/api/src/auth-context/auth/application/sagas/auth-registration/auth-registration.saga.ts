@@ -2,12 +2,7 @@ import { AuthCreateCommand } from '@/auth-context/auth/application/commands/auth
 import { AuthDeleteCommand } from '@/auth-context/auth/application/commands/auth-delete/auth-delete.command';
 import { IAuthCreateCommandDto } from '@/auth-context/auth/application/dtos/commands/auth-create/auth-create-command.dto';
 import { BaseSaga } from '@/shared/application/sagas/base-saga/base-saga';
-import { TenantMemberRoleEnum } from '@/shared/domain/enums/tenant-context/tenant-members/tenant-member-role/tenant-member-role.enum';
 import { AuthRegistrationRequestedEvent } from '@/shared/domain/events/auth/auth-registration-requested/auth-registration-requested.event';
-import { TenantMemberAddCommand } from '@/tenant-context/tenant-members/application/commands/tenant-member-add/tenant-member-add.command';
-import { TenantMemberRemoveCommand } from '@/tenant-context/tenant-members/application/commands/tenant-member-remove/tenant-member-remove.command';
-import { TenantCreateCommand } from '@/tenant-context/tenants/application/commands/tenant-create/tenant-create.command';
-import { TenantDeleteCommand } from '@/tenant-context/tenants/application/commands/tenant-delete/tenant-delete.command';
 import { UserDeleteCommand } from '@/user-context/users/application/commands/delete-user/delete-user.command';
 import { UserCreateCommand } from '@/user-context/users/application/commands/user-create/user-create.command';
 import { Injectable } from '@nestjs/common';
@@ -109,69 +104,6 @@ export class AuthRegistrationSaga extends BaseSaga {
         }
       });
 
-      // Step 3: Create tenant (if tenantName is provided)
-      if (tenantName) {
-        const tenantResult = await this.executeStep(sagaInstanceId, {
-          name: 'Create Tenant',
-          order: 3,
-          payload: { tenantName },
-          action: () => this.createTenantStep(tenantName),
-        });
-        const createdTenantId = tenantResult.tenantId;
-
-        // Register compensation: delete tenant
-        this.compensationActions.push(async () => {
-          this.logger.log(
-            `🔄 Compensating: Deleting tenant ${createdTenantId}`,
-          );
-          try {
-            await this.commandBus.execute(
-              new TenantDeleteCommand({ id: createdTenantId }),
-            );
-          } catch (compensationError) {
-            this.logger.error(
-              `❌ Failed to delete tenant ${createdTenantId} during compensation: ${compensationError}`,
-            );
-            // Continue with other compensations even if this fails
-          }
-        });
-
-        // Step 4: Associate user as tenant member (if tenant was created)
-        const tenantMemberResult = await this.executeStep(sagaInstanceId, {
-          name: 'Add User as Tenant Member',
-          order: 4,
-          payload: {
-            userId,
-            tenantId: createdTenantId,
-            role: TenantMemberRoleEnum.OWNER,
-          },
-          action: () =>
-            this.addTenantMemberStep(
-              userId,
-              createdTenantId,
-              TenantMemberRoleEnum.OWNER,
-            ),
-        });
-        const createdTenantMemberId = tenantMemberResult.tenantMemberId;
-
-        // Register compensation: delete tenant member
-        this.compensationActions.push(async () => {
-          this.logger.log(
-            `🔄 Compensating: Removing tenant member ${createdTenantMemberId} (user ${userId} from tenant ${createdTenantId})`,
-          );
-          try {
-            await this.commandBus.execute(
-              new TenantMemberRemoveCommand({ id: createdTenantMemberId }),
-            );
-          } catch (compensationError) {
-            this.logger.error(
-              `❌ Failed to remove tenant member ${createdTenantMemberId} during compensation: ${compensationError}`,
-            );
-            // Continue with other compensations even if this fails
-          }
-        });
-      }
-
       await this.completeSagaInstance(sagaInstanceId);
       this.logger.log(
         `🎉 Complete user registration SAGA completed successfully for auth: ${authId}`,
@@ -220,65 +152,6 @@ export class AuthRegistrationSaga extends BaseSaga {
     this.logger.log(`✅ Auth created successfully: ${authId}`);
 
     return { authId };
-  }
-
-  /**
-   * Creates a tenant with the provided name
-   */
-  private async createTenantStep(tenantName: string): Promise<{
-    tenantId: string;
-  }> {
-    const tenantId = await this.commandBus.execute(
-      new TenantCreateCommand({
-        name: tenantName,
-        description: null,
-        websiteUrl: null,
-        logoUrl: null,
-        faviconUrl: null,
-        primaryColor: null,
-        secondaryColor: null,
-        email: null,
-        phoneNumber: null,
-        phoneCode: null,
-        address: null,
-        city: null,
-        state: null,
-        country: null,
-        postalCode: null,
-        timezone: null,
-        locale: null,
-        maxUsers: null,
-        maxStorage: null,
-        maxApiCalls: null,
-      }),
-    );
-
-    this.logger.log(`✅ Tenant created successfully: ${tenantId}`);
-
-    return { tenantId };
-  }
-
-  /**
-   * Adds a user as a tenant member with the specified role
-   */
-  private async addTenantMemberStep(
-    userId: string,
-    tenantId: string,
-    role: TenantMemberRoleEnum,
-  ): Promise<{ tenantMemberId: string }> {
-    const tenantMemberId = await this.commandBus.execute(
-      new TenantMemberAddCommand({
-        tenantId,
-        userId,
-        role,
-      }),
-    );
-
-    this.logger.log(
-      `✅ User ${userId} added as tenant member with role ${role} to tenant ${tenantId}`,
-    );
-
-    return { tenantMemberId };
   }
 
   /**

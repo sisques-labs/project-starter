@@ -1,11 +1,11 @@
-import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 
-const FEATURES = [];
+const MODULES = [];
 
 @Module({
-  imports: [SharedModule, ...FEATURES],
+  imports: [...MODULES],
   controllers: [],
   providers: [],
+  exports: [],
 })
 export class FeaturesModule {}

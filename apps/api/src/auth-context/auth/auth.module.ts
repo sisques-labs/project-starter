@@ -26,8 +26,6 @@ import { AuthTypeormMapper } from '@/auth-context/auth/infrastructure/database/t
 import { AuthTypeormRepository } from '@/auth-context/auth/infrastructure/database/typeorm/repositories/auth-typeorm.repository';
 import { OwnerGuard } from '@/auth-context/auth/infrastructure/guards/owner/owner.guard';
 import { RolesGuard } from '@/auth-context/auth/infrastructure/guards/roles/roles.guard';
-import { TenantRolesGuard } from '@/auth-context/auth/infrastructure/guards/tenant-roles/tenant-roles.guard';
-import { TenantGuard } from '@/auth-context/auth/infrastructure/guards/tenant/tenant.guard';
 import { JwtStrategy } from '@/auth-context/auth/infrastructure/strategies/jwt/jwt.strategy';
 import { AuthGraphQLMapper } from '@/auth-context/auth/transport/graphql/mappers/auth.mapper';
 import { AuthMutationsResolver } from '@/auth-context/auth/transport/graphql/resolvers/auth-mutations.resolver';
@@ -74,13 +72,7 @@ const MAPPERS = [AuthTypeormMapper, AuthMongoDBMapper, AuthGraphQLMapper];
 
 const STRATEGIES = [JwtStrategy];
 
-const GUARDS = [
-  JwtAuthGuard,
-  RolesGuard,
-  OwnerGuard,
-  TenantGuard,
-  TenantRolesGuard,
-];
+const GUARDS = [JwtAuthGuard, RolesGuard, OwnerGuard];
 
 const REPOSITORIES = [
   {
