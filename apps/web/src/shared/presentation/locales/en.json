@@ -11,6 +11,9 @@
   "nav": {
     "home": "Home",
     "features": "Features",
+    "feature1": "Feature 1",
+    "feature2": "Feature 2",
+    "feature3": "Feature 3",
     "settings": "Settings"
   },
   "authPage": {

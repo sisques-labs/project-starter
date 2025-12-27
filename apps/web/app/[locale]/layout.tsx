@@ -1,3 +1,4 @@
+import { AppLayoutWithSidebar } from '@/shared/presentation/components/templates/app-layout-with-sidebar';
 import { routing } from '@/shared/presentation/i18n/routing';
 import Providers from '@/shared/presentation/providers/providers';
 import type { Metadata } from 'next';
@@ -53,7 +54,7 @@ export default async function LocaleLayout({
           apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4100'}
           messages={messages}
         >
-          {children}
+          <AppLayoutWithSidebar>{children}</AppLayoutWithSidebar>
         </Providers>
       </body>
     </html>

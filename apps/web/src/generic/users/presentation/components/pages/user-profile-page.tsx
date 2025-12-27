@@ -21,6 +21,7 @@ import { useTranslations } from 'next-intl';
 
 export function UserProfilePage() {
   const t = useTranslations();
+
   const {
     profile,
     isLoading: isLoadingProfile,
@@ -87,25 +88,23 @@ export function UserProfilePage() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="space-y-6">
-        {/* Header with Avatar and Basic Info */}
-        <UserProfileHeader profile={profile} />
+    <div>
+      {/* Header with Avatar and Basic Info */}
+      <UserProfileHeader profile={profile} />
 
-        {/* Grid Layout for Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Personal Information */}
-          <UserProfileInfoSection profile={profile} />
+      {/* Grid Layout for Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Personal Information */}
+        <UserProfileInfoSection profile={profile} />
 
-          {/* Authentication Information */}
-          <UserProfileAuthSection profile={profile} />
+        {/* Authentication Information */}
+        <UserProfileAuthSection profile={profile} />
 
-          {/* Account Information */}
-          <UserProfileAccountSection profile={profile} />
+        {/* Account Information */}
+        <UserProfileAccountSection profile={profile} />
 
-          {/* Contact Information */}
-          <UserProfileContactSection profile={profile} />
-        </div>
+        {/* Contact Information */}
+        <UserProfileContactSection profile={profile} />
 
         {/* Edit Form Section */}
         <Card>

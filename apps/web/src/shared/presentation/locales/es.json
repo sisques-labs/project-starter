@@ -11,6 +11,9 @@
   "nav": {
     "home": "Inicio",
     "features": "Características",
+    "feature1": "Característica 1",
+    "feature2": "Característica 2",
+    "feature3": "Característica 3",
     "settings": "Configuración"
   },
   "authPage": {
