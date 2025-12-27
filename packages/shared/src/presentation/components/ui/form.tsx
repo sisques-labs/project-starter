@@ -20,7 +20,7 @@ const FormFieldContext = React.createContext<{ name: string }>({
   name: '',
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
 function FormField(props: ControllerProps<any, any>) {
   return (
     <FormFieldContext.Provider value={{ name: String(props.name) }}>

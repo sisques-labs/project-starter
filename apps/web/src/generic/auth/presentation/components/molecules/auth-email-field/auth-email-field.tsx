@@ -28,9 +28,8 @@ export function AuthEmailField<T extends FieldValues>({
 
   return (
     <FormField
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      control={control as any}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control			control={control as any}
+      // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic name
       name={name as any}
       render={({ field }) => (
         <FormItem>

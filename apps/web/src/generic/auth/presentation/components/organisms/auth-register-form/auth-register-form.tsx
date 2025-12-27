@@ -54,7 +54,7 @@ export function AuthRegisterForm({
   });
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
     <Form {...(form as any)}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <AuthEmailField

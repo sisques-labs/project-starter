@@ -36,7 +36,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   // Ensure that the incoming `locale` is valid
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: next-intl routing.locales type is readonly array and doesn't match string type
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }

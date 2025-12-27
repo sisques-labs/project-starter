@@ -60,11 +60,11 @@ export function UserUpdateForm({
   const isSubmitting = isLoading;
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
     <Form {...(form as any)}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
           control={form.control as any}
           name="name"
           render={({ field }) => (
@@ -83,7 +83,7 @@ export function UserUpdateForm({
         />
 
         <FormField
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
           control={form.control as any}
           name="lastName"
           render={({ field }) => (
@@ -102,7 +102,7 @@ export function UserUpdateForm({
         />
 
         <FormField
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
           control={form.control as any}
           name="userName"
           render={({ field }) => (
@@ -121,7 +121,7 @@ export function UserUpdateForm({
         />
 
         <FormField
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
           control={form.control as any}
           name="bio"
           render={({ field }) => (
@@ -140,7 +140,7 @@ export function UserUpdateForm({
         />
 
         <FormField
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
           control={form.control as any}
           name="avatarUrl"
           render={({ field }) => (
