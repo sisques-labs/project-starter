@@ -1,0 +1,42 @@
+{
+  "name": "@repo/sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react/index.js",
+      "types": "./dist/react/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "dev": "tsc --watch",
+    "release": "semantic-release",
+    "git:clean": "git branch --merged | grep -vE '^*|main|dev' | xargs -n 1 git branch -d"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.0",
+    "eslint": "^9.34.0",
+    "semantic-release": "^23.0.2",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {}
+}
