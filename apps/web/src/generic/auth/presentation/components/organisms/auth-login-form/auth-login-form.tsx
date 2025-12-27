@@ -1,14 +1,14 @@
 'use client';
 
-import { AuthEmailField } from '@/auth-context/auth/presentation/components/molecules/auth-email-field/auth-email-field';
-import { AuthErrorMessage } from '@/auth-context/auth/presentation/components/molecules/auth-error-message/auth-error-message';
-import { AuthPasswordField } from '@/auth-context/auth/presentation/components/molecules/auth-password-field/auth-password-field';
-import { AuthSubmitButton } from '@/auth-context/auth/presentation/components/molecules/auth-submit-button/auth-submit-button';
+import { AuthEmailField } from '@/generic/auth/presentation/components/molecules/auth-email-field/auth-email-field';
+import { AuthErrorMessage } from '@/generic/auth/presentation/components/molecules/auth-error-message/auth-error-message';
+import { AuthPasswordField } from '@/generic/auth/presentation/components/molecules/auth-password-field/auth-password-field';
+import { AuthSubmitButton } from '@/generic/auth/presentation/components/molecules/auth-submit-button/auth-submit-button';
 import {
   AuthLoginByEmailFormValues,
   createAuthLoginByEmailSchema,
-} from '@/auth-context/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
-import { useAuthPageStore } from '@/auth-context/auth/presentation/stores/auth-page-store';
+} from '@/generic/auth/presentation/dtos/schemas/auth-login-by-email/auth-login-by-email.schema';
+import { useAuthPageStore } from '@/generic/auth/presentation/stores/auth-page-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@repo/shared/presentation/components/ui/form';
 import { useTranslations } from 'next-intl';

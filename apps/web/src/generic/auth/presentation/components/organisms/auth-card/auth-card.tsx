@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthErrorMessage } from '@/auth-context/auth/presentation/components/molecules/auth-error-message/auth-error-message';
+import { AuthErrorMessage } from '@/generic/auth/presentation/components/molecules/auth-error-message/auth-error-message';
 import {
   Card,
   CardContent,
