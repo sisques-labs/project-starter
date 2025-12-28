@@ -8,6 +8,7 @@ const withNextIntl = createNextIntlPlugin(
 const nextConfig: NextConfig = {
   /* config options here */
   transpilePackages: ['@repo/sdk', '@repo/shared'],
+  output: 'standalone',
 };
 
 export default withNextIntl(nextConfig);
