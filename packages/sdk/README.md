@@ -1,14 +1,39 @@
 # @repo/sdk
 
-TypeScript SDK for the SaaS Boilerplate API. Compatible with React Native and web applications.
+TypeScript SDK for the project-starter GraphQL API. Compatible with React Native and web applications. Provides automatic token management, type-safe GraphQL operations, and React hooks.
 
-## Installation
+## 🚀 Features
+
+- 🔐 **Authentication**: Login, register, logout, token refresh, profile management
+- 👥 **User Management**: CRUD operations with filtering, sorting, and pagination
+- 📊 **Saga Management**: Complete saga orchestration (instances, steps, logs)
+- 🏥 **Health Checks**: Monitor API status
+- ⚛️ **React Hooks**: Ready-to-use hooks with loading, error, and data states
+- 🔄 **Automatic Token Management**: Tokens are automatically stored and refreshed
+- 📦 **TypeScript**: Full type definitions for all operations
+- 🌐 **GraphQL**: Type-safe GraphQL client with automatic token injection
+
+## 📦 Installation
 
 ```bash
 pnpm add @repo/sdk
 ```
 
-## Usage
+## 📋 Prerequisites
+
+- **Node.js**: >= 18
+- **React**: ^18.0.0 || ^19.0.0 (for React hooks)
+
+## 🏗️ Architecture
+
+The SDK is built with:
+
+- **GraphQL Client**: Custom client that handles token management and automatic refresh
+- **Storage**: Pluggable storage interface (WebStorage for browsers, MemoryStorage for server-side)
+- **React Hooks**: Hooks built on top of the SDK for React applications
+- **Type Safety**: Full TypeScript support with generated types
+
+## 🚀 Quick Start
 
 ### Basic Setup
 
@@ -17,18 +42,34 @@ import { SDK } from '@repo/sdk';
 
 // For Next.js / Web (uses localStorage automatically)
 const sdk = new SDK({
-  apiUrl: 'http://localhost:4100/api/v1',
+  apiUrl: 'http://localhost:4100', // Base URL (without /graphql)
 });
 
 // For React Native (pass AsyncStorage)
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SDK } from '@repo/sdk';
 
 const sdk = new SDK({
-  apiUrl: 'http://localhost:4100/api/v1',
+  apiUrl: 'http://localhost:4100',
   storage: AsyncStorage, // Custom storage for React Native
 });
 ```
+
+**Note**: The `apiUrl` should be the base URL of your API. The SDK automatically appends `/graphql` to all requests.
+
+### Configuration
+
+```typescript
+type GraphQLClientConfig = {
+  apiUrl: string; // Base API URL (e.g., 'http://localhost:4100')
+  accessToken?: string; // Optional initial access token
+  refreshToken?: string; // Optional initial refresh token
+  headers?: Record<string, string>; // Optional custom headers
+  storage?: Storage; // Optional custom storage implementation
+  storagePrefix?: string; // Optional storage key prefix (default: '@repo/sdk:')
+};
+```
+
+## 📖 Usage
 
 ### Authentication
 
@@ -42,18 +83,21 @@ const { accessToken, refreshToken } = await sdk.auth.loginByEmail({
 // Tokens are automatically stored and used in subsequent requests
 // No need to manually set the token!
 
-// The SDK automatically:
-// - Saves tokens to localStorage (web) or AsyncStorage (React Native)
-// - Loads tokens from storage on initialization
-// - Includes the access token in all authenticated requests
-
 // Register
 const registerResult = await sdk.auth.registerByEmail({
   email: 'newuser@example.com',
   password: 'password123',
 });
 
-// Logout
+// Get current user profile
+const profile = await sdk.auth.profileMe();
+
+// Refresh token (automatic on 401 errors, but can be manual)
+const { accessToken: newToken } = await sdk.auth.refreshToken({
+  refreshToken: 'your-refresh-token',
+});
+
+// Logout - clears all stored tokens
 await sdk.auth.logout({ id: 'user-id' });
 ```
 
@@ -63,7 +107,7 @@ await sdk.auth.logout({ id: 'user-id' });
 // Find user by ID
 const user = await sdk.users.findById({ id: 'user-id' });
 
-// Find users with filters and pagination
+// Find users with filters, sorting, and pagination
 const users = await sdk.users.findByCriteria({
   filters: [{ field: 'status', operator: 'EQUALS', value: 'ACTIVE' }],
   sorts: [{ field: 'name', direction: 'ASC' }],
@@ -87,165 +131,188 @@ const updateResult = await sdk.users.update({
 const deleteResult = await sdk.users.delete({ id: 'user-id' });
 ```
 
-### Tenants
+### Saga Instances
 
 ```typescript
-// Find tenants
-const tenants = await sdk.tenants.findByCriteria({
+// Find saga instances
+const instances = await sdk.sagaInstances.findByCriteria({
+  filters: [{ field: 'status', operator: 'EQUALS', value: 'RUNNING' }],
   pagination: { page: 1, perPage: 10 },
 });
 
-// Create tenant
-const tenant = await sdk.tenants.create({
-  name: 'My Company',
-  description: 'A great company',
-  email: 'contact@mycompany.com',
+// Find by ID
+const instance = await sdk.sagaInstances.findById({ id: 'instance-id' });
+
+// Create saga instance
+const newInstance = await sdk.sagaInstances.create({
+  name: 'Order Processing',
+  context: { orderId: '123' },
 });
 
-// Update tenant
-await sdk.tenants.update({
-  id: 'tenant-id',
-  name: 'Updated Company Name',
+// Update saga instance
+await sdk.sagaInstances.update({
+  id: 'instance-id',
+  name: 'Updated Name',
 });
 
-// Delete tenant
-await sdk.tenants.delete({ id: 'tenant-id' });
+// Change status
+await sdk.sagaInstances.changeStatus({
+  id: 'instance-id',
+  status: 'COMPLETED',
+});
+
+// Delete saga instance
+await sdk.sagaInstances.delete({ id: 'instance-id' });
 ```
 
-### Tenant Members
+### Saga Steps
 
 ```typescript
-// Find tenant members
-const members = await sdk.tenantMembers.findByCriteria({
-  filters: [{ field: 'tenantId', operator: 'EQUALS', value: 'tenant-id' }],
+// Find saga steps by criteria
+const steps = await sdk.sagaSteps.findByCriteria({
+  pagination: { page: 1, perPage: 10 },
 });
 
-// Add member
-await sdk.tenantMembers.add({
-  tenantId: 'tenant-id',
-  userId: 'user-id',
-  role: 'MEMBER',
+// Find by saga instance ID
+const instanceSteps = await sdk.sagaSteps.findBySagaInstanceId({
+  sagaInstanceId: 'instance-id',
 });
 
-// Update member role
-await sdk.tenantMembers.update({
-  id: 'member-id',
-  role: 'ADMIN',
+// Create saga step
+const step = await sdk.sagaSteps.create({
+  sagaInstanceId: 'instance-id',
+  name: 'Payment Step',
+  order: 1,
 });
 
-// Remove member
-await sdk.tenantMembers.remove({ id: 'member-id' });
+// Update saga step
+await sdk.sagaSteps.update({
+  id: 'step-id',
+  name: 'Updated Step Name',
+});
+
+// Change status
+await sdk.sagaSteps.changeStatus({
+  id: 'step-id',
+  status: 'COMPLETED',
+});
+
+// Delete saga step
+await sdk.sagaSteps.delete({ id: 'step-id' });
 ```
 
-### Subscription Plans
+### Saga Logs
 
 ```typescript
-// Find subscription plans
-const plans = await sdk.subscriptionPlans.findByCriteria();
-
-// Create plan
-await sdk.subscriptionPlans.create({
-  name: 'Pro Plan',
-  type: 'PRO',
-  priceMonthly: 29.99,
-  currency: 'USD',
-  interval: 'MONTHLY',
-  intervalCount: 1,
-  features: ['feature1', 'feature2'],
+// Find saga logs
+const logs = await sdk.sagaLogs.findByCriteria({
+  pagination: { page: 1, perPage: 10 },
 });
+
+// Find by saga instance ID
+const instanceLogs = await sdk.sagaLogs.findBySagaInstanceId({
+  sagaInstanceId: 'instance-id',
+});
+
+// Find by saga step ID
+const stepLogs = await sdk.sagaLogs.findBySagaStepId({
+  sagaStepId: 'step-id',
+});
+
+// Create saga log
+const log = await sdk.sagaLogs.create({
+  sagaInstanceId: 'instance-id',
+  sagaStepId: 'step-id',
+  type: 'INFO',
+  message: 'Step completed successfully',
+});
+
+// Update saga log
+await sdk.sagaLogs.update({
+  id: 'log-id',
+  message: 'Updated log message',
+});
+
+// Delete saga log
+await sdk.sagaLogs.delete({ id: 'log-id' });
 ```
 
 ### Health Check
 
 ```typescript
 const health = await sdk.health.check();
-console.log(health.status); // 'ok'
+console.log(health.status); // 'ok' | 'error'
 ```
 
-## Features
+## ⚛️ React Hooks
 
-- 🔐 **Authentication**: Login, register, logout
-- 👥 **User Management**: CRUD operations with filtering and pagination
-- 🏢 **Tenant Management**: Create, update, delete tenants
-- 👤 **Tenant Members**: Manage team members and roles
-- 💳 **Subscription Plans**: Manage billing plans and features
-- 📊 **Event Store**: Query event history
-- 🏥 **Health Checks**: Monitor API status
+For React applications, the SDK provides hooks that manage loading, error, and data states automatically.
 
-## React Native Compatibility
-
-This SDK is fully compatible with React Native and uses only native `fetch` API for HTTP requests. No Node.js-specific dependencies are required.
-
-### Token Storage
-
-The SDK automatically handles token storage:
-
-- **Web/Next.js**: Uses `localStorage` automatically
-- **React Native**: Pass `AsyncStorage` as custom storage:
-
-  ```typescript
-  import AsyncStorage from '@react-native-async-storage/async-storage';
-
-  const sdk = new SDK({
-    apiUrl: 'http://localhost:4100/api/v1',
-    storage: AsyncStorage,
-  });
-  ```
-
-- **Server-side**: Falls back to memory storage (tokens are not persisted)
-
-### Automatic Token Management
-
-- Tokens are automatically saved when you login
-- Tokens are automatically loaded from storage on SDK initialization
-- Access token is automatically included in all requests
-- Use `await sdk.logout()` to clear all stored tokens
-
-## React Hooks (Optional)
-
-For React applications, the SDK provides hooks that manage loading, error, and data states automatically:
+### Setup SDK Provider
 
 ```typescript
-import { useSDK, useAuth, useUsersList, useUser } from '@repo/sdk/react';
+import { SDKAutoProvider } from '@repo/sdk/react';
+
+function App() {
+  return (
+    <SDKAutoProvider apiUrl="http://localhost:4100">
+      <YourApp />
+    </SDKAutoProvider>
+  );
+}
+```
+
+Or with custom storage (React Native):
+
+```typescript
+import { SDKAutoProvider } from '@repo/sdk/react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+function App() {
+  return (
+    <SDKAutoProvider apiUrl="http://localhost:4100" storage={AsyncStorage}>
+      <YourApp />
+    </SDKAutoProvider>
+  );
+}
+```
+
+### Using Hooks
+
+```typescript
+import { useAuth, useUsers, useUsersList } from '@repo/sdk/react';
 
 function MyComponent() {
-  // Initialize SDK
-  const sdk = useSDK({
-    apiUrl: 'http://localhost:4100/api/v1',
-  });
-
-  // Auth hook with states
-  const { login } = useAuth(sdk);
+  // Auth hook
+  const { loginByEmail, profileMe } = useAuth();
 
   // Users list hook - automatically fetches on mount
-  const users = useUsersList(sdk, {
-    pagination: { page: 1, perPage: 10 },
-  });
+  const usersList = useUsersList();
 
-  // Single user hook - automatically fetches when userId changes
-  const user = useUser(sdk, 'user-id');
+  // Users operations hook
+  const { findById, create, update, delete: deleteUser } = useUsers();
 
   // Handle login
   const handleLogin = async () => {
-    await login.execute({
+    await loginByEmail.execute({
       email: 'user@example.com',
       password: 'password123',
     });
   };
 
-  // Render with states - perfect for React Native and Web!
-  if (login.loading) return <div>Logging in...</div>;
-  if (login.error) return <div>Error: {login.error.message}</div>;
-  if (login.success && login.data) {
+  // Render with states
+  if (loginByEmail.loading) return <div>Logging in...</div>;
+  if (loginByEmail.error) return <div>Error: {loginByEmail.error.message}</div>;
+  if (loginByEmail.success && loginByEmail.data) {
     // Tokens are automatically saved!
   }
 
-  if (users.loading) return <div>Loading users...</div>;
-  if (users.error) return <div>Error: {users.error.message}</div>;
-  if (users.data) {
+  if (usersList.loading) return <div>Loading users...</div>;
+  if (usersList.error) return <div>Error: {usersList.error.message}</div>;
+  if (usersList.data) {
     return (
       <div>
-        {users.data.items.map(user => (
+        {usersList.data.items.map(user => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>
@@ -256,18 +323,26 @@ function MyComponent() {
 }
 ```
 
-### Available Hooks
+### Available React Hooks
 
-- `useSDK(config)` - Initialize SDK instance
-- `useAuth(sdk)` - Authentication operations (login, register, logout)
-- `useUsers(sdk)` - User operations (find, create, update, delete)
-- `useUsersList(sdk, input?)` - Auto-fetch users list
-- `useUser(sdk, userId)` - Auto-fetch single user
-- `useTenants(sdk)` - Tenant operations
-- `useTenantsList(sdk, input?)` - Auto-fetch tenants list
-- `useSubscriptionPlans(sdk)` - Subscription plan operations
-- `useHealth(sdk)` - Health check operations
-- `useEvents(sdk)` - Event store operations
+#### Core Hooks
+
+- `useSDK(config, storage?)` - Create an SDK instance (use within component, not in provider)
+- `useSDKContext()` - Get SDK instance from context (requires SDKProvider)
+- `useSDKOptional()` - Get SDK instance from context, returns null if not available
+
+#### Module Hooks
+
+- `useAuth()` - Authentication operations (loginByEmail, registerByEmail, logout, refreshToken, profileMe)
+- `useUsers()` - User operations (findById, findByCriteria, create, update, delete)
+- `useUsersList(input?)` - Auto-fetch users list with pagination and filters
+- `useHealth()` - Health check operations (check)
+- `useSagaInstances()` - Saga instance operations (findById, findByCriteria, create, update, changeStatus, delete)
+- `useSagaInstancesList(input?)` - Auto-fetch saga instances list
+- `useSagaSteps()` - Saga step operations (findById, findByCriteria, findBySagaInstanceId, create, update, changeStatus, delete)
+- `useSagaStepsList(input?)` - Auto-fetch saga steps list
+- `useSagaLogs()` - Saga log operations (findById, findByCriteria, findBySagaInstanceId, findBySagaStepId, create, update, delete)
+- `useSagaLogsList(input?)` - Auto-fetch saga logs list
 
 ### Hook States
 
@@ -280,26 +355,121 @@ Each hook returns an object with:
 - `execute` or `fetch`/`mutate`: Function to trigger the operation
 - `reset`: Function to reset all states
 
-### Example: React Native Usage
+## 🔄 Token Management
+
+### Automatic Token Storage
+
+The SDK automatically handles token storage:
+
+- **Web/Next.js**: Uses `localStorage` automatically (via WebStorage)
+- **React Native**: Pass `AsyncStorage` as custom storage
+- **Server-side**: Falls back to memory storage (tokens are not persisted)
+
+### Token Lifecycle
+
+1. **Login**: Tokens are automatically saved to storage
+2. **Requests**: Access token is automatically included in all requests
+3. **Refresh**: On 401 errors, the SDK automatically attempts to refresh the token
+4. **Logout**: All tokens are cleared from storage
+
+### Manual Token Management
 
 ```typescript
-import { useSDK, useAuth, useUsersList } from '@repo/sdk/react';
+// Set access token manually
+await sdk.setAccessToken('your-token');
+
+// Get current access token
+const token = sdk.getAccessToken();
+
+// Set refresh token manually
+await sdk.setRefreshToken('your-refresh-token');
+
+// Get current refresh token
+const refreshToken = sdk.getRefreshToken();
+
+// Clear all tokens
+await sdk.logout();
+```
+
+## 🔍 Filter Operators
+
+When using `findByCriteria`, you can use the following filter operators:
+
+- `EQUALS` - Exact match
+- `NOT_EQUALS` - Not equal
+- `LIKE` - Pattern matching (SQL LIKE)
+- `IN` - Value is in array
+- `GREATER_THAN` - Numeric/date comparison
+- `LESS_THAN` - Numeric/date comparison
+- `GREATER_THAN_OR_EQUAL` - Numeric/date comparison
+- `LESS_THAN_OR_EQUAL` - Numeric/date comparison
+
+## 📊 Sort Directions
+
+- `ASC` - Ascending order
+- `DESC` - Descending order
+
+## 📜 Available Scripts
+
+From the project root:
+
+```bash
+# Build the SDK
+pnpm build --filter=@repo/sdk
+
+# Watch mode (development)
+pnpm dev --filter=@repo/sdk
+
+# Type checking
+pnpm check-types --filter=@repo/sdk
+
+# Format code
+pnpm format --filter=@repo/sdk
+
+# Lint code
+pnpm lint --filter=@repo/sdk
+```
+
+## 🔧 Custom Storage
+
+You can implement a custom storage interface:
+
+```typescript
+import type { Storage } from '@repo/sdk';
+
+class CustomStorage implements Storage {
+  async getItem(key: string): Promise<string | null> {
+    // Your implementation
+  }
+
+  async setItem(key: string, value: string): Promise<void> {
+    // Your implementation
+  }
+
+  async removeItem(key: string): Promise<void> {
+    // Your implementation
+  }
+}
+
+const sdk = new SDK({
+  apiUrl: 'http://localhost:4100',
+  storage: new CustomStorage(),
+});
+```
+
+## 🌐 React Native Example
+
+```typescript
+import { SDKAutoProvider, useAuth, useUsersList } from '@repo/sdk/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, ActivityIndicator, Button } from 'react-native';
 
 function MyScreen() {
-  const sdk = useSDK(
-    {
-      apiUrl: 'https://api.example.com/api/v1',
-    },
-    AsyncStorage, // Pass AsyncStorage for React Native
-  );
-
-  const { login } = useAuth(sdk);
-  const users = useUsersList(sdk); // Auto-fetches on mount
+  const { loginByEmail } = useAuth();
+  const usersList = useUsersList(); // Auto-fetches on mount
 
   const handleLogin = () => {
-    login.execute({
+    loginByEmail.execute({
       email: 'user@example.com',
       password: 'password123',
     });
@@ -307,17 +477,17 @@ function MyScreen() {
 
   return (
     <View>
-      <Button title="Login" onPress={handleLogin} disabled={login.loading} />
+      <Button title="Login" onPress={handleLogin} disabled={loginByEmail.loading} />
 
-      {login.loading && <ActivityIndicator />}
-      {login.error && <Text>Error: {login.error.message}</Text>}
-      {login.success && <Text>Logged in!</Text>}
+      {loginByEmail.loading && <ActivityIndicator />}
+      {loginByEmail.error && <Text>Error: {loginByEmail.error.message}</Text>}
+      {loginByEmail.success && <Text>Logged in!</Text>}
 
-      {users.loading && <ActivityIndicator />}
-      {users.error && <Text>Error: {users.error.message}</Text>}
-      {users.data && (
+      {usersList.loading && <ActivityIndicator />}
+      {usersList.error && <Text>Error: {usersList.error.message}</Text>}
+      {usersList.data && (
         <View>
-          {users.data.items.map(user => (
+          {usersList.data.items.map(user => (
             <Text key={user.id}>{user.name}</Text>
           ))}
         </View>
@@ -325,36 +495,46 @@ function MyScreen() {
     </View>
   );
 }
+
+function App() {
+  return (
+    <SDKAutoProvider apiUrl="https://api.example.com" storage={AsyncStorage}>
+      <MyScreen />
+    </SDKAutoProvider>
+  );
+}
 ```
 
-## TypeScript Support
+## 📚 TypeScript Support
 
-The SDK is written in TypeScript and provides full type definitions for all operations, inputs, and responses.
+The SDK is written in TypeScript and provides full type definitions for:
 
-## API Reference
+- All operations (methods and their parameters)
+- All responses (return types)
+- All input types (mutations and queries)
+- React hooks and their return types
 
-### Configuration
+## 🐛 Error Handling
 
-```typescript
-type GraphQLClientConfig = {
-  apiUrl: string;
-  accessToken?: string;
-  headers?: Record<string, string>;
-};
-```
+The SDK throws errors for:
 
-### Filter Operators
+- Network errors (connection issues)
+- GraphQL errors (API errors)
+- Authentication errors (401, invalid tokens)
+- Validation errors (invalid input)
 
-- `EQUALS`
-- `NOT_EQUALS`
-- `LIKE`
-- `IN`
-- `GREATER_THAN`
-- `LESS_THAN`
-- `GREATER_THAN_OR_EQUAL`
-- `LESS_THAN_OR_EQUAL`
+All errors include a descriptive message and can be caught using try/catch or checked via the `error` state in React hooks.
 
-### Sort Directions
+## 📝 License
 
-- `ASC`
-- `DESC`
+This package is part of the project-starter monorepo. See the root LICENSE file for details.
+
+## 🤝 Contributing
+
+When contributing to the SDK:
+
+1. Follow the existing code structure
+2. Add TypeScript types for all new operations
+3. Update this README with new features
+4. Add React hooks for new modules if applicable
+5. Ensure compatibility with both web and React Native
