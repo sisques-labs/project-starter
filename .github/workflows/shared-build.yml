@@ -2,6 +2,7 @@ name: Shared Build
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     paths:
       - 'packages/shared/**'
     branches: [main, dev]

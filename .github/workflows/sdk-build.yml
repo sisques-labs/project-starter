@@ -2,6 +2,7 @@ name: SDK Build
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     paths:
       - 'packages/sdk/**'
     branches: [main, dev]
