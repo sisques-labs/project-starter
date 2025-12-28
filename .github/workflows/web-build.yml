@@ -38,4 +38,5 @@ jobs:
       run_lint: true
       run_test: true
       build_command: 'build'
+      use_filter: 'false'
     secrets: inherit # Required if the workflow needs secrets
