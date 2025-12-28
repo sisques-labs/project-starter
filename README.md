@@ -147,7 +147,11 @@ This repository is designed as a **project starter** that provides a solid found
    - Add your domain-specific bounded contexts
    - Customize the web application
 
-3. **Start developing:**
+3. **Reset project versions (optional):**
+   - If you want to start fresh with versioning, run `pnpm reset`
+   - This will reset all package.json versions to 0.0.0, delete all CHANGELOG.md files, and reset the release-please manifest
+
+4. **Start developing:**
    - Follow the architecture patterns established in the codebase
    - Add new features following DDD, CQRS, and Event-Driven principles
    - Use the existing bounded contexts as examples for new ones
@@ -174,6 +178,35 @@ pnpm check-types            # Verify TypeScript types across the project
 
 # Formatting
 pnpm format                 # Format code with Prettier
+
+# Project Reset
+pnpm reset                  # Reset all package versions to 0.0.0, delete changelogs, and reset release-please manifest
+```
+
+### Reset Project Script
+
+The `reset` script is useful when starting a new project from this template. It performs the following actions:
+
+- **Resets all package.json versions** to `0.0.0` (only for packages that have a version field)
+- **Deletes all CHANGELOG.md files** in the project
+- **Resets `.release-please-manifest.json`** to set all tracked package versions to `0.0.0`
+
+This is particularly useful when:
+
+- Using this repository as a template for a new project
+- Starting fresh with versioning after a major refactor
+- Resetting the project state for a new release cycle
+
+**Usage:**
+
+```bash
+pnpm reset
+```
+
+Or directly:
+
+```bash
+node scripts/reset-projects.js
 ```
 
 ### API Scripts (`apps/api`)
