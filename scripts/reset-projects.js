@@ -125,45 +125,6 @@ function deleteChangelog(filePath) {
 }
 
 /**
- * Reset release-please-manifest.json versions to 0.0.0
- */
-function resetReleasePleaseManifest() {
-  const manifestPath = path.join(PROJECT_ROOT, '.release-please-manifest.json');
-
-  try {
-    if (!fs.existsSync(manifestPath)) {
-      console.log('⊘ .release-please-manifest.json not found, skipping');
-      return;
-    }
-
-    const content = fs.readFileSync(manifestPath, 'utf8');
-    const manifest = JSON.parse(content);
-
-    // Reset all versions to 0.0.0
-    const resetManifest = {};
-    for (const key in manifest) {
-      resetManifest[key] = '0.0.0';
-    }
-
-    // Write back with proper formatting (2 spaces indentation)
-    fs.writeFileSync(
-      manifestPath,
-      JSON.stringify(resetManifest, null, 2) + '\n',
-      'utf8',
-    );
-
-    console.log(
-      '✓ Reset all versions to 0.0.0 in .release-please-manifest.json',
-    );
-  } catch (error) {
-    console.error(
-      `✗ Error processing .release-please-manifest.json:`,
-      error.message,
-    );
-  }
-}
-
-/**
  * Main function
  */
 function main() {
@@ -182,9 +143,6 @@ function main() {
   } else {
     changelogFiles.forEach(deleteChangelog);
   }
-
-  console.log('\n🔖 Resetting release-please-manifest.json:');
-  resetReleasePleaseManifest();
 
   console.log('\n✅ Reset complete!');
 }
