@@ -42,7 +42,7 @@ export function AppLayoutWithSidebar({ children }: AppLayoutWithSidebarProps) {
       ...sidebarNavData,
       header: {
         appName: 'App Name', // TODO: Get from config or env
-        logoSrc: '/favicon.ico', // Pon aqui el favicon
+        logoSrc: '/favicon.ico',
         url: routes.home,
       },
       footer: {
