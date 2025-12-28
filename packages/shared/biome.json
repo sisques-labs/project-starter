@@ -1,7 +1,16 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
-  "files": { "includes": ["**", "!!**/dist"] },
+  "files": {
+    "includes": [
+      "**",
+      "!!**/dist",
+      "!**/*.json",
+      "!tsconfig*.json",
+      "!.releaserc.json",
+      "!biome.json"
+    ]
+  },
   "formatter": { "enabled": true, "indentStyle": "tab" },
   "linter": {
     "enabled": true,
