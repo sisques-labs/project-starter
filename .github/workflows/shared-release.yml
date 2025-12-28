@@ -15,12 +15,13 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -45,12 +46,7 @@ jobs:
       - name: Build the shared package
         run: pnpm build --filter=./packages/shared...
 
-      - name: Release Please
-        uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          manifest-file: .release-please-manifest.json
-          config-file: .release-please-config.json
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-          skip-github-release: true
-          skip-github-pull-request: false
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm release --filter=./packages/shared...
