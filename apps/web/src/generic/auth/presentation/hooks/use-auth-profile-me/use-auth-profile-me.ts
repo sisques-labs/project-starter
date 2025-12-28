@@ -1,6 +1,6 @@
+import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
 import { useAuth } from '@repo/sdk';
 import { useEffect } from 'react';
-import { useSidebarUserStore } from '@/shared/presentation/stores/sidebar-user-store';
 
 /**
  * Hook that provides authenticated user profile functionality
@@ -23,7 +23,7 @@ export function useAuthProfileMe(options?: { autoFetch?: boolean }) {
     if (autoFetch) {
       profileMe.fetch();
     }
-  }, [autoFetch, profileMe.fetch]);
+  }, [autoFetch]);
 
   return {
     profile: profileMe.data || null,

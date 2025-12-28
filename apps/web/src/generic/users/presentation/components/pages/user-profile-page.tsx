@@ -1,14 +1,5 @@
 'use client';
 
-import { UserResponse } from '@repo/sdk';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@repo/shared/presentation/components/ui/card';
-import { useTranslations } from 'next-intl';
 import { useAuthProfileMe } from '@/generic/auth/presentation/hooks/use-auth-profile-me/use-auth-profile-me';
 import { UserProfileAccountSection } from '@/generic/users/presentation/components/organisms/user-profile-account-section/user-profile-account-section';
 import { UserProfileAuthSection } from '@/generic/users/presentation/components/organisms/user-profile-auth-section/user-profile-auth-section';
@@ -18,6 +9,15 @@ import { UserProfileInfoSection } from '@/generic/users/presentation/components/
 import { UserUpdateForm } from '@/generic/users/presentation/components/organisms/user-update-form/user-update-form';
 import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
 import { useUserUpdate } from '@/generic/users/presentation/hooks/use-user-update/use-user-update';
+import { UserResponse } from '@repo/sdk';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/shared/presentation/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 export function UserProfilePage() {
   const t = useTranslations();
@@ -43,7 +43,7 @@ export function UserProfilePage() {
 
   if (isLoadingProfile) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="mx-auto py-8">
         <div className="flex items-center justify-center min-h-[400px]">
           <p className="text-muted-foreground">{t('user.loading')}</p>
         </div>
@@ -53,7 +53,7 @@ export function UserProfilePage() {
 
   if (profileError) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="mx-auto py-8">
         <div className="flex items-center justify-center min-h-[400px]">
           <p className="text-destructive">
             {t('user.error.loading', { message: profileError.message })}
@@ -65,7 +65,7 @@ export function UserProfilePage() {
 
   if (!profile) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="mx-auto py-8">
         <div className="flex items-center justify-center min-h-[400px]">
           <p className="text-muted-foreground">{t('user.notFound')}</p>
         </div>
@@ -88,7 +88,7 @@ export function UserProfilePage() {
   };
 
   return (
-    <div>
+    <div className="mx-auto space-y-6">
       {/* Header with Avatar and Basic Info */}
       <UserProfileHeader profile={profile} />
 
