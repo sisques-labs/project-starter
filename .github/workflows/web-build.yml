@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build dependencies
+        run: pnpm turbo build --filter=@repo/sdk --filter=@repo/shared
+
   build-web:
     needs: install-dependencies
     uses: sisques-labs/workflows/.github/workflows/web-build.yml@main
