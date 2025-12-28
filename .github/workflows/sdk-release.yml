@@ -43,8 +43,10 @@ jobs:
       - name: Build the SDK
         run: pnpm build --filter=./packages/sdk...
 
-      - name: Release
-        run: pnpm --filter=./packages/sdk... run release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v4
+        id: release
+        with:
+          manifest-file: .release-please-manifest.json
+          config-file: .release-please-config.json
+          skip-github-release: true
