@@ -14,11 +14,34 @@ permissions:
 
 jobs:
   release:
-    uses: sisques-labs/workflows/.github/workflows/node-release.yml@main
-    secrets: inherit
-    with:
-      app_path: 'apps/api'
-      working_directory: 'apps/api'
-      node_version: '24'
-      build_command: 'build'
-      use_filter: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint code
+        run: pnpm lint --filter=./apps/api...
+
+      - name: Build the app
+        run: pnpm build --filter=./apps/api...
+
+      - name: Release
+        run: pnpm release --filter=./apps/api...
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
