@@ -8,7 +8,7 @@ on:
     branches: [main, dev]
 
 jobs:
-  install-dependencies:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -28,18 +28,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build dependencies
-        run: pnpm turbo build --filter=@repo/sdk --filter=@repo/shared
+      - name: Build SDK
+        run: pnpm --filter @repo/sdk build
 
-  build-web:
-    needs: install-dependencies
-    uses: sisques-labs/workflows/.github/workflows/web-build.yml@main
-    with:
-      app_path: 'apps/web'
-      app_name: 'My Web App'
-      node_version: '24'
-      run_lint: true
-      run_test: true
-      build_command: 'build'
-      use_filter: 'false'
-    secrets: inherit # Required if the workflow needs secrets
+      - name: Build Shared
+        run: pnpm --filter @repo/shared build
+
+      - name: Build web app
+        working-directory: apps/web
+        run: pnpm build
+
+      - name: Run lint
+        working-directory: apps/web
+        run: pnpm lint:check

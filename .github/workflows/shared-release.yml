@@ -14,11 +14,42 @@ permissions:
 
 jobs:
   release:
-    uses: sisques-labs/workflows/.github/workflows/node-release.yml@main
-    secrets: inherit
-    with:
-      app_path: 'packages/shared'
-      working_directory: 'packages/shared'
-      node_version: '24'
-      build_command: 'build'
-      use_filter: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Shared
+        working-directory: packages/shared
+        run: pnpm build
+
+      - name: Run lint
+        working-directory: packages/shared
+        run: pnpm lint:check
+
+      - name: Run type check
+        working-directory: packages/shared
+        run: pnpm check-types || true
+
+      - name: Release
+        working-directory: packages/shared
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm release
