@@ -538,3 +538,5 @@ When contributing to the SDK:
 3. Update this README with new features
 4. Add React hooks for new modules if applicable
 5. Ensure compatibility with both web and React Native
+
+fix
