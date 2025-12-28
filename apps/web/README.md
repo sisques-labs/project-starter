@@ -353,5 +353,3 @@ When contributing to the web application:
 ## 📝 License
 
 This project is part of the project-starter monorepo. See the root LICENSE file for details.
-
-fix
