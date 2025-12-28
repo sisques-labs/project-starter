@@ -1,5 +1,5 @@
 # Stage 1: Dependencies
-# Install all dependencies (including devDependencies) and generate Prisma Client
+# Install all dependencies (including devDependencies)
 FROM node:20-alpine AS dependencies
 
 WORKDIR /app
@@ -17,12 +17,6 @@ RUN if [ -f pnpm-lock.yaml ]; then \
       pnpm install --no-frozen-lockfile; \
     fi
 
-# Copy Prisma schema
-COPY prisma ./prisma
-
-# Generate Prisma Client
-RUN pnpm prisma:generate:all || npx prisma generate:all
-
 # Stage 2: Build
 # Compile TypeScript application
 FROM node:20-alpine AS build
@@ -32,7 +26,6 @@ WORKDIR /app
 # Copy dependencies from previous stage
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY --from=dependencies /app/package.json ./package.json
-COPY --from=dependencies /app/prisma ./prisma
 
 # Copy source code and configuration files
 COPY tsconfig.json tsconfig.build.json nest-cli.json ./
@@ -61,10 +54,6 @@ RUN if [ -f pnpm-lock.yaml ]; then \
     else \
       pnpm install --prod --no-frozen-lockfile; \
     fi
-
-# Copy Prisma files and generate client for production
-COPY prisma ./prisma
-RUN pnpm prisma:generate:all || npx prisma generate:all
 
 # Copy built application from build stage
 COPY --from=build /app/dist ./dist
