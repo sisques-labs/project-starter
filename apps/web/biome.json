@@ -50,7 +50,7 @@
     ]
   },
   "javascript": {
-    "formatter": { "quoteStyle": "double" },
+    "formatter": { "quoteStyle": "single" },
     "parser": { "unsafeParameterDecoratorsEnabled": true },
     "globals": []
   },

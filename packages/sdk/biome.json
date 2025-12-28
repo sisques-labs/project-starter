@@ -85,7 +85,7 @@
     },
     "includes": ["**", "!**/example.ts", "!**/dist/**", "!dist/**"]
   },
-  "javascript": { "formatter": { "quoteStyle": "double" }, "globals": [] },
+  "javascript": { "formatter": { "quoteStyle": "single" }, "globals": [] },
   "overrides": [
     {
       "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
