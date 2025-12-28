@@ -81,7 +81,7 @@ export function AppSidebar({ data, onLogout, ...props }: AppSidebarProps) {
             {onLogout && (
               <SidebarMenuAction
                 onClick={onLogout}
-                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                className="text-destructive hover:text-destructive hover:bg-destructive/10 !top-1/2 !-translate-y-1/2"
               >
                 <LogOut className="size-4" />
               </SidebarMenuAction>
