@@ -6,6 +6,7 @@ import { UserProfileAuthSection } from '@/generic/users/presentation/components/
 import { UserProfileContactSection } from '@/generic/users/presentation/components/organisms/user-profile-contact-section/user-profile-contact-section';
 import { UserProfileHeader } from '@/generic/users/presentation/components/organisms/user-profile-header/user-profile-header';
 import { UserProfileInfoSection } from '@/generic/users/presentation/components/organisms/user-profile-info-section/user-profile-info-section';
+import { UserProfilePageSkeleton } from '@/generic/users/presentation/components/organisms/user-profile-page-skeleton/user-profile-page-skeleton';
 import { UserUpdateForm } from '@/generic/users/presentation/components/organisms/user-update-form/user-update-form';
 import type { UserUpdateFormValues } from '@/generic/users/presentation/dtos/schemas/user-update/user-update.schema';
 import { useUserUpdate } from '@/generic/users/presentation/hooks/use-user-update/use-user-update';
@@ -42,13 +43,7 @@ export function UserProfilePage() {
   };
 
   if (isLoadingProfile) {
-    return (
-      <div className="mx-auto py-8">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p className="text-muted-foreground">{t('user.loading')}</p>
-        </div>
-      </div>
-    );
+    return <UserProfilePageSkeleton />;
   }
 
   if (profileError) {
