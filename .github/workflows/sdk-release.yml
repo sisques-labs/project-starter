@@ -44,7 +44,7 @@ jobs:
         run: pnpm build --filter=./packages/sdk...
 
       - name: Release
-        run: pnpm release --filter=./packages/sdk...
+        run: pnpm --filter=./packages/sdk... run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

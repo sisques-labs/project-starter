@@ -47,7 +47,7 @@ jobs:
         run: pnpm build --filter=./apps/web...
 
       - name: Release
-        run: pnpm release --filter=./apps/web...
+        run: pnpm --filter=./apps/web... run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

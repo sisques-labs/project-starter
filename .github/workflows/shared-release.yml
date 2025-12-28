@@ -35,17 +35,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build Shared
-        working-directory: packages/shared
-        run: pnpm build
+      - name: Lint code
+        run: pnpm lint --filter=./packages/shared...
 
-      - name: Run lint
-        working-directory: packages/shared
-        run: pnpm lint:check
+      - name: Check types
+        run: pnpm check-types --filter=./packages/shared...
 
-      - name: Run type check
-        working-directory: packages/shared
-        run: pnpm check-types || true
+      - name: Build the shared package
+        run: pnpm build --filter=./packages/shared...
 
       - name: Release
         working-directory: packages/shared
