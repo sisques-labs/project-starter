@@ -1,5 +1,5 @@
-import { PasswordValueObject } from '@/shared/domain/value-objects/password/password.vo';
 import { InvalidPasswordException } from '@/shared/domain/exceptions/value-objects/invalid-password/invalid-password.exception';
+import { PasswordValueObject } from '@/shared/domain/value-objects/password/password.vo';
 
 describe('PasswordValueObject', () => {
   describe('constructor', () => {

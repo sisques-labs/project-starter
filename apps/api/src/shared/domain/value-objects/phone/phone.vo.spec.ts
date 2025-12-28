@@ -1,5 +1,5 @@
-import { PhoneValueObject } from '@/shared/domain/value-objects/phone/phone.vo';
 import { InvalidPhoneException } from '@/shared/domain/exceptions/value-objects/invalid-phone/invalid-phone.exception';
+import { PhoneValueObject } from '@/shared/domain/value-objects/phone/phone.vo';
 
 describe('PhoneValueObject', () => {
   describe('constructor', () => {

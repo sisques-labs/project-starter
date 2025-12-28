@@ -1,9 +1,9 @@
+import { Logger } from '@nestjs/common';
+import { Collection } from 'mongodb';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 import { BaseDatabaseRepository } from '@/shared/infrastructure/database/base-database.repository';
-import { Logger } from '@nestjs/common';
-import { Collection } from 'mongodb';
 
 /**
  * Base class for MongoDB database repositories.

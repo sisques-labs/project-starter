@@ -1,59 +1,49 @@
-import * as React from 'react';
-
 import { SidebarData } from '@repo/shared/domain/interfaces/sidebar-data.interface';
-import { TenantSwitcher } from '@repo/shared/presentation/components/molecules/tenant-switcher';
 import { SearchForm } from '@repo/shared/presentation/components/organisms/search-form';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarSeparator,
 } from '@repo/shared/presentation/components/ui/sidebar';
+import { LogOut } from 'lucide-react';
+import * as React from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui';
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  /**
-   * The sidebar data structure containing versions and navigation items
-   */
   data: SidebarData;
-  /**
-   * Optional tenants for tenant switching. If not provided, shows default tenant view.
-   */
-  tenants?: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-  /**
-   * Default tenant name when no tenants are provided (default: "Admin Panel")
-   */
-  defaultTenantName?: string;
-  /**
-   * Default tenant subtitle when no tenants are provided (default: "Management")
-   */
-  defaultTenantSubtitle?: string;
+  onLogout?: () => void;
 }
 
-export function AppSidebar({
-  data,
-  tenants,
-  defaultTenantName,
-  defaultTenantSubtitle,
-  ...props
-}: AppSidebarProps) {
+export function AppSidebar({ data, onLogout, ...props }: AppSidebarProps) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <TenantSwitcher
-          tenants={tenants}
-          defaultTenantName={defaultTenantName}
-          defaultTenantSubtitle={defaultTenantSubtitle}
-        />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild size="lg" variant="outline">
+              <a href={data.header.url || '#'}>
+                {data.header.logoSrc && (
+                  <img
+                    src={data.header.logoSrc}
+                    alt={data.header.appName}
+                    className="h-6 w-6 shrink-0"
+                  />
+                )}
+                <span className="font-semibold">{data.header.appName}</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent>
@@ -75,6 +65,30 @@ export function AppSidebar({
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarSeparator />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild size="lg">
+              <a href={data.footer.profileUrl}>
+                <Avatar className="h-8 w-8 shrink-0">
+                  <AvatarImage src={data.footer.avatarSrc} />
+                  <AvatarFallback>{data.footer.avatarFallback}</AvatarFallback>
+                </Avatar>
+                <span className="font-medium">{data.footer.name}</span>
+              </a>
+            </SidebarMenuButton>
+            {onLogout && (
+              <SidebarMenuAction
+                onClick={onLogout}
+                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <LogOut className="size-4" />
+              </SidebarMenuAction>
+            )}
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

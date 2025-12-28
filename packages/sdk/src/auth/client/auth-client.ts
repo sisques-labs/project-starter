@@ -6,10 +6,12 @@ import {
   AUTH_REFRESH_TOKEN_MUTATION,
   AUTH_REGISTER_BY_EMAIL_MUTATION,
 } from '../graphql/mutations/auth.mutations.js';
+import { AUTH_PROFILE_ME_QUERY } from '../graphql/queries/auth.queries.js';
 import type { AuthLoginByEmailInput } from '../types/auth-login-by-email-input.type.js';
 import type { AuthLogoutInput } from '../types/auth-logout-input.type.js';
 import type { AuthRefreshTokenInput } from '../types/auth-refresh-token-input.type.js';
 import type { AuthRegisterByEmailInput } from '../types/auth-register-by-email-input.type.js';
+import type { AuthUserProfileResponse } from '../types/auth-user-profile-response.type.js';
 import type { LoginResponse } from '../types/login-response.type.js';
 import type { RefreshTokenResponse } from '../types/refresh-token-response.type.js';
 
@@ -71,5 +73,15 @@ export class AuthClient {
     });
 
     return result.logout;
+  }
+
+  async profileMe(): Promise<AuthUserProfileResponse> {
+    const result = await this.client.request<{
+      authProfileMe: AuthUserProfileResponse;
+    }>({
+      query: AUTH_PROFILE_ME_QUERY,
+    });
+
+    return result.authProfileMe;
   }
 }

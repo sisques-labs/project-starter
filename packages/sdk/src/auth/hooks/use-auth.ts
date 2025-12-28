@@ -5,6 +5,7 @@ import type { AuthLoginByEmailInput } from '../types/auth-login-by-email-input.t
 import type { AuthLogoutInput } from '../types/auth-logout-input.type.js';
 import type { AuthRefreshTokenInput } from '../types/auth-refresh-token-input.type.js';
 import type { AuthRegisterByEmailInput } from '../types/auth-register-by-email-input.type.js';
+import type { AuthUserProfileResponse } from '../types/auth-user-profile-response.type.js';
 import type { LoginResponse } from '../types/login-response.type.js';
 import type { RefreshTokenResponse } from '../types/refresh-token-response.type.js';
 
@@ -32,6 +33,10 @@ export function useAuth() {
     (input: AuthLogoutInput) => sdk.auth.logout(input),
   );
 
+  const profileMe = useAsyncState<AuthUserProfileResponse, []>(() =>
+    sdk.auth.profileMe(),
+  );
+
   return {
     loginByEmail: {
       ...loginByEmail,
@@ -48,6 +53,10 @@ export function useAuth() {
     logout: {
       ...logout,
       fetch: logout.execute,
+    },
+    profileMe: {
+      ...profileMe,
+      fetch: profileMe.execute,
     },
   };
 }

@@ -1,5 +1,5 @@
-import { NumberValueObject } from '@/shared/domain/value-objects/number/number.vo';
 import { InvalidNumberException } from '@/shared/domain/exceptions/value-objects/invalid-number/invalid-number.exception';
+import { NumberValueObject } from '@/shared/domain/value-objects/number/number.vo';
 
 describe('NumberValueObject', () => {
   describe('constructor', () => {

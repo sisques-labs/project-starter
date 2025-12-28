@@ -1,9 +1,8 @@
 'use client';
 
+import { cn } from '@repo/shared/presentation/lib/utils';
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-
-import { cn } from '@repo/shared/presentation/lib/utils';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;

@@ -1,5 +1,5 @@
-import { FilterOperator } from "@repo/shared/domain/enums/filter-operator.enum";
-import { SortDirection } from "@repo/shared/domain/enums/sort-direction.enum";
+import { FilterOperator } from '@repo/shared/domain/enums/filter-operator.enum';
+import { SortDirection } from '@repo/shared/domain/enums/sort-direction.enum';
 
 export interface Filter {
   field: string;
@@ -21,6 +21,6 @@ export class Criteria {
   constructor(
     public filters: Filter[] = [],
     public sorts: Sort[] = [],
-    public pagination: Pagination = { page: 1, perPage: 10 }
+    public pagination: Pagination = { page: 1, perPage: 10 },
   ) {}
 }

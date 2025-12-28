@@ -1,5 +1,5 @@
-import { IpValueObject } from '@/shared/domain/value-objects/ip/ip.vo';
 import { InvalidIpException } from '@/shared/domain/exceptions/value-objects/invalid-ip/invalid-ip.exception';
+import { IpValueObject } from '@/shared/domain/value-objects/ip/ip.vo';
 
 describe('IpValueObject', () => {
   describe('constructor', () => {

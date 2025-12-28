@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MutationResponseGraphQLMapper } from './mutation-response.mapper';
 import { MutationResponseDto } from '@/shared/transport/graphql/dtos/responses/success-response/success-response.dto';
+import { MutationResponseGraphQLMapper } from './mutation-response.mapper';
 
 describe('MutationResponseGraphQLMapper', () => {
   let mapper: MutationResponseGraphQLMapper;

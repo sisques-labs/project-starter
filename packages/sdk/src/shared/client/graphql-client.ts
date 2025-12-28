@@ -1,5 +1,5 @@
-import { createStorage } from '../storage/storage-factory.js';
 import type { Storage } from '../storage/storage.interface.js';
+import { createStorage } from '../storage/storage-factory.js';
 import type { GraphQLClientConfig } from '../types/index.js';
 
 export type GraphQLRequestOptions = {

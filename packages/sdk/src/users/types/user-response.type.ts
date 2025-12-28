@@ -10,5 +10,3 @@ export type UserResponse = {
   createdAt?: Date;
   updatedAt?: Date;
 };
-
-

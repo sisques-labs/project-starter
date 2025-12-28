@@ -1,9 +1,9 @@
+import { Test, TestingModule } from '@nestjs/testing';
 import { Criteria } from '@/shared/domain/entities/criteria';
 import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 import { SortDirection } from '@/shared/domain/enums/sort-direction.enum';
 import { BaseMongoMasterRepository } from '@/shared/infrastructure/database/mongodb/base-mongo/base-mongo-master/base-mongo-master.repository';
 import { MongoMasterService } from '@/shared/infrastructure/database/mongodb/services/mongo-master/mongo-master.service';
-import { Test, TestingModule } from '@nestjs/testing';
 
 describe('BaseMongoMasterRepository', () => {
   let repository: BaseMongoMasterRepository;

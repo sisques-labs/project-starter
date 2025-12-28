@@ -1,9 +1,8 @@
-import { AppModule } from '@/app.module';
-import { TenantContextInterceptor } from '@/shared/infrastructure/interceptors/tenant-context/tenant-context.interceptor';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { AppModule } from '@/app.module';
 
 async function bootstrap() {
   let app;
@@ -46,9 +45,6 @@ async function bootstrap() {
         },
       }),
     );
-
-    // Global interceptor to extract tenant ID from headers
-    app.useGlobalInterceptors(new TenantContextInterceptor());
 
     // CORS
     app.enableCors({

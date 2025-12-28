@@ -2,45 +2,32 @@
 
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
+import { Label } from '@repo/shared/presentation/components/ui/label';
+import { cn } from '@repo/shared/presentation/lib/utils';
 import * as React from 'react';
 import {
   Controller,
+  type ControllerProps,
   FormProvider,
   useFormContext,
   useFormState,
-  type ControllerProps,
-  type FieldPath,
-  type FieldValues,
 } from 'react-hook-form';
-
-import { Label } from '@repo/shared/presentation/components/ui/label';
-import { cn } from '@repo/shared/presentation/lib/utils';
 
 const Form = FormProvider;
 
-type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = {
-  name: TName;
-};
+const FormFieldContext = React.createContext<{ name: string }>({
+  name: '',
+});
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue,
-);
-
-const FormField = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-  ...props
-}: ControllerProps<TFieldValues, TName>) => {
+// biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control
+function FormField(props: ControllerProps<any, any>) {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
+    <FormFieldContext.Provider value={{ name: String(props.name) }}>
+      {/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form FormField requires any for generic control */}
+      <Controller {...(props as any)} />
     </FormFieldContext.Provider>
   );
-};
+}
 
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);

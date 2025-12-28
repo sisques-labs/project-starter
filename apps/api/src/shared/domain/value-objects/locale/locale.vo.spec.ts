@@ -1,5 +1,5 @@
-import { LocaleValueObject } from '@/shared/domain/value-objects/locale/locale.vo';
 import { InvalidLocaleException } from '@/shared/domain/exceptions/value-objects/invalid-locale/invalid-locale.exception';
+import { LocaleValueObject } from '@/shared/domain/value-objects/locale/locale.vo';
 
 describe('LocaleValueObject', () => {
   describe('constructor', () => {

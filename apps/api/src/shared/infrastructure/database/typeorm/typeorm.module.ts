@@ -1,11 +1,10 @@
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { TenantQuerySubscriber } from '@/shared/infrastructure/database/typeorm/subscribers/tenant-query.subscriber';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule as NestTypeOrmModule } from '@nestjs/typeorm';
+import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
 
 const SERVICES = [TypeormMasterService];
-const SUBSCRIBERS = [TenantQuerySubscriber];
+const SUBSCRIBERS = [];
 
 @Global()
 @Module({
@@ -18,7 +17,7 @@ const SUBSCRIBERS = [TenantQuerySubscriber];
         autoLoadEntities: true,
         synchronize: configService.get<string>('NODE_ENV') === 'development',
         logging: configService.get<string>('NODE_ENV') === 'development',
-        subscribers: [TenantQuerySubscriber],
+        subscribers: [...SUBSCRIBERS],
       }),
     }),
   ],

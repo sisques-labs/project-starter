@@ -1,5 +1,5 @@
-import { SlugValueObject } from '@/shared/domain/value-objects/slug/slug.vo';
 import { InvalidStringException } from '@/shared/domain/exceptions/value-objects/invalid-string/invalid-string.exception';
+import { SlugValueObject } from '@/shared/domain/value-objects/slug/slug.vo';
 
 describe('SlugValueObject', () => {
   describe('constructor', () => {

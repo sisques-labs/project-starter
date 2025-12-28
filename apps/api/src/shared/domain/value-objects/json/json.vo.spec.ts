@@ -1,5 +1,5 @@
-import { JsonValueObject } from '@/shared/domain/value-objects/json/json.vo';
 import { InvalidJsonException } from '@/shared/domain/exceptions/value-objects/invalid-json/invalid-json.exception';
+import { JsonValueObject } from '@/shared/domain/value-objects/json/json.vo';
 
 describe('JsonValueObject', () => {
   describe('constructor', () => {

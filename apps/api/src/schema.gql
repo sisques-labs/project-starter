@@ -3,54 +3,120 @@
 # ------------------------------------------------------
 
 type LoginResponseDto {
-  """The access token"""
-  accessToken: String!
+	"""
+	The access token
+	"""
+	accessToken: String!
 
-  """The refresh token"""
-  refreshToken: String!
+	"""
+	The refresh token
+	"""
+	refreshToken: String!
 }
 
 type RefreshTokenResponseDto {
-  """The new access token"""
-  accessToken: String!
+	"""
+	The new access token
+	"""
+	accessToken: String!
 }
 
 type MutationResponseDto {
-  success: Boolean!
-  message: String
-  id: String
+	success: Boolean!
+	message: String
+	id: String
 }
 
-type AuthResponseDto {
-  """The id of the auth"""
-  id: String!
+type AuthUserProfileResponseDto {
+	"""
+	The user id
+	"""
+	userId: String!
 
-  """The user id of the auth"""
-  userId: String!
+	"""
+	The auth id
+	"""
+	authId: String!
 
-  """The email of the auth"""
-  email: String
+	"""
+	The email of the auth
+	"""
+	email: String
 
-  """The email verified of the auth"""
-  emailVerified: Boolean
+	"""
+	The email verified status of the auth
+	"""
+	emailVerified: Boolean
 
-  """The last login at of the auth"""
-  lastLoginAt: DateTime
+	"""
+	The last login at of the auth
+	"""
+	lastLoginAt: DateTime
 
-  """The provider of the auth"""
-  provider: String
+	"""
+	The phone number of the auth
+	"""
+	phoneNumber: String
 
-  """The provider id of the auth"""
-  providerId: String
+	"""
+	The provider of the auth
+	"""
+	provider: String
 
-  """The two factor enabled of the auth"""
-  twoFactorEnabled: Boolean
+	"""
+	The provider id of the auth
+	"""
+	providerId: String
 
-  """The created at of the auth"""
-  createdAt: DateTime
+	"""
+	The two factor enabled status of the auth
+	"""
+	twoFactorEnabled: Boolean
 
-  """The updated at of the auth"""
-  updatedAt: DateTime
+	"""
+	The user name of the user
+	"""
+	userName: String
+
+	"""
+	The first name of the user
+	"""
+	name: String
+
+	"""
+	The last name of the user
+	"""
+	lastName: String
+
+	"""
+	The bio of the user
+	"""
+	bio: String
+
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
+
+	"""
+	The role of the user
+	"""
+	role: String
+
+	"""
+	The status of the user
+	"""
+	status: String
+
+	"""
+	The created at timestamp
+	"""
+	createdAt: DateTime
+
+	"""
+	The updated at timestamp
+	"""
+	updatedAt: DateTime
 }
 
 """
@@ -58,1768 +124,1010 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthResponseDto {
+	"""
+	The id of the auth
+	"""
+	id: String!
+
+	"""
+	The user id of the auth
+	"""
+	userId: String!
+
+	"""
+	The email of the auth
+	"""
+	email: String
+
+	"""
+	The email verified of the auth
+	"""
+	emailVerified: Boolean
+
+	"""
+	The last login at of the auth
+	"""
+	lastLoginAt: DateTime
+
+	"""
+	The provider of the auth
+	"""
+	provider: String
+
+	"""
+	The provider id of the auth
+	"""
+	providerId: String
+
+	"""
+	The two factor enabled of the auth
+	"""
+	twoFactorEnabled: Boolean
+
+	"""
+	The created at of the auth
+	"""
+	createdAt: DateTime
+
+	"""
+	The updated at of the auth
+	"""
+	updatedAt: DateTime
+}
+
 type PaginatedAuthResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The auths in the current page"""
-  items: [AuthResponseDto!]!
-}
-
-type SubscriptionPlanResponseDto {
-  """The id of the subscription plan"""
-  id: String!
-
-  """The name of the subscription plan"""
-  name: String!
-
-  """The slug of the subscription plan"""
-  slug: String!
-
-  """The type of the subscription plan"""
-  type: String
-
-  """The description of the subscription plan"""
-  description: String
-
-  """The price monthly of the subscription plan"""
-  priceMonthly: Float!
-
-  """The price yearly of the subscription plan"""
-  priceYearly: Float!
-
-  """The currency of the subscription plan"""
-  currency: String!
-
-  """The interval of the subscription plan"""
-  interval: String!
-
-  """The interval count of the subscription plan"""
-  intervalCount: Float!
-
-  """The trial period days of the subscription plan"""
-  trialPeriodDays: Float
-
-  """The is active of the subscription plan"""
-  isActive: Boolean!
-
-  """The features of the subscription plan"""
-  features: [String!]
-
-  """The limits of the subscription plan"""
-  limits: [String!]
-
-  """The stripe price id of the subscription plan"""
-  stripePriceId: String
-
-  """The created at of the subscription plan"""
-  createdAt: DateTime!
-
-  """The updated at of the subscription plan"""
-  updatedAt: DateTime!
-}
-
-type PaginatedSubscriptionPlanResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The subscription plans in the current page"""
-  items: [SubscriptionPlanResponseDto!]!
-}
-
-type SubscriptionResponseDto {
-  """The id of the subscription"""
-  id: String!
-
-  """The name of the subscription"""
-  tenantId: String!
-
-  """The plan id of the subscription"""
-  planId: String!
-
-  """The start date of the subscription"""
-  startDate: String!
-
-  """The end date of the subscription"""
-  endDate: DateTime!
-
-  """The trial end date of the subscription"""
-  trialEndDate: DateTime
-
-  """The status of the subscription"""
-  status: SubscriptionStatusEnum!
-
-  """The stripe subscription id of the subscription"""
-  stripeSubscriptionId: String
-
-  """The stripe customer id of the subscription"""
-  stripeCustomerId: String
-
-  """The renewal method of the subscription"""
-  renewalMethod: SubscriptionRenewalMethodEnum!
-}
-
-"""The status of the subscription"""
-enum SubscriptionStatusEnum {
-  ACTIVE
-  INACTIVE
-  CANCELLED
-  REFUNDED
-}
-
-"""The renewal method"""
-enum SubscriptionRenewalMethodEnum {
-  MANUAL
-  AUTOMATIC
-}
-
-type PaginatedSubscriptionResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The subscriptions in the current page"""
-  items: [SubscriptionResponseDto!]!
-}
-
-type EventResponseDto {
-  """The id of the event"""
-  id: String!
-
-  """The name of the event"""
-  eventType: String
-
-  """The bio of the event"""
-  aggregateType: String
-
-  """The aggregate id of the event"""
-  aggregateId: String
-
-  """The payload of the event"""
-  payload: String
-
-  """The timestamp of the event"""
-  timestamp: DateTime
-
-  """The created at of the event"""
-  createdAt: DateTime
-
-  """The updated at of the event"""
-  updatedAt: DateTime
-}
-
-type PaginatedEventResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The events in the current page"""
-  items: [EventResponseDto!]!
-}
-
-type FeatureResponseDto {
-  """The id of the feature"""
-  id: String!
-
-  """The unique key of the feature"""
-  key: String!
-
-  """The name of the feature"""
-  name: String!
-
-  """The description of the feature"""
-  description: String
-
-  """The status of the feature"""
-  status: String!
-
-  """The created at timestamp of the feature"""
-  createdAt: DateTime!
-
-  """The updated at timestamp of the feature"""
-  updatedAt: DateTime!
-}
-
-type PaginatedFeatureResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The features in the current page"""
-  items: [FeatureResponseDto!]!
-}
-
-type HealthResponseDto {
-  """The status of the check"""
-  status: String!
-
-  """The status of the write database check"""
-  writeDatabaseStatus: String!
-
-  """The status of the read database check"""
-  readDatabaseStatus: String!
-}
-
-type PromptResponseDto {
-  """The id of the prompt"""
-  id: String!
-
-  """The name of the prompt"""
-  slug: String!
-
-  """The version of the prompt"""
-  version: String!
-
-  """The title of the prompt"""
-  title: String!
-
-  """The description of the prompt"""
-  description: String!
-
-  """The content of the prompt"""
-  content: String
-
-  """The status of the prompt"""
-  status: PromptStatusEnum!
-
-  """The is active of the prompt"""
-  isActive: String
-
-  """The created at of the prompt"""
-  createdAt: DateTime!
-
-  """The updated at of the prompt"""
-  updatedAt: DateTime!
-}
-
-"""The status of the prompt"""
-enum PromptStatusEnum {
-  ACTIVE
-  DRAFT
-  ARCHIVED
-  DEPRECATED
-}
-
-type PaginatedPromptResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The prompts in the current page"""
-  items: [PromptResponseDto!]!
+	"""
+	The total number of items
+	"""
+	total: Int!
+
+	"""
+	The page number
+	"""
+	page: Int!
+
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
+
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
+
+	"""
+	The auths in the current page
+	"""
+	items: [AuthResponseDto!]!
 }
 
 type SagaInstanceResponseDto {
-  """The saga instance ID"""
-  id: String!
+	"""
+	The saga instance ID
+	"""
+	id: String!
 
-  """The saga instance name"""
-  name: String!
+	"""
+	The saga instance name
+	"""
+	name: String!
 
-  """The saga instance status"""
-  status: SagaInstanceStatusEnum!
+	"""
+	The saga instance status
+	"""
+	status: SagaInstanceStatusEnum!
 
-  """The saga instance start date"""
-  startDate: DateTime!
+	"""
+	The saga instance start date
+	"""
+	startDate: DateTime!
 
-  """The saga instance end date"""
-  endDate: DateTime!
+	"""
+	The saga instance end date
+	"""
+	endDate: DateTime!
 
-  """The saga instance creation date"""
-  createdAt: DateTime!
+	"""
+	The saga instance creation date
+	"""
+	createdAt: DateTime!
 
-  """The saga instance update date"""
-  updatedAt: DateTime!
+	"""
+	The saga instance update date
+	"""
+	updatedAt: DateTime!
 }
 
-"""The status of the saga"""
+"""
+The status of the saga
+"""
 enum SagaInstanceStatusEnum {
-  PENDING
-  STARTED
-  RUNNING
-  COMPLETED
-  FAILED
-  COMPENSATING
-  COMPENSATED
+	PENDING
+	STARTED
+	RUNNING
+	COMPLETED
+	FAILED
+	COMPENSATING
+	COMPENSATED
 }
 
 type PaginatedSagaInstanceResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The saga instance items"""
-  items: [SagaInstanceResponseDto!]!
+	"""
+	The saga instance items
+	"""
+	items: [SagaInstanceResponseDto!]!
 }
 
 type SagaLogResponseDto {
-  """The saga log ID"""
-  id: String!
+	"""
+	The saga log ID
+	"""
+	id: String!
 
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The saga step ID"""
-  sagaStepId: String!
+	"""
+	The saga step ID
+	"""
+	sagaStepId: String!
 
-  """The saga log type"""
-  type: SagaLogTypeEnum!
+	"""
+	The saga log type
+	"""
+	type: SagaLogTypeEnum!
 
-  """The saga log message"""
-  message: String!
+	"""
+	The saga log message
+	"""
+	message: String!
 
-  """The saga log creation date"""
-  createdAt: DateTime!
+	"""
+	The saga log creation date
+	"""
+	createdAt: DateTime!
 
-  """The saga log update date"""
-  updatedAt: DateTime!
+	"""
+	The saga log update date
+	"""
+	updatedAt: DateTime!
 }
 
-"""The type of the saga log"""
+"""
+The type of the saga log
+"""
 enum SagaLogTypeEnum {
-  INFO
-  WARNING
-  ERROR
-  DEBUG
+	INFO
+	WARNING
+	ERROR
+	DEBUG
 }
 
 type PaginatedSagaLogResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The saga log items"""
-  items: [SagaLogResponseDto!]!
+	"""
+	The saga log items
+	"""
+	items: [SagaLogResponseDto!]!
 }
 
 type SagaStepResponseDto {
-  """The saga step ID"""
-  id: String!
+	"""
+	The saga step ID
+	"""
+	id: String!
 
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The saga step name"""
-  name: String!
+	"""
+	The saga step name
+	"""
+	name: String!
 
-  """The saga step order"""
-  order: Float!
+	"""
+	The saga step order
+	"""
+	order: Float!
 
-  """The saga step status"""
-  status: SagaStepStatusEnum!
+	"""
+	The saga step status
+	"""
+	status: SagaStepStatusEnum!
 
-  """The saga step start date"""
-  startDate: DateTime
+	"""
+	The saga step start date
+	"""
+	startDate: DateTime
 
-  """The saga step end date"""
-  endDate: DateTime
+	"""
+	The saga step end date
+	"""
+	endDate: DateTime
 
-  """The saga step error message"""
-  errorMessage: String
+	"""
+	The saga step error message
+	"""
+	errorMessage: String
 
-  """The saga step retry count"""
-  retryCount: Float!
+	"""
+	The saga step retry count
+	"""
+	retryCount: Float!
 
-  """The saga step max retries"""
-  maxRetries: Float!
+	"""
+	The saga step max retries
+	"""
+	maxRetries: Float!
 
-  """The saga step payload"""
-  payload: String
+	"""
+	The saga step payload
+	"""
+	payload: String
 
-  """The saga step result"""
-  result: String
+	"""
+	The saga step result
+	"""
+	result: String
 
-  """The saga step creation date"""
-  createdAt: DateTime!
+	"""
+	The saga step creation date
+	"""
+	createdAt: DateTime!
 
-  """The saga step update date"""
-  updatedAt: DateTime!
+	"""
+	The saga step update date
+	"""
+	updatedAt: DateTime!
 }
 
-"""The status of the saga step"""
+"""
+The status of the saga step
+"""
 enum SagaStepStatusEnum {
-  PENDING
-  STARTED
-  RUNNING
-  COMPLETED
-  FAILED
+	PENDING
+	STARTED
+	RUNNING
+	COMPLETED
+	FAILED
 }
 
 type PaginatedSagaStepResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The saga step items"""
-  items: [SagaStepResponseDto!]!
-}
-
-type MutationResponseArrayDto {
-  success: Boolean!
-  message: String
-  ids: [String!]
-}
-
-type StorageDownloadFileResponseDto {
-  """The file content as base64"""
-  content: String!
-
-  """The file name"""
-  fileName: String!
-
-  """The MIME type"""
-  mimeType: String!
-
-  """The file size in bytes"""
-  fileSize: Float!
-}
-
-type StorageResponseDto {
-  """The storage ID"""
-  id: String!
-
-  """The file name"""
-  fileName: String!
-
-  """The file size in bytes"""
-  fileSize: Float!
-
-  """The MIME type"""
-  mimeType: String!
-
-  """The storage provider"""
-  provider: String!
-
-  """The file URL"""
-  url: String!
-
-  """The file path"""
-  path: String!
-
-  """The creation date"""
-  createdAt: DateTime!
-
-  """The update date"""
-  updatedAt: DateTime!
-}
-
-type PaginatedStorageResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The storage items"""
-  items: [StorageResponseDto!]!
-}
-
-type TenantMemberResponseDto {
-  """The id of the tenant member"""
-  id: String!
-
-  """The tenant id of the tenant member"""
-  tenantId: String
-
-  """The user id of the tenant member"""
-  userId: String
-
-  """The role of the tenant member"""
-  role: String
-
-  """The created at of the tenant member"""
-  createdAt: DateTime
-
-  """The updated at of the tenant member"""
-  updatedAt: DateTime
-}
-
-type PaginatedTenantMemberResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The tenant members in the current page"""
-  items: [TenantMemberResponseDto!]!
-}
-
-type TenantTenantMemberResponseDto {
-  """The id of the tenant member"""
-  id: String!
-
-  """The user id of the tenant member"""
-  userId: String!
-
-  """The role of the tenant member"""
-  role: String!
-
-  """The creation timestamp of the tenant member"""
-  createdAt: DateTime
-
-  """The last update timestamp of the tenant member"""
-  updatedAt: DateTime
-}
-
-type TenantResponseDto {
-  """The id of the tenant"""
-  id: String!
-
-  """The tenant name of the tenant"""
-  name: String
-
-  """The tenant slug of the tenant"""
-  slug: String
-
-  """The description of the tenant"""
-  description: String
-
-  """The website url of the tenant"""
-  websiteUrl: String
-
-  """The logo url of the tenant"""
-  logoUrl: String
-
-  """The favicon url of the tenant"""
-  faviconUrl: String
-
-  """The primary color of the tenant"""
-  primaryColor: String
-
-  """The secondary color of the tenant"""
-  secondaryColor: String
-
-  """The status of the tenant"""
-  status: String
-
-  """The email of the tenant"""
-  email: String
-
-  """The phone number of the tenant"""
-  phoneNumber: String
-
-  """The phone code of the tenant"""
-  phoneCode: String
-
-  """The address of the tenant"""
-  address: String
-
-  """The city of the tenant"""
-  city: String
-
-  """The state of the tenant"""
-  state: String
-
-  """The country of the tenant"""
-  country: String
-
-  """The postal code of the tenant"""
-  postalCode: String
-
-  """The timezone of the tenant"""
-  timezone: String
-
-  """The locale of the tenant"""
-  locale: String
-
-  """The max users of the tenant"""
-  maxUsers: Float
-
-  """The max storage of the tenant"""
-  maxStorage: Float
-
-  """The max API calls of the tenant"""
-  maxApiCalls: Float
-
-  """The tenant members of the tenant"""
-  tenantMembers: [TenantTenantMemberResponseDto!]
-
-  """The created at of the tenant"""
-  createdAt: DateTime
-
-  """The updated at of the tenant"""
-  updatedAt: DateTime
-}
-
-type PaginatedTenantResultDto {
-  """The total number of items"""
-  total: Int!
-
-  """The page number"""
-  page: Int!
-
-  """The number of items per page"""
-  perPage: Int!
-
-  """The total number of pages"""
-  totalPages: Int!
-
-  """The tenants in the current page"""
-  items: [TenantResponseDto!]!
+	"""
+	The total number of items
+	"""
+	total: Int!
+
+	"""
+	The page number
+	"""
+	page: Int!
+
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
+
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
+
+	"""
+	The saga step items
+	"""
+	items: [SagaStepResponseDto!]!
 }
 
 type UserResponseDto {
-  """The id of the user"""
-  id: String!
+	"""
+	The id of the user
+	"""
+	id: String!
 
-  """The user name of the user"""
-  userName: String
+	"""
+	The user name of the user
+	"""
+	userName: String
 
-  """The last name of the user"""
-  lastName: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
 
-  """The role of the user"""
-  role: String
+	"""
+	The role of the user
+	"""
+	role: String
 
-  """The status of the user"""
-  status: String
+	"""
+	The status of the user
+	"""
+	status: String
 
-  """The avatar url of the user"""
-  avatarUrl: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The bio of the user"""
-  bio: String
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The name of the user"""
-  name: String
+	"""
+	The name of the user
+	"""
+	name: String
 
-  """The created at of the user"""
-  createdAt: DateTime
+	"""
+	The created at of the user
+	"""
+	createdAt: DateTime
 
-  """The updated at of the user"""
-  updatedAt: DateTime
+	"""
+	The updated at of the user
+	"""
+	updatedAt: DateTime
 }
 
 type PaginatedUserResultDto {
-  """The total number of items"""
-  total: Int!
+	"""
+	The total number of items
+	"""
+	total: Int!
 
-  """The page number"""
-  page: Int!
+	"""
+	The page number
+	"""
+	page: Int!
 
-  """The number of items per page"""
-  perPage: Int!
+	"""
+	The number of items per page
+	"""
+	perPage: Int!
 
-  """The total number of pages"""
-  totalPages: Int!
+	"""
+	The total number of pages
+	"""
+	totalPages: Int!
 
-  """The users in the current page"""
-  items: [UserResponseDto!]!
+	"""
+	The users in the current page
+	"""
+	items: [UserResponseDto!]!
 }
 
 type Query {
-  hello: String!
-  health: String!
-  eventsFindByCriteria(input: EventFindByCriteriaRequestDto): PaginatedEventResultDto!
-  findAuthsByCriteria(input: AuthFindByCriteriaRequestDto): PaginatedAuthResultDto!
-  tenantFindByCriteria(input: TenantFindByCriteriaRequestDto): PaginatedTenantResultDto!
-  tenantMemberFindByCriteria(input: TenantMemberFindByCriteriaRequestDto): PaginatedTenantMemberResultDto!
-  usersFindByCriteria(input: UserFindByCriteriaRequestDto): PaginatedUserResultDto!
-  userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
-  healthCheck: HealthResponseDto!
-  subscriptionPlanFindByCriteria(input: SubscriptionPlanFindByCriteriaRequestDto): PaginatedSubscriptionPlanResultDto!
-  subscriptionPlanFindById(input: SubscriptionPlanFindByIdRequestDto!): SubscriptionPlanResponseDto!
-  subscriptionFindByCriteria(input: SubscriptionFindByCriteriaRequestDto): PaginatedSubscriptionResultDto!
-  subscriptionFindById(input: SubscriptionFindByIdRequestDto!): SubscriptionResponseDto!
-  subscriptionFindByTenantId(input: SubscriptionFindByTenantIdRequestDto!): SubscriptionResponseDto!
-  promptFindByCriteria(input: PromptFindByCriteriaRequestDto): PaginatedPromptResultDto!
-  promptFindById(input: PromptFindByIdRequestDto!): PromptResponseDto!
-  storageFindById(input: StorageFindByIdRequestDto!): StorageResponseDto
-  storageFindByCriteria(input: StorageFindByCriteriaRequestDto): PaginatedStorageResultDto!
-  sagaInstanceFindById(input: SagaInstanceFindByIdRequestDto!): SagaInstanceResponseDto
-  sagaInstanceFindByCriteria(input: SagaInstanceFindByCriteriaRequestDto): PaginatedSagaInstanceResultDto!
-  sagaStepFindById(input: SagaStepFindByIdRequestDto!): SagaStepResponseDto
-  sagaStepFindBySagaInstanceId(input: SagaStepFindBySagaInstanceIdRequestDto!): [SagaStepResponseDto!]!
-  sagaStepFindByCriteria(input: SagaStepFindByCriteriaRequestDto): PaginatedSagaStepResultDto!
-  sagaLogFindById(input: SagaLogFindByIdRequestDto!): SagaLogResponseDto
-  sagaLogFindBySagaInstanceId(input: SagaLogFindBySagaInstanceIdRequestDto!): [SagaLogResponseDto!]!
-  sagaLogFindBySagaStepId(input: SagaLogFindBySagaStepIdRequestDto!): [SagaLogResponseDto!]!
-  sagaLogFindByCriteria(input: SagaLogFindByCriteriaRequestDto): PaginatedSagaLogResultDto!
-  featuresFindByCriteria(input: FeatureFindByCriteriaRequestDto): PaginatedFeatureResultDto!
-  featureFindById(input: FeatureFindByIdRequestDto!): FeatureResponseDto!
-}
-
-input EventFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
-}
-
-input BaseFilterInput {
-  """The field to filter by"""
-  field: String!
-
-  """The operator to filter by"""
-  operator: FilterOperator!
-
-  """The value to filter by"""
-  value: String!
-}
-
-"""The operator to filter by"""
-enum FilterOperator {
-  EQUALS
-  NOT_EQUALS
-  LIKE
-  IN
-  GREATER_THAN
-  LESS_THAN
-  GREATER_THAN_OR_EQUAL
-  LESS_THAN_OR_EQUAL
-}
-
-input BaseSortInput {
-  """The field to sort by"""
-  field: String!
-
-  """The direction to sort by"""
-  direction: SortDirection!
-}
-
-"""The direction to sort by"""
-enum SortDirection {
-  ASC
-  DESC
-}
-
-input BasePaginationInput {
-  """The page to paginate by"""
-  page: Int!
-
-  """The per page to paginate by"""
-  perPage: Int!
+	hello: String!
+	health: String!
+	authProfileMe: AuthUserProfileResponseDto!
+	findAuthsByCriteria(
+		input: AuthFindByCriteriaRequestDto
+	): PaginatedAuthResultDto!
+	sagaInstanceFindById(
+		input: SagaInstanceFindByIdRequestDto!
+	): SagaInstanceResponseDto
+	sagaInstanceFindByCriteria(
+		input: SagaInstanceFindByCriteriaRequestDto
+	): PaginatedSagaInstanceResultDto!
+	sagaStepFindById(input: SagaStepFindByIdRequestDto!): SagaStepResponseDto
+	sagaStepFindBySagaInstanceId(
+		input: SagaStepFindBySagaInstanceIdRequestDto!
+	): [SagaStepResponseDto!]!
+	sagaStepFindByCriteria(
+		input: SagaStepFindByCriteriaRequestDto
+	): PaginatedSagaStepResultDto!
+	sagaLogFindById(input: SagaLogFindByIdRequestDto!): SagaLogResponseDto
+	sagaLogFindBySagaInstanceId(
+		input: SagaLogFindBySagaInstanceIdRequestDto!
+	): [SagaLogResponseDto!]!
+	sagaLogFindBySagaStepId(
+		input: SagaLogFindBySagaStepIdRequestDto!
+	): [SagaLogResponseDto!]!
+	sagaLogFindByCriteria(
+		input: SagaLogFindByCriteriaRequestDto
+	): PaginatedSagaLogResultDto!
+	usersFindByCriteria(
+		input: UserFindByCriteriaRequestDto
+	): PaginatedUserResultDto!
+	userFindById(input: UserFindByIdRequestDto!): UserResponseDto!
 }
 
 input AuthFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
-input TenantFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+input BaseFilterInput {
+	"""
+	The field to filter by
+	"""
+	field: String!
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The operator to filter by
+	"""
+	operator: FilterOperator!
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The value to filter by
+	"""
+	value: String!
 }
 
-input TenantMemberFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+"""
+The operator to filter by
+"""
+enum FilterOperator {
+	EQUALS
+	NOT_EQUALS
+	LIKE
+	IN
+	GREATER_THAN
+	LESS_THAN
+	GREATER_THAN_OR_EQUAL
+	LESS_THAN_OR_EQUAL
 }
 
-input UserFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+input BaseSortInput {
+	"""
+	The field to sort by
+	"""
+	field: String!
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The direction to sort by
+	"""
+	direction: SortDirection!
 }
 
-input UserFindByIdRequestDto {
-  """The id of the user"""
-  id: String!
+"""
+The direction to sort by
+"""
+enum SortDirection {
+	ASC
+	DESC
 }
 
-input SubscriptionPlanFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+input BasePaginationInput {
+	"""
+	The page to paginate by
+	"""
+	page: Int!
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
-}
-
-input SubscriptionPlanFindByIdRequestDto {
-  """The ID of the subscription plan to find"""
-  id: String!
-}
-
-input SubscriptionFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
-}
-
-input SubscriptionFindByIdRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-}
-
-input SubscriptionFindByTenantIdRequestDto {
-  """The tenant id of the subscription"""
-  tenantId: String!
-}
-
-input PromptFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
-}
-
-input PromptFindByIdRequestDto {
-  """The unique identifier of the prompt"""
-  id: String!
-}
-
-input StorageFindByIdRequestDto {
-  """The id of the storage"""
-  id: String!
-}
-
-input StorageFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
-
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
-
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The per page to paginate by
+	"""
+	perPage: Int!
 }
 
 input SagaInstanceFindByIdRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 }
 
 input SagaInstanceFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input SagaStepFindByIdRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 }
 
 input SagaStepFindBySagaInstanceIdRequestDto {
-  """The saga instance id"""
-  sagaInstanceId: String!
+	"""
+	The saga instance id
+	"""
+	sagaInstanceId: String!
 }
 
 input SagaStepFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
 input SagaLogFindByIdRequestDto {
-  """The id of the saga log"""
-  id: String!
+	"""
+	The id of the saga log
+	"""
+	id: String!
 }
 
 input SagaLogFindBySagaInstanceIdRequestDto {
-  """The saga instance id"""
-  sagaInstanceId: String!
+	"""
+	The saga instance id
+	"""
+	sagaInstanceId: String!
 }
 
 input SagaLogFindBySagaStepIdRequestDto {
-  """The saga step id"""
-  sagaStepId: String!
+	"""
+	The saga step id
+	"""
+	sagaStepId: String!
 }
 
 input SagaLogFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
-input FeatureFindByCriteriaRequestDto {
-  """The filters to find by"""
-  filters: [BaseFilterInput!] = []
+input UserFindByCriteriaRequestDto {
+	"""
+	The filters to find by
+	"""
+	filters: [BaseFilterInput!] = []
 
-  """The sorts to find by"""
-  sorts: [BaseSortInput!] = []
+	"""
+	The sorts to find by
+	"""
+	sorts: [BaseSortInput!] = []
 
-  """The pagination to find by"""
-  pagination: BasePaginationInput = {page: 1, perPage: 10}
+	"""
+	The pagination to find by
+	"""
+	pagination: BasePaginationInput = { page: 1, perPage: 10 }
 }
 
-input FeatureFindByIdRequestDto {
-  """The id of the feature"""
-  id: String!
+input UserFindByIdRequestDto {
+	"""
+	The id of the user
+	"""
+	id: String!
 }
 
 type Mutation {
-  eventReplay(input: EventReplayRequestDto!): MutationResponseDto!
-  loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
-  registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
-  refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
-  logout(input: UpdateUserRequestDto!): MutationResponseDto!
-  tenantCreate(input: TenantCreateRequestDto!): MutationResponseDto!
-  tenantUpdate(input: TenantUpdateRequestDto!): MutationResponseDto!
-  tenantDelete(input: TenantDeleteRequestDto!): MutationResponseDto!
-  tenantMemberAdd(input: TenantMemberAddRequestDto!): MutationResponseDto!
-  tenantMemberUpdate(input: TenantMemberUpdateRequestDto!): MutationResponseDto!
-  tenantMemberRemove(input: TenantMemberRemoveRequestDto!): MutationResponseDto!
-  createUser(input: CreateUserRequestDto!): MutationResponseDto!
-  updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
-  deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
-  subscriptionPlanCreate(input: SubscriptionPlanCreateRequestDto!): MutationResponseDto!
-  subscriptionPlanUpdate(input: SubscriptionPlanUpdateRequestDto!): MutationResponseDto!
-  subscriptionPlanDelete(input: SubscriptionPlanDeleteRequestDto!): MutationResponseDto!
-  subscriptionCreate(input: SubscriptionCreateRequestDto!): MutationResponseDto!
-  subscriptionUpdate(input: SubscriptionUpdateRequestDto!): MutationResponseDto!
-  subscriptionDelete(input: SubscriptionDeleteRequestDto!): MutationResponseDto!
-  subscriptionActivate(input: SubscriptionActivateRequestDto!): MutationResponseDto!
-  subscriptionDeactivate(input: SubscriptionDeactivateRequestDto!): MutationResponseDto!
-  subscriptionRefund(input: SubscriptionRefundRequestDto!): MutationResponseDto!
-  subscriptionCancel(input: SubscriptionCancelRequestDto!): MutationResponseDto!
-  promptCreate(input: PromptCreateRequestDto!): MutationResponseDto!
-  promptUpdate(input: PromptUpdateRequestDto!): MutationResponseDto!
-  promptDelete(input: PromptDeleteRequestDto!): MutationResponseDto!
-  promptChangeStatus(input: PromptChangeStatusRequestDto!): MutationResponseDto!
-  storageUploadFile(file: Upload!): MutationResponseDto!
-  storageDownloadFiles(input: StorageDownloadFileRequestDto!): [StorageDownloadFileResponseDto!]!
-  storageDeleteFile(input: StorageDeleteFileRequestDto!): MutationResponseArrayDto!
-  test: MutationResponseDto!
-  sagaInstanceCreate(input: SagaInstanceCreateRequestDto!): MutationResponseDto!
-  sagaInstanceUpdate(input: SagaInstanceUpdateRequestDto!): MutationResponseDto!
-  sagaInstanceChangeStatus(input: SagaInstanceChangeStatusRequestDto!): MutationResponseDto!
-  sagaInstanceDelete(input: SagaInstanceDeleteRequestDto!): MutationResponseDto!
-  sagaStepCreate(input: SagaStepCreateRequestDto!): MutationResponseDto!
-  sagaStepUpdate(input: SagaStepUpdateRequestDto!): MutationResponseDto!
-  sagaStepChangeStatus(input: SagaStepChangeStatusRequestDto!): MutationResponseDto!
-  sagaStepDelete(input: SagaStepDeleteRequestDto!): MutationResponseDto!
-  sagaLogCreate(input: SagaLogCreateRequestDto!): MutationResponseDto!
-  sagaLogUpdate(input: SagaLogUpdateRequestDto!): MutationResponseDto!
-  sagaLogDelete(input: SagaLogDeleteRequestDto!): MutationResponseDto!
-  createFeature(input: CreateFeatureRequestDto!): MutationResponseDto!
-  updateFeature(input: UpdateFeatureRequestDto!): MutationResponseDto!
-  deleteFeature(input: DeleteFeatureRequestDto!): MutationResponseDto!
-  changeFeatureStatus(input: FeatureChangeStatusRequestDto!): MutationResponseDto!
-}
-
-input EventReplayRequestDto {
-  """The id of the event to replay"""
-  id: String
-
-  """
-  The type of the event to replay. If not provided, all events within the date range will be replayed.
-  """
-  eventType: String
-
-  """The aggregate id"""
-  aggregateId: String
-
-  """The aggregate type"""
-  aggregateType: String
-
-  """The start date of the event to replay"""
-  from: DateTime!
-
-  """The end date of the event to replay"""
-  to: DateTime!
-
-  """Batch size for replay"""
-  batchSize: Int
+	loginByEmail(input: AuthLoginByEmailRequestDto!): LoginResponseDto!
+	registerByEmail(input: AuthRegisterByEmailRequestDto!): MutationResponseDto!
+	refreshToken(input: AuthRefreshTokenRequestDto!): RefreshTokenResponseDto!
+	logout(input: UpdateUserRequestDto!): MutationResponseDto!
+	sagaInstanceCreate(input: SagaInstanceCreateRequestDto!): MutationResponseDto!
+	sagaInstanceUpdate(input: SagaInstanceUpdateRequestDto!): MutationResponseDto!
+	sagaInstanceChangeStatus(
+		input: SagaInstanceChangeStatusRequestDto!
+	): MutationResponseDto!
+	sagaInstanceDelete(input: SagaInstanceDeleteRequestDto!): MutationResponseDto!
+	sagaStepCreate(input: SagaStepCreateRequestDto!): MutationResponseDto!
+	sagaStepUpdate(input: SagaStepUpdateRequestDto!): MutationResponseDto!
+	sagaStepChangeStatus(
+		input: SagaStepChangeStatusRequestDto!
+	): MutationResponseDto!
+	sagaStepDelete(input: SagaStepDeleteRequestDto!): MutationResponseDto!
+	sagaLogCreate(input: SagaLogCreateRequestDto!): MutationResponseDto!
+	sagaLogUpdate(input: SagaLogUpdateRequestDto!): MutationResponseDto!
+	sagaLogDelete(input: SagaLogDeleteRequestDto!): MutationResponseDto!
+	createUser(input: CreateUserRequestDto!): MutationResponseDto!
+	updateUser(input: UpdateUserRequestDto!): MutationResponseDto!
+	deleteUser(input: DeleteUserRequestDto!): MutationResponseDto!
 }
 
 input AuthLoginByEmailRequestDto {
-  """The email of the auth"""
-  email: String!
+	"""
+	The email of the auth
+	"""
+	email: String!
 
-  """The password of the auth"""
-  password: String!
+	"""
+	The password of the auth
+	"""
+	password: String!
 }
 
 input AuthRegisterByEmailRequestDto {
-  """The email of the auth"""
-  email: String!
+	"""
+	The email of the auth
+	"""
+	email: String!
 
-  """The password of the auth"""
-  password: String!
-
-  """Optional tenant name to create during registration"""
-  tenantName: String
+	"""
+	The password of the auth
+	"""
+	password: String!
 }
 
 input AuthRefreshTokenRequestDto {
-  """The refresh token to use for generating a new access token"""
-  refreshToken: String!
+	"""
+	The refresh token to use for generating a new access token
+	"""
+	refreshToken: String!
 }
 
 input UpdateUserRequestDto {
-  """The unique identifier of the user"""
-  id: String!
+	"""
+	The unique identifier of the user
+	"""
+	id: String!
 
-  """The name of the user"""
-  name: String
+	"""
+	The name of the user
+	"""
+	name: String
 
-  """The bio of the user"""
-  bio: String
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The avatar url of the user"""
-  avatarUrl: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The last name of the user"""
-  lastName: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
 
-  """The user name of the user"""
-  userName: String
+	"""
+	The user name of the user
+	"""
+	userName: String
 
-  """The role of the user"""
-  role: UserRoleEnum
+	"""
+	The role of the user
+	"""
+	role: UserRoleEnum
 
-  """The status of the user"""
-  status: UserStatusEnum
+	"""
+	The status of the user
+	"""
+	status: UserStatusEnum
 }
 
-"""The role of the user"""
+"""
+The role of the user
+"""
 enum UserRoleEnum {
-  ADMIN
-  USER
+	ADMIN
+	USER
 }
 
-"""The status of the user"""
+"""
+The status of the user
+"""
 enum UserStatusEnum {
-  ACTIVE
-  INACTIVE
-  BLOCKED
-}
-
-input TenantCreateRequestDto {
-  """The name of the tenant"""
-  name: String!
-
-  """The description of the tenant"""
-  description: String
-
-  """The website url of the tenant"""
-  websiteUrl: String
-
-  """The logo url of the tenant"""
-  logoUrl: String
-
-  """The favicon url of the tenant"""
-  faviconUrl: String
-
-  """The primary color of the tenant"""
-  primaryColor: String
-
-  """The secondary color of the tenant"""
-  secondaryColor: String
-
-  """The email of the tenant"""
-  email: String
-
-  """The phone number of the tenant"""
-  phoneNumber: String
-
-  """The phone code of the tenant"""
-  phoneCode: String
-
-  """The address of the tenant"""
-  address: String
-
-  """The city of the tenant"""
-  city: String
-
-  """The state of the tenant"""
-  state: String
-
-  """The country of the tenant"""
-  country: String
-
-  """The postal code of the tenant"""
-  postalCode: String
-
-  """The timezone of the tenant"""
-  timezone: String
-
-  """The locale of the tenant"""
-  locale: String
-
-  """The max users of the tenant"""
-  maxUsers: Float
-
-  """The max storage of the tenant"""
-  maxStorage: Float
-
-  """The max API calls of the tenant"""
-  maxApiCalls: Float
-}
-
-input TenantUpdateRequestDto {
-  """The unique identifier of the tenant"""
-  id: String!
-
-  """The name of the tenant"""
-  name: String
-
-  """The description of the tenant"""
-  description: String
-
-  """The website url of the tenant"""
-  websiteUrl: String
-
-  """The logo url of the tenant"""
-  logoUrl: String
-
-  """The favicon url of the tenant"""
-  faviconUrl: String
-
-  """The primary color of the tenant"""
-  primaryColor: String
-
-  """The secondary color of the tenant"""
-  secondaryColor: String
-
-  """The status of the tenant"""
-  status: String
-
-  """The email of the tenant"""
-  email: String
-
-  """The phone number of the tenant"""
-  phoneNumber: String
-
-  """The phone code of the tenant"""
-  phoneCode: String
-
-  """The address of the tenant"""
-  address: String
-
-  """The city of the tenant"""
-  city: String
-
-  """The state of the tenant"""
-  state: String
-
-  """The country of the tenant"""
-  country: String
-
-  """The postal code of the tenant"""
-  postalCode: String
-
-  """The country of the tenant"""
-  timezone: String
-
-  """The locale of the tenant"""
-  locale: Float
-
-  """The max users of the tenant"""
-  maxUsers: String
-
-  """The max storage of the tenant"""
-  maxStorage: Float
-
-  """The max API calls of the tenant"""
-  maxApiCalls: Float
-}
-
-input TenantDeleteRequestDto {
-  """The unique identifier of the tenant"""
-  id: String!
-}
-
-input TenantMemberAddRequestDto {
-  """The id of the tenant"""
-  tenantId: String!
-
-  """The id of the user"""
-  userId: String
-
-  """The role of the tenant member"""
-  role: TenantMemberRoleEnum!
-}
-
-"""The role of the tenant member"""
-enum TenantMemberRoleEnum {
-  OWNER
-  ADMIN
-  MEMBER
-  GUEST
-}
-
-input TenantMemberUpdateRequestDto {
-  """The unique identifier of the tenant member"""
-  id: String!
-
-  """The role of the tenant member"""
-  role: TenantMemberRoleEnum
-}
-
-input TenantMemberRemoveRequestDto {
-  """The unique identifier of the tenant member"""
-  id: String!
-}
-
-input CreateUserRequestDto {
-  """The name of the user"""
-  name: String
-
-  """The bio of the user"""
-  bio: String
-
-  """The avatar url of the user"""
-  avatarUrl: String
-
-  """The last name of the user"""
-  lastName: String
-
-  """The user name of the user"""
-  userName: String
-
-  """The role of the user"""
-  role: UserRoleEnum!
-
-  """The status of the user"""
-  status: UserStatusEnum!
-}
-
-input DeleteUserRequestDto {
-  """The unique identifier of the user"""
-  id: String!
-}
-
-input SubscriptionPlanCreateRequestDto {
-  """The name of the subscription plan"""
-  name: String!
-
-  """The type of the subscription plan"""
-  type: SubscriptionPlanTypeEnum!
-
-  """The description of the subscription plan"""
-  description: String
-
-  """The price monthly of the subscription plan"""
-  priceMonthly: Float!
-
-  """The currency of the subscription plan"""
-  currency: CurrencyEnum!
-
-  """The interval of the subscription plan"""
-  interval: SubscriptionPlanIntervalEnum!
-
-  """The interval count of the subscription plan"""
-  intervalCount: Float!
-
-  """The trial period days of the subscription plan"""
-  trialPeriodDays: Float
-
-  """The features of the subscription plan"""
-  features: [String!]
-
-  """The limits of the subscription plan"""
-  limits: [String!]
-
-  """The stripe price id of the subscription plan"""
-  stripePriceId: String
-}
-
-"""The type of the subscription plan"""
-enum SubscriptionPlanTypeEnum {
-  FREE
-  BASIC
-  PRO
-  ENTERPRISE
-}
-
-"""The currency"""
-enum CurrencyEnum {
-  USD
-  GBP
-  EUR
-  JPY
-  KRW
-  CNY
-  INR
-  BRL
-  MXN
-  ARS
-  COP
-}
-
-"""The interval of the subscription plan"""
-enum SubscriptionPlanIntervalEnum {
-  MONTHLY
-  YEARLY
-}
-
-input SubscriptionPlanUpdateRequestDto {
-  """The unique identifier of the subscription plan"""
-  id: String!
-
-  """The name of the subscription plan"""
-  name: String
-
-  """The type of the subscription plan"""
-  type: SubscriptionPlanTypeEnum
-
-  """The description of the subscription plan"""
-  description: String
-
-  """The price monthly of the subscription plan"""
-  priceMonthly: Float
-
-  """The currency of the subscription plan"""
-  currency: CurrencyEnum
-
-  """The interval of the subscription plan"""
-  interval: SubscriptionPlanIntervalEnum
-
-  """The interval count of the subscription plan"""
-  intervalCount: Float
-
-  """The trial period days of the subscription plan"""
-  trialPeriodDays: Float
-
-  """The features of the subscription plan"""
-  features: [String!]
-
-  """The limits of the subscription plan"""
-  limits: [String!]
-
-  """The stripe price id of the subscription plan"""
-  stripePriceId: String
-}
-
-input SubscriptionPlanDeleteRequestDto {
-  """The unique identifier of the subscription plan"""
-  id: String!
-}
-
-input SubscriptionCreateRequestDto {
-  """The tenant id of the subscription"""
-  tenantId: String!
-
-  """The plan id of the subscription"""
-  planId: String!
-
-  """The start date of the subscription"""
-  startDate: String!
-
-  """The end date of the subscription"""
-  endDate: DateTime!
-
-  """The stripe subscription id of the subscription"""
-  stripeSubscriptionId: String
-
-  """The stripe customer id of the subscription"""
-  stripeCustomerId: String
-
-  """The renewal method of the subscription"""
-  renewalMethod: SubscriptionRenewalMethodEnum!
-}
-
-input SubscriptionUpdateRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-
-  """The tenant id of the subscription"""
-  tenantId: String
-
-  """The plan id of the subscription"""
-  planId: String
-
-  """The start date of the subscription"""
-  startDate: DateTime
-
-  """The end date of the subscription"""
-  endDate: DateTime
-
-  """The trial end date of the subscription"""
-  trialEndDate: DateTime
-
-  """The status of the subscription"""
-  status: SubscriptionStatusEnum
-
-  """The stripe subscription id of the subscription"""
-  stripeSubscriptionId: String
-
-  """The stripe customer id of the subscription"""
-  stripeCustomerId: String
-
-  """The renewal method of the subscription"""
-  renewalMethod: SubscriptionRenewalMethodEnum
-}
-
-input SubscriptionDeleteRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-}
-
-input SubscriptionActivateRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-}
-
-input SubscriptionDeactivateRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-}
-
-input SubscriptionRefundRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-}
-
-input SubscriptionCancelRequestDto {
-  """The unique identifier of the subscription"""
-  id: String!
-}
-
-input PromptCreateRequestDto {
-  """The title of the prompt"""
-  title: String!
-
-  """The description of the prompt"""
-  description: String!
-
-  """The content of the prompt"""
-  content: String
-
-  """The status of the prompt"""
-  status: PromptStatusEnum!
-}
-
-input PromptUpdateRequestDto {
-  """The unique identifier of the prompt"""
-  id: String!
-
-  """The title of the prompt"""
-  title: String
-
-  """The description of the prompt"""
-  description: String
-
-  """The content of the prompt"""
-  content: String
-}
-
-input PromptDeleteRequestDto {
-  """The unique identifier of the prompt"""
-  id: String!
-}
-
-input PromptChangeStatusRequestDto {
-  """The id of the prompt to change status"""
-  id: String!
-
-  """The new status to set"""
-  status: PromptStatusEnum!
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
-input StorageDownloadFileRequestDto {
-  """The unique identifiers of the storages"""
-  ids: [String!]!
-}
-
-input StorageDeleteFileRequestDto {
-  """The unique identifiers of the storages"""
-  ids: [String!]!
+	ACTIVE
+	INACTIVE
+	BLOCKED
 }
 
 input SagaInstanceCreateRequestDto {
-  """The name of the saga instance"""
-  name: String!
+	"""
+	The name of the saga instance
+	"""
+	name: String!
 }
 
 input SagaInstanceUpdateRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 
-  """The name of the saga instance"""
-  name: String
+	"""
+	The name of the saga instance
+	"""
+	name: String
 
-  """The status of the saga instance"""
-  status: SagaInstanceStatusEnum
+	"""
+	The status of the saga instance
+	"""
+	status: SagaInstanceStatusEnum
 
-  """The start date of the saga instance"""
-  startDate: DateTime
+	"""
+	The start date of the saga instance
+	"""
+	startDate: DateTime
 
-  """The end date of the saga instance"""
-  endDate: DateTime
+	"""
+	The end date of the saga instance
+	"""
+	endDate: DateTime
 }
 
 input SagaInstanceChangeStatusRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 
-  """The status of the saga instance"""
-  status: SagaInstanceStatusEnum!
+	"""
+	The status of the saga instance
+	"""
+	status: SagaInstanceStatusEnum!
 }
 
 input SagaInstanceDeleteRequestDto {
-  """The id of the saga instance"""
-  id: String!
+	"""
+	The id of the saga instance
+	"""
+	id: String!
 }
 
 input SagaStepCreateRequestDto {
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The name of the saga step"""
-  name: String!
+	"""
+	The name of the saga step
+	"""
+	name: String!
 
-  """The order of the saga step"""
-  order: Float!
+	"""
+	The order of the saga step
+	"""
+	order: Float!
 
-  """The payload of the saga step (JSON string)"""
-  payload: String!
+	"""
+	The payload of the saga step (JSON string)
+	"""
+	payload: String!
 }
 
 input SagaStepUpdateRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 
-  """The name of the saga step"""
-  name: String
+	"""
+	The name of the saga step
+	"""
+	name: String
 
-  """The order of the saga step"""
-  order: Float
+	"""
+	The order of the saga step
+	"""
+	order: Float
 
-  """The status of the saga step"""
-  status: SagaStepStatusEnum
+	"""
+	The status of the saga step
+	"""
+	status: SagaStepStatusEnum
 
-  """The start date of the saga step"""
-  startDate: DateTime
+	"""
+	The start date of the saga step
+	"""
+	startDate: DateTime
 
-  """The end date of the saga step"""
-  endDate: DateTime
+	"""
+	The end date of the saga step
+	"""
+	endDate: DateTime
 
-  """The error message of the saga step"""
-  errorMessage: String
+	"""
+	The error message of the saga step
+	"""
+	errorMessage: String
 
-  """The retry count of the saga step"""
-  retryCount: Float
+	"""
+	The retry count of the saga step
+	"""
+	retryCount: Float
 
-  """The max retries of the saga step"""
-  maxRetries: Float
+	"""
+	The max retries of the saga step
+	"""
+	maxRetries: Float
 
-  """The payload of the saga step (JSON string)"""
-  payload: String
+	"""
+	The payload of the saga step (JSON string)
+	"""
+	payload: String
 
-  """The result of the saga step (JSON string)"""
-  result: String
+	"""
+	The result of the saga step (JSON string)
+	"""
+	result: String
 }
 
 input SagaStepChangeStatusRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 
-  """The status of the saga step"""
-  status: SagaStepStatusEnum!
+	"""
+	The status of the saga step
+	"""
+	status: SagaStepStatusEnum!
 }
 
 input SagaStepDeleteRequestDto {
-  """The id of the saga step"""
-  id: String!
+	"""
+	The id of the saga step
+	"""
+	id: String!
 }
 
 input SagaLogCreateRequestDto {
-  """The saga instance ID"""
-  sagaInstanceId: String!
+	"""
+	The saga instance ID
+	"""
+	sagaInstanceId: String!
 
-  """The saga step ID"""
-  sagaStepId: String!
+	"""
+	The saga step ID
+	"""
+	sagaStepId: String!
 
-  """The type of the saga log"""
-  type: SagaLogTypeEnum!
+	"""
+	The type of the saga log
+	"""
+	type: SagaLogTypeEnum!
 
-  """The message of the saga log"""
-  message: String!
+	"""
+	The message of the saga log
+	"""
+	message: String!
 }
 
 input SagaLogUpdateRequestDto {
-  """The id of the saga log"""
-  id: String!
+	"""
+	The id of the saga log
+	"""
+	id: String!
 
-  """The type of the saga log"""
-  type: SagaLogTypeEnum
+	"""
+	The type of the saga log
+	"""
+	type: SagaLogTypeEnum
 
-  """The message of the saga log"""
-  message: String
+	"""
+	The message of the saga log
+	"""
+	message: String
 }
 
 input SagaLogDeleteRequestDto {
-  """The id of the saga log"""
-  id: String!
+	"""
+	The id of the saga log
+	"""
+	id: String!
 }
 
-input CreateFeatureRequestDto {
-  """The unique key of the feature"""
-  key: String!
+input CreateUserRequestDto {
+	"""
+	The name of the user
+	"""
+	name: String
 
-  """The name of the feature"""
-  name: String!
+	"""
+	The bio of the user
+	"""
+	bio: String
 
-  """The description of the feature"""
-  description: String
+	"""
+	The avatar url of the user
+	"""
+	avatarUrl: String
 
-  """The status of the feature"""
-  status: String
+	"""
+	The last name of the user
+	"""
+	lastName: String
+
+	"""
+	The user name of the user
+	"""
+	userName: String
+
+	"""
+	The role of the user
+	"""
+	role: UserRoleEnum!
+
+	"""
+	The status of the user
+	"""
+	status: UserStatusEnum!
 }
 
-input UpdateFeatureRequestDto {
-  """The id of the feature"""
-  id: String!
-
-  """The unique key of the feature"""
-  key: String
-
-  """The name of the feature"""
-  name: String
-
-  """The description of the feature"""
-  description: String
-
-  """The status of the feature"""
-  status: String
-}
-
-input DeleteFeatureRequestDto {
-  """The id of the feature"""
-  id: String!
-}
-
-input FeatureChangeStatusRequestDto {
-  """The id of the feature"""
-  id: String!
-
-  """The new status of the feature"""
-  status: String!
+input DeleteUserRequestDto {
+	"""
+	The unique identifier of the user
+	"""
+	id: String!
 }

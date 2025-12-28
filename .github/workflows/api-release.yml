@@ -1,23 +1,20 @@
-name: Release and Publish to GHCR
+name: API Release
 
 on:
   push:
     paths:
-      - "apps/api/**"
+      - 'apps/api/**'
     branches:
       - main
 
 permissions:
   contents: write
-  packages: write
   issues: write
   pull-requests: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,56 +47,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build API
+        run: pnpm build --filter=./apps/api...
+
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Run semantic-release
-        id: semantic
+        working-directory: ./apps/api
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Run semantic-release and capture the output
-          OUTPUT=$(pnpm semantic-release --dry-run)
-
-          # Extract the new version from the output
-          NEW_VERSION=$(echo "$OUTPUT" | grep -o 'The next release version is [0-9]\+\.[0-9]\+\.[0-9]\+' | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+' | head -1)
-
-          if [ -z "$NEW_VERSION" ]; then
-            echo "No new version to release"
-            echo "new_release_version=" >> $GITHUB_OUTPUT
-          else
-            echo "new_release_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-            echo "New version: $NEW_VERSION"
-          fi
-
-          # Actually run semantic-release if there's a new version
-          if [ -n "$NEW_VERSION" ]; then
-            pnpm semantic-release
-          fi
-
-  docker:
-    needs: release
-    runs-on: ubuntu-latest
-    if: needs.release.outputs.version != ''
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
-
-      - name: Build and Push Docker Image
-        run: |
-          VERSION=${{ needs.release.outputs.version }}
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
-          echo "Building and pushing version: $VERSION"
-          docker buildx build --platform linux/amd64,linux/arm64 \
-            -t $IMAGE_NAME:$VERSION \
-            -t $IMAGE_NAME:latest \
-            --push .
+        run: pnpm release

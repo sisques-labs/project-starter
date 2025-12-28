@@ -1,6 +1,6 @@
-import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { FilterOperator } from '@/shared/domain/enums/filter-operator.enum';
 
 @InputType('BaseFilterInput')
 export class BaseFilterInput {

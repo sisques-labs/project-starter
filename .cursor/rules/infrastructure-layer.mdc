@@ -30,14 +30,12 @@ infrastructure/
 
 TypeORM repositories implement write repository interfaces and handle persistence of aggregates to PostgreSQL. They must:
 
-- Extend `BaseTypeormMasterRepository` or `BaseTypeormTenantRepository`
+- Extend `BaseTypeormMasterRepository`
 - Implement the domain write repository interface
 - Use mappers to convert between entities and aggregates
 - Use `@Injectable()` decorator
 
-### Master Database Repository
-
-For entities stored in the master database (no tenant isolation):
+### TypeORM Repository
 
 ```typescript
 import { BaseTypeormMasterRepository } from '@/shared/infrastructure/database/typeorm/base-typeorm/base-typeorm-master/base-typeorm-master.repository';
@@ -107,83 +105,12 @@ export class ExampleTypeormRepository
 }
 ```
 
-### Tenant Database Repository
-
-For entities stored in the master database with tenant isolation (using `tenantId` column):
-
-```typescript
-import { BaseTypeormTenantRepository } from '@/shared/infrastructure/database/typeorm/base-typeorm/base-typeorm-tenant/base-typeorm-tenant.repository';
-import { TypeormMasterService } from '@/shared/infrastructure/database/typeorm/services/typeorm-master/typeorm-master.service';
-import { TenantContextService } from '@/shared/infrastructure/services/tenant-context/tenant-context.service';
-import { ExampleAggregate } from '@/example-context/example/domain/aggregates/example.aggregate';
-import { ExampleWriteRepository } from '@/example-context/example/domain/repositories/example-write.repository';
-import { ExampleTypeormEntity } from '@/example-context/example/infrastructure/database/typeorm/entities/example-typeorm.entity';
-import { ExampleTypeormMapper } from '@/example-context/example/infrastructure/database/typeorm/mappers/example-typeorm.mapper';
-import { Injectable, Logger, Scope } from '@nestjs/common';
-
-@Injectable({ scope: Scope.REQUEST })
-export class ExampleTypeormRepository
-  extends BaseTypeormTenantRepository<ExampleTypeormEntity>
-  implements ExampleWriteRepository
-{
-  constructor(
-    typeormMasterService: TypeormMasterService,
-    tenantContextService: TenantContextService,
-    private readonly exampleTypeormMapper: ExampleTypeormMapper,
-  ) {
-    super(typeormMasterService, tenantContextService, ExampleTypeormEntity);
-    this.logger = new Logger(ExampleTypeormRepository.name);
-  }
-
-  /**
-   * Finds an example by id (automatically filtered by tenantId)
-   *
-   * @param id - The id of the example to find
-   * @returns The example if found, null otherwise
-   */
-  async findById(id: string): Promise<ExampleAggregate | null> {
-    // tenantId is automatically added by BaseTypeormTenantRepository
-    const entity = await super.findOne({ where: { id } as any });
-
-    if (!entity) {
-      return null;
-    }
-
-    return this.exampleTypeormMapper.toDomainEntity(entity);
-  }
-
-  /**
-   * Saves an example (automatically sets tenantId)
-   *
-   * @param example - The example to save
-   * @returns The saved example
-   */
-  async save(example: ExampleAggregate): Promise<ExampleAggregate> {
-    const entity = this.exampleTypeormMapper.toTypeormEntity(example);
-    // tenantId is automatically set by saveEntity()
-    const saved = await super.saveEntity(entity);
-    return this.exampleTypeormMapper.toDomainEntity(saved);
-  }
-
-  /**
-   * Deletes an example (automatically filtered by tenantId)
-   *
-   * @param id - The id of the example to delete
-   */
-  async delete(id: string): Promise<void> {
-    // Automatically filters by tenantId
-    await super.softDelete(id);
-  }
-}
-```
-
 ### Rules
 
-- **Extend base repositories** - Always extend `BaseTypeormMasterRepository` or `BaseTypeormTenantRepository`
+- **Extend base repositories** - Always extend `BaseTypeormMasterRepository`
 - **Use mappers** - Never convert entities to aggregates directly
 - **Use soft delete** - Use `softDelete()` instead of `delete()` for soft deletes
 - **Log operations** - Use Logger for debugging
-- **Request scope for tenant repos** - Use `@Injectable({ scope: Scope.REQUEST })` for tenant repositories
 
 ## TypeORM Entities
 
@@ -191,12 +118,12 @@ export class ExampleTypeormRepository
 
 TypeORM entities represent database tables. They must:
 
-- Extend `BaseTypeormEntity` or `BaseTypeormWithTenantEntity`
+- Extend `BaseTypeormEntity`
 - Use TypeORM decorators (`@Entity`, `@Column`, `@Index`)
 - Use primitive types (not Value Objects)
 - Match aggregate structure
 
-### Master Database Entity
+### TypeORM Entity
 
 ```typescript
 import { BaseTypeormEntity } from '@/shared/infrastructure/database/typeorm/entities/base-typeorm.entity';
@@ -217,22 +144,6 @@ export class ExampleTypeormEntity extends BaseTypeormEntity {
 }
 ```
 
-### Tenant Entity
-
-For entities that require tenant isolation:
-
-```typescript
-import { BaseTypeormWithTenantEntity } from '@/shared/infrastructure/database/typeorm/entities/base-typeorm-with-tenant.entity';
-import { Column, Entity, Index } from 'typeorm';
-
-@Entity('examples')
-@Index(['name'])
-export class ExampleTypeormEntity extends BaseTypeormWithTenantEntity {
-  @Column({ type: 'varchar', nullable: true })
-  name: string | null;
-}
-```
-
 ### Base Entity Properties
 
 `BaseTypeormEntity` provides:
@@ -242,13 +153,9 @@ export class ExampleTypeormEntity extends BaseTypeormWithTenantEntity {
 - `updatedAt: Date` (auto-managed)
 - `deletedAt: Date | null` (for soft deletes)
 
-`BaseTypeormWithTenantEntity` extends `BaseTypeormEntity` and adds:
-
-- `tenantId: string | null` (indexed)
-
 ### Rules
 
-- **Extend base entities** - Always extend `BaseTypeormEntity` or `BaseTypeormWithTenantEntity`
+- **Extend base entities** - Always extend `BaseTypeormEntity`
 - **Use primitive types** - Never use Value Objects in entities
 - **Add indexes** - Use `@Index()` for frequently queried columns
 - **Use enums** - Use TypeORM enum columns for enum values
@@ -342,12 +249,12 @@ export class ExampleTypeormMapper {
 
 MongoDB repositories implement read repository interfaces and handle queries of view models from MongoDB. They must:
 
-- Extend `BaseMongoMasterRepository` or `BaseMongoTenantRepository`
+- Extend `BaseMongoMasterRepository`
 - Implement the domain read repository interface
 - Use mappers to convert between DTOs and view models
 - Use `@Injectable()` decorator
 
-### Master Database Repository
+### MongoDB Repository
 
 ```typescript
 import { Criteria } from '@/shared/domain/entities/criteria';
@@ -488,7 +395,7 @@ export class ExampleMongoRepository
 
 ### Rules
 
-- **Extend base repositories** - Always extend `BaseMongoMasterRepository` or `BaseMongoTenantRepository`
+- **Extend base repositories** - Always extend `BaseMongoMasterRepository`
 - **Use mappers** - Never convert DTOs to view models directly
 - **Use upsert for save** - Use `replaceOne` with `upsert: true` for save operations
 - **Use buildMongoQuery** - Use base repository methods to build queries
@@ -607,7 +514,6 @@ export class ExampleMongoDBMapper {
 - Use soft delete for TypeORM entities
 - Use upsert for MongoDB save operations
 - Log all operations
-- Use request scope for tenant repositories
 - Add indexes for frequently queried columns
 
 ### ❌ Bad Practices

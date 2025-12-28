@@ -1,40 +1,17 @@
 import { AppResolver } from '@/app.resolver';
-import { AuthContextModule } from '@/auth-context/auth-context.module';
-import { BillingContextModule } from '@/billing-context/billing-context.module';
-import { EventContextModule } from '@/event-store-context/event-store-context.module';
-import { FeatureContextModule } from '@/feature-context/feature-context.module';
-import { FeaturesModule } from '@/features/features.module';
-import { HealthContextModule } from '@/health-context/health-context.module';
-import { LLMContextModule } from '@/llm-context/llm-context.module';
-import { LoggingContextModule } from '@/logging-context/logging-context.module';
-import { SagaContextModule } from '@/saga-context/saga-context.module';
+import { CoreModule } from '@/core/core.module';
+import { GenericModule } from '@/generic/generic.module';
 import { SharedModule } from '@/shared/shared.module';
 import '@/shared/transport/graphql/registered-enums/registered-enums.graphql';
-import { StorageContextModule } from '@/storage-context/storage-context.module';
-import { TenantContextModule } from '@/tenant-context/tenant-context.module';
-import { UserContextModule } from '@/user-context/user-context.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { SupportModule } from '@/support/generic.module';
 
-const CONTEXT_MODULES = [
-  LoggingContextModule,
-  EventContextModule,
-  AuthContextModule,
-  TenantContextModule,
-  UserContextModule,
-  HealthContextModule,
-  BillingContextModule,
-  LLMContextModule,
-  StorageContextModule,
-  SagaContextModule,
-  FeatureContextModule,
-];
-
-const MODULES = [FeaturesModule, SharedModule];
+const MODULES = [CoreModule, SharedModule, SupportModule, GenericModule];
 
 @Module({
   imports: [
@@ -51,7 +28,6 @@ const MODULES = [FeaturesModule, SharedModule];
       context: ({ req }) => ({ req }),
     }),
     ...MODULES,
-    ...CONTEXT_MODULES,
   ],
   providers: [AppResolver],
 })

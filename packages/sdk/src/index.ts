@@ -1,19 +1,22 @@
 import { AuthClient } from './auth/client/auth-client.js';
 import type { AuthLogoutInput } from './auth/index.js';
-import { EventClient } from './event/client/event-client.js';
-import { FeatureClient } from './features/client/feature-client.js';
 import { HealthClient } from './health/client/health-client.js';
 import { SagaInstanceClient } from './saga-instance/client/saga-instance-client.js';
 import { SagaLogClient } from './saga-log/client/saga-log-client.js';
 import { SagaStepClient } from './saga-step/client/saga-step-client.js';
 import { GraphQLClient } from './shared/client/graphql-client.js';
 import type { GraphQLClientConfig } from './shared/types/index.js';
-import { SubscriptionPlanClient } from './subscription-plan/client/subscription-plan-client.js';
-import { TenantDatabaseClient } from './tenant-database/client/tenant-database-client.js';
-import { TenantMemberClient } from './tenant-member/client/tenant-member-client.js';
-import { TenantClient } from './tenant/client/tenant-client.js';
 import { UserClient } from './users/client/user-client.js';
 
+export * from './auth/index.js';
+export * from './health/index.js';
+export * from './saga-instance/index.js';
+export * from './saga-log/index.js';
+export * from './saga-step/index.js';
+// Re-export storage interface for custom implementations
+export { MemoryStorage } from './shared/storage/memory-storage.js';
+export type { Storage } from './shared/storage/storage.interface.js';
+export { WebStorage } from './shared/storage/web-storage.js';
 // Re-export types from shared
 export type {
   BaseFilter,
@@ -25,36 +28,13 @@ export type {
   PaginationInput,
   SortDirection,
 } from './shared/types/index.js';
-
-// Re-export storage interface for custom implementations
-export { MemoryStorage } from './shared/storage/memory-storage.js';
-export type { Storage } from './shared/storage/storage.interface.js';
-export { WebStorage } from './shared/storage/web-storage.js';
-
-export * from './auth/index.js';
-export * from './event/index.js';
-export * from './features/index.js';
-export * from './health/index.js';
-export * from './saga-instance/index.js';
-export * from './saga-log/index.js';
-export * from './saga-step/index.js';
-export * from './subscription-plan/index.js';
-export * from './tenant-database/index.js';
-export * from './tenant-member/index.js';
-export * from './tenant/index.js';
 export * from './users/index.js';
 
 export class SDK {
   private client: GraphQLClient;
   private authClient: AuthClient;
   private userClient: UserClient;
-  private tenantClient: TenantClient;
-  private tenantMemberClient: TenantMemberClient;
-  private tenantDatabaseClient: TenantDatabaseClient;
-  private subscriptionPlanClient: SubscriptionPlanClient;
   private healthClient: HealthClient;
-  private eventClient: EventClient;
-  private featureClient: FeatureClient;
   private sagaInstanceClient: SagaInstanceClient;
   private sagaStepClient: SagaStepClient;
   private sagaLogClient: SagaLogClient;
@@ -63,13 +43,7 @@ export class SDK {
     this.client = new GraphQLClient(config);
     this.authClient = new AuthClient(this.client);
     this.userClient = new UserClient(this.client);
-    this.tenantClient = new TenantClient(this.client);
-    this.tenantMemberClient = new TenantMemberClient(this.client);
-    this.tenantDatabaseClient = new TenantDatabaseClient(this.client);
-    this.subscriptionPlanClient = new SubscriptionPlanClient(this.client);
     this.healthClient = new HealthClient(this.client);
-    this.eventClient = new EventClient(this.client);
-    this.featureClient = new FeatureClient(this.client);
     this.sagaInstanceClient = new SagaInstanceClient(this.client);
     this.sagaStepClient = new SagaStepClient(this.client);
     this.sagaLogClient = new SagaLogClient(this.client);
@@ -138,6 +112,10 @@ export class SDK {
         await this.client.clearTokens();
         return result;
       },
+      /**
+       * Get the current authenticated user's profile
+       */
+      profileMe: this.authClient.profileMe.bind(this.authClient),
     };
   }
 
@@ -170,118 +148,6 @@ export class SDK {
   }
 
   /**
-   * Tenants module
-   */
-  get tenants() {
-    return {
-      /**
-       * Find tenants by criteria with pagination, filters, and sorting
-       */
-      findByCriteria: this.tenantClient.findByCriteria.bind(this.tenantClient),
-      /**
-       * Find a tenant by ID
-       */
-      findById: this.tenantClient.findById.bind(this.tenantClient),
-      /**
-       * Create a new tenant
-       */
-      create: this.tenantClient.create.bind(this.tenantClient),
-      /**
-       * Update an existing tenant
-       */
-      update: this.tenantClient.update.bind(this.tenantClient),
-      /**
-       * Delete a tenant
-       */
-      delete: this.tenantClient.delete.bind(this.tenantClient),
-    };
-  }
-
-  /**
-   * Tenant Members module
-   */
-  get tenantMembers() {
-    return {
-      /**
-       * Find tenant members by criteria with pagination, filters, and sorting
-       */
-      findByCriteria: this.tenantMemberClient.findByCriteria.bind(
-        this.tenantMemberClient,
-      ),
-      /**
-       * Find a tenant member by ID
-       */
-      findById: this.tenantMemberClient.findById.bind(this.tenantMemberClient),
-      /**
-       * Add a member to a tenant
-       */
-      add: this.tenantMemberClient.add.bind(this.tenantMemberClient),
-      /**
-       * Update a tenant member
-       */
-      update: this.tenantMemberClient.update.bind(this.tenantMemberClient),
-      /**
-       * Remove a member from a tenant
-       */
-      remove: this.tenantMemberClient.remove.bind(this.tenantMemberClient),
-    };
-  }
-
-  /**
-   * Subscription Plans module
-   */
-  get subscriptionPlans() {
-    return {
-      /**
-       * Find subscription plans by criteria with pagination, filters, and sorting
-       */
-      findByCriteria: this.subscriptionPlanClient.findByCriteria.bind(
-        this.subscriptionPlanClient,
-      ),
-      /**
-       * Find a subscription plan by ID
-       */
-      findById: this.subscriptionPlanClient.findById.bind(
-        this.subscriptionPlanClient,
-      ),
-      /**
-       * Create a new subscription plan
-       */
-      create: this.subscriptionPlanClient.create.bind(
-        this.subscriptionPlanClient,
-      ),
-      /**
-       * Update an existing subscription plan
-       */
-      update: this.subscriptionPlanClient.update.bind(
-        this.subscriptionPlanClient,
-      ),
-      /**
-       * Delete a subscription plan
-       */
-      delete: this.subscriptionPlanClient.delete.bind(
-        this.subscriptionPlanClient,
-      ),
-    };
-  }
-
-  /**
-   * Events module
-   */
-  get events() {
-    return {
-      /**
-       * Find events by criteria with pagination, filters, and sorting
-       */
-      findByCriteria: this.eventClient.findByCriteria.bind(this.eventClient),
-      /**
-       * Replay events
-       */
-      replay: this.eventClient.replay.bind(this.eventClient),
-    };
-  }
-
-  /**
    * Health module
    */
   get health() {
@@ -293,71 +159,6 @@ export class SDK {
     };
   }
 
-  /**
-   * Features module
-   */
-  get features() {
-    return {
-      /**
-       * Find features by criteria with pagination, filters, and sorting
-       */
-      findByCriteria: this.featureClient.findByCriteria.bind(
-        this.featureClient,
-      ),
-      /**
-       * Find a feature by ID
-       */
-      findById: this.featureClient.findById.bind(this.featureClient),
-      /**
-       * Create a new feature
-       */
-      create: this.featureClient.create.bind(this.featureClient),
-      /**
-       * Update an existing feature
-       */
-      update: this.featureClient.update.bind(this.featureClient),
-      /**
-       * Change the status of a feature
-       */
-      changeStatus: this.featureClient.changeStatus.bind(this.featureClient),
-      /**
-       * Delete a feature
-       */
-      delete: this.featureClient.delete.bind(this.featureClient),
-    };
-  }
-
-  /**
-   * Tenant Databases module
-   */
-  get tenantDatabases() {
-    return {
-      /**
-       * Find tenant databases by criteria with pagination, filters, and sorting
-       */
-      findByCriteria: this.tenantDatabaseClient.findByCriteria.bind(
-        this.tenantDatabaseClient,
-      ),
-      /**
-       * Find a tenant database by ID
-       */
-      findById: this.tenantDatabaseClient.findById.bind(
-        this.tenantDatabaseClient,
-      ),
-      /**
-       * Create a new tenant database
-       */
-      create: this.tenantDatabaseClient.create.bind(this.tenantDatabaseClient),
-      /**
-       * Update an existing tenant database
-       */
-      update: this.tenantDatabaseClient.update.bind(this.tenantDatabaseClient),
-      /**
-       * Delete a tenant database
-       */
-      delete: this.tenantDatabaseClient.delete.bind(this.tenantDatabaseClient),
-    };
-  }
   /**
    * Saga Instances module
    */

@@ -1,5 +1,5 @@
-import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
 import { randomUUID } from 'crypto';
+import { InvalidUuidException } from '@/shared/domain/exceptions/value-objects/invalid-uuid/invalid-uuid.exception';
 
 /**
  * UUID Value Object

@@ -1,5 +1,5 @@
-import { ColorValueObject } from '@/shared/domain/value-objects/color/color.vo';
 import { InvalidColorException } from '@/shared/domain/exceptions/value-objects/invalid-color/invalid-color.exception';
+import { ColorValueObject } from '@/shared/domain/value-objects/color/color.vo';
 
 describe('ColorValueObject', () => {
   describe('constructor', () => {
