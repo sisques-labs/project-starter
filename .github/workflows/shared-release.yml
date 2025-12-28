@@ -47,6 +47,7 @@ jobs:
         run: pnpm build --filter=./packages/shared...
 
       - name: Release
+        working-directory: packages/shared
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release --filter=./packages/shared...
+        run: pnpm release
